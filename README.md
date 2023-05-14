@@ -1,11 +1,11 @@
-## CMSC 23 B7L Group 2 Members
-Araez, Danielle Lei R.
-Concepcion, Sean Kierby I.
-Dela Cruz, Laydon Albert L.
-Luñeza, Marcel Luiz G.
+# CMSC 23 B7L Group 2 Members
+Araez, Danielle Lei R.  
+Concepcion, Sean Kierby I.  
+Dela Cruz, Laydon Albert L.  
+Luñeza, Marcel Luiz G.  
 
-### Program Description
+## Program Description
 
-### Installation Guide
+## Installation Guide
 
-### How To Use the Health Monitor App
+## How To Use the Health Monitor App
