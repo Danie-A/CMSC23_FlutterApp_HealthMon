@@ -166,10 +166,10 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.edit_square, color: Colors.green),
+          Icon(Icons.local_hospital_rounded, color: Colors.green),
           SizedBox(width: 14),
           Text(
-            "To Do List",
+            "HealthMon",
             style: TextStyle(fontWeight: FontWeight.bold),
           )
         ]),

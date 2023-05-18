@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/signup.dart';
 
-// hewoo may klas lang me math 100 brbrbrb
-// parang hindii skksks try moo xD
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
   @override
@@ -120,10 +118,10 @@ class _SigninPageState extends State<SigninPage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.edit_square, color: Colors.green),
+          Icon(Icons.local_hospital, color: Colors.green),
           SizedBox(width: 14),
           Text(
-            "To Do List",
+            "HealthMon",
             style: TextStyle(fontWeight: FontWeight.bold),
           )
         ]),

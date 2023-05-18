@@ -8,6 +8,7 @@ import '../screens/modal_todo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../screens/signin.dart';
 import 'user_details.dart';
+import 'ViewStudents.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -61,6 +62,13 @@ class _TodoPageState extends State<TodoPage> {
           onTap: () {
             context.read<AuthProvider>().signOut();
             Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: const Text('View Students'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ViewStudents()));
           },
         ),
       ])),

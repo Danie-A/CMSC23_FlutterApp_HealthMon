@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Health Monitor',
+      title: 'HealthMon App',
       initialRoute: '/',
       theme: ThemeData(
           useMaterial3: true,
