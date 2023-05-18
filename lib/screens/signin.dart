@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../screens/signup.dart';
+import '../screens/user_signup.dart';
+import '../screens/admin_monitor_signup.dart';
+
+var identities = ['User', 'Admin', 'Entrance Monitor'];
+String identityValue = identities.first;
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -73,6 +77,28 @@ class _SigninPageState extends State<SigninPage> {
       }, // adds a validator in the form field
     );
 
+    final identity = DropdownButton<String>(
+      value: identityValue,
+      icon: const Icon(Icons.arrow_downward),
+      underline: Container(
+        height: 2,
+        color: Colors.green,
+      ),
+      onChanged: (String? newValue) {
+        // This is called when the user selects an item.
+        setState(() {
+          identityValue = newValue!;
+        });
+        print(identityValue);
+      },
+      items: identities.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+
     final signinButton = Padding(
       key: const Key('signinButton'),
       padding: const EdgeInsets.only(top: 30.0),
@@ -97,11 +123,24 @@ class _SigninPageState extends State<SigninPage> {
       padding: const EdgeInsets.only(top: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const SignupPage(),
-            ),
-          );
+
+          if(identityValue == 'User') {
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => const UserSignupPage(),
+                ),
+            );
+          }
+
+          else if(identityValue == 'Admin' || identityValue == 'Entrance Monitor') {
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => const AdminMonitorSignupPage(),
+                ),
+            );
+          }
+
+
         },
         child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
       ),
@@ -111,17 +150,25 @@ class _SigninPageState extends State<SigninPage> {
       return Form(
           key: _formSigninKey,
           child:
-              Column(children: [email, password, signinButton, signUpButton]));
+              Column(children: [
+                email,
+                password,
+                signinButton,
+                Divider(height: 80, color: Colors.green),
+                identity, 
+                signUpButton
+              ])
+      );
     }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.local_hospital, color: Colors.green),
+          Icon(Icons.edit_square, color: Colors.green),
           SizedBox(width: 14),
           Text(
-            "HealthMon",
+            "To Do List",
             style: TextStyle(fontWeight: FontWeight.bold),
           )
         ]),
