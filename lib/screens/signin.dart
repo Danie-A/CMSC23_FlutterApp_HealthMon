@@ -3,13 +3,15 @@ import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/signup.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+// hewoo may klas lang me math 100 brbrbrb
+// parang hindii skksks try moo xD
+class SigninPage extends StatefulWidget {
+  const SigninPage({super.key});
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SigninPageState createState() => _SigninPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     void showErrorDialog(String string) {
@@ -35,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    final _formLoginKey = GlobalKey<FormState>();
+    final _formSigninKey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
@@ -73,12 +75,12 @@ class _LoginPageState extends State<LoginPage> {
       }, // adds a validator in the form field
     );
 
-    final loginButton = Padding(
-      key: const Key('loginButton'),
+    final signinButton = Padding(
+      key: const Key('signinButton'),
       padding: const EdgeInsets.only(top: 30.0),
       child: ElevatedButton(
         onPressed: () async {
-          if (_formLoginKey.currentState!.validate()) {
+          if (_formSigninKey.currentState!.validate()) {
             String message = await context.read<AuthProvider>().signIn(
                 emailController.text.trim(), passwordController.text.trim());
             if (message == 'user-not-found') {
@@ -88,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         },
-        child: const Text('Log In', style: TextStyle(color: Colors.white)),
+        child: const Text('Sign In', style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -107,11 +109,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    Widget showLoginForm(BuildContext context) {
+    Widget showSigninForm(BuildContext context) {
       return Form(
-          key: _formLoginKey,
+          key: _formSigninKey,
           child:
-              Column(children: [email, password, loginButton, signUpButton]));
+              Column(children: [email, password, signinButton, signUpButton]));
     }
 
     return Scaffold(
@@ -133,11 +135,11 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.only(left: 40.0, right: 40.0),
           children: <Widget>[
             const Text(
-              "Log In",
+              "Sign In",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            showLoginForm(context)
+            showSigninForm(context)
           ],
         ),
       ),

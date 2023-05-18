@@ -4,7 +4,7 @@ import '../providers/todo_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/todo_page.dart';
 import '../screens/user_details.dart';
-import '../screens/login.dart';
+import '../screens/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import '../providers/userdetail_provider.dart';
@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
           colorSchemeSeed: Colors.green),
       routes: {
         '/': (context) => const TodoPage(),
-        '/login': (context) => const LoginPage(),
-        '/todo': (context) => const LoginPage(),
+        '/login': (context) => const SigninPage(),
+        '/todo': (context) => const SigninPage(),
         '/user_details': (context) => const UserDetailsPage(),
       },
     );
