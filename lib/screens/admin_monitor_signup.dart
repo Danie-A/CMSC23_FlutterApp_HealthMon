@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../models/userdetail_model.dart';
 import '../providers/userdetail_provider.dart';
+import '../models/UserDetail.dart';
 
 class AdminMonitorSignupPage extends StatefulWidget {
   const AdminMonitorSignupPage({super.key});
@@ -36,8 +36,8 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
       );
     }
 
-    void addUserDetail(UserDetail userDetail) {
-      context.read<UserDetailListProvider>().addUserDetail(userDetail);
+    void addAdminMonitorDetail(UserDetail userDetail) {
+      context.read<UserDetailListProvider>().addAdminMonitorDetail(userDetail);
     }
 
     final _formKey = GlobalKey<FormState>();
@@ -163,7 +163,6 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
       }, // adds a validator in the form field
     );
 
-
     var signUpButton = Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: ElevatedButton(
@@ -177,16 +176,15 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
               showErrorDialog("Email Already In Use");
             } else if (message == '') {
               UserDetail userDetail = UserDetail(
-                email: emailController.text,
-                firstName: fnameController.text,
-                lastName: lnameController.text,
-                empNo: int.parse(empNoController.text),
-                position: positionController.text,
-                homeUnit: homeUnitController.text,
-                status: 'N/A',
-                userType: 'Admin'
-              );
-              addUserDetail(userDetail);
+                  email: emailController.text,
+                  firstName: fnameController.text,
+                  lastName: lnameController.text,
+                  empNo: int.parse(empNoController.text),
+                  position: positionController.text,
+                  homeUnit: homeUnitController.text,
+                  status: 'No Health Entry',
+                  userType: 'Admin');
+              addAdminMonitorDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }
 

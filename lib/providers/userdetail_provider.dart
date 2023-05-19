@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../models/userdetail_model.dart';
+import '../models/UserDetail.dart';
 import '../api/firebase_userdetail_api.dart';
 
 class UserDetailListProvider with ChangeNotifier {
@@ -20,8 +20,17 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addUserDetail(UserDetail user) async {
-    String message = await firebaseService.addUserDetail(user.toJson(user));
+  void addStudentDetail(UserDetail user) async {
+    String message =
+        await firebaseService.addUserDetail(user.studentToJson(user));
+    print(message);
+
+    notifyListeners();
+  }
+
+  void addAdminMonitorDetail(UserDetail user) async {
+    String message =
+        await firebaseService.addUserDetail(user.adminMonitorToJson(user));
     print(message);
 
     notifyListeners();

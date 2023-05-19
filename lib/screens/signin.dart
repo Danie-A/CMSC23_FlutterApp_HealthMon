@@ -79,11 +79,8 @@ class _SigninPageState extends State<SigninPage> {
 
     final identity = DropdownButton<String>(
       value: identityValue,
-      icon: const Icon(Icons.arrow_downward),
-      underline: Container(
-        height: 2,
-        color: Colors.green,
-      ),
+      icon: const Icon(Icons.arrow_drop_down),
+      underline: SizedBox.shrink(),
       onChanged: (String? newValue) {
         // This is called when the user selects an item.
         setState(() {
@@ -94,7 +91,10 @@ class _SigninPageState extends State<SigninPage> {
       items: identities.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(
+            'As $value',
+            style: const TextStyle(fontSize: 14),
+          ),
         );
       }).toList(),
     );
@@ -123,24 +123,20 @@ class _SigninPageState extends State<SigninPage> {
       padding: const EdgeInsets.only(top: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-
-          if(identityValue == 'User') {
+          if (identityValue == 'User') {
             Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => const UserSignupPage(),
-                ),
+              MaterialPageRoute(
+                builder: (context) => const UserSignupPage(),
+              ),
+            );
+          } else if (identityValue == 'Admin' ||
+              identityValue == 'Entrance Monitor') {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const AdminMonitorSignupPage(),
+              ),
             );
           }
-
-          else if(identityValue == 'Admin' || identityValue == 'Entrance Monitor') {
-            Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => const AdminMonitorSignupPage(),
-                ),
-            );
-          }
-
-
         },
         child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
       ),
@@ -149,26 +145,24 @@ class _SigninPageState extends State<SigninPage> {
     Widget showSigninForm(BuildContext context) {
       return Form(
           key: _formSigninKey,
-          child:
-              Column(children: [
-                email,
-                password,
-                signinButton,
-                Divider(height: 80, color: Colors.green),
-                identity, 
-                signUpButton
-              ])
-      );
+          child: Column(children: [
+            email,
+            password,
+            signinButton,
+            const SizedBox(height: 50),
+            const Text("Don't have an account?"),
+            Row(children: [signUpButton, identity])
+          ]));
     }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.edit_square, color: Colors.green),
+          Icon(Icons.local_hospital_rounded, color: Colors.green),
           SizedBox(width: 14),
           Text(
-            "To Do List",
+            "HealthMon",
             style: TextStyle(fontWeight: FontWeight.bold),
           )
         ]),

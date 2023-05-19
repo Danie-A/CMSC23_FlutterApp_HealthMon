@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../models/userdetail_model.dart';
 import '../providers/userdetail_provider.dart';
+import '../models/UserDetail.dart';
 
 class UserSignupPage extends StatefulWidget {
   const UserSignupPage({super.key});
@@ -36,8 +36,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
       );
     }
 
-    void addUserDetail(UserDetail userDetail) {
-      context.read<UserDetailListProvider>().addUserDetail(userDetail);
+    void addStudentDetail(UserDetail userDetail) {
+      context.read<UserDetailListProvider>().addStudentDetail(userDetail);
     }
 
     final _formKey = GlobalKey<FormState>();
@@ -193,17 +193,16 @@ class _UserSignupPageState extends State<UserSignupPage> {
               showErrorDialog("Email Already In Use");
             } else if (message == '') {
               UserDetail userDetail = UserDetail(
-                email: emailController.text,
-                firstName: fnameController.text,
-                lastName: lnameController.text,
-                username: usernameController.text,
-                college: collegeController.text,
-                course: courseController.text,
-                studentNo: int.parse(studentNoController.text),
-                status: 'N/A',
-                userType: 'User'
-              );
-              addUserDetail(userDetail);
+                  email: emailController.text,
+                  firstName: fnameController.text,
+                  lastName: lnameController.text,
+                  username: usernameController.text,
+                  college: collegeController.text,
+                  course: courseController.text,
+                  studentNo: int.parse(studentNoController.text),
+                  status: 'No Health Entry',
+                  userType: 'User');
+              addStudentDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }
 

@@ -35,7 +35,7 @@ class _ViewStudentsState extends State<ViewStudents> {
                 onPressed: () => {}, child: const Text("Make Admin")),
             const SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () => {},
+                onPressed: () =>     {},
                 child: const Text("Make Entrance Monitor")),
             const SizedBox(height: 10),
             TextButton(
