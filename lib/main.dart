@@ -8,8 +8,8 @@ import '../screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import '../providers/userdetail_provider.dart';
-import 'qrcode.dart';
-import 'myprofile.dart';
+import '../screens/qrcode.dart';
+import '../screens/myprofile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
