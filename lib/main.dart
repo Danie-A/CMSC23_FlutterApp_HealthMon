@@ -8,6 +8,8 @@ import '../screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import '../providers/userdetail_provider.dart';
+import 'qrcode.dart';
+import 'myprofile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/todo': (context) => const LoginPage(),
         '/user_details': (context) => const UserDetailsPage(),
+        '/user-profile': (context) => const MyProfile(),
+        '/qr-code': (context) => const QrCodePage(),
       },
     );
   }
