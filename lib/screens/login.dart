@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/screens/myprofile.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/signup.dart';
@@ -106,12 +107,31 @@ class _LoginPageState extends State<LoginPage> {
         child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
       ),
     );
+    final myProfileButton = Padding(
+      key: const Key('myProfileButton'),
+      padding: const EdgeInsets.only(top: 16.0),
+      child: ElevatedButton(
+        onPressed: () async {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const MyProfile(),
+            ),
+          );
+        },
+        child: const Text('My Profile', style: TextStyle(color: Colors.white)),
+      ),
+    );
 
     Widget showLoginForm(BuildContext context) {
       return Form(
           key: _formLoginKey,
-          child:
-              Column(children: [email, password, loginButton, signUpButton]));
+          child: Column(children: [
+            email,
+            password,
+            loginButton,
+            signUpButton,
+            myProfileButton
+          ]));
     }
 
     return Scaffold(

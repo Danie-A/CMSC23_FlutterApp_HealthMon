@@ -23,9 +23,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,40 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBrjzPvRNZzYnuamkeVQvonVUWq4aUl03k',
-    appId: '1:489417437365:web:3eb58df521a076eda04efc',
-    messagingSenderId: '489417437365',
-    projectId: 'cmsc23-b7l-group2-health-app',
-    authDomain: 'cmsc23-b7l-group2-health-app.firebaseapp.com',
-    storageBucket: 'cmsc23-b7l-group2-health-app.appspot.com',
-    measurementId: 'G-DHK1M6EKLM',
+    apiKey: 'AIzaSyCPbCu1TsoPR34BUhbU3WyWNj_9D6ZNwx0',
+    appId: '1:434421807220:web:77b815fda672e780347921',
+    messagingSenderId: '434421807220',
+    projectId: 'project-23-8e45e',
+    authDomain: 'project-23-8e45e.firebaseapp.com',
+    storageBucket: 'project-23-8e45e.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBC1kPR85AgB2Ik16linwUlELtzGh2_Bvk',
-    appId: '1:489417437365:android:ed4dab9bf5803b57a04efc',
-    messagingSenderId: '489417437365',
-    projectId: 'cmsc23-b7l-group2-health-app',
-    storageBucket: 'cmsc23-b7l-group2-health-app.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCOl1OYmequTuT8M1-NrHnBIx7OcOaUYr4',
-    appId: '1:489417437365:ios:cb09ada4146712d0a04efc',
-    messagingSenderId: '489417437365',
-    projectId: 'cmsc23-b7l-group2-health-app',
-    storageBucket: 'cmsc23-b7l-group2-health-app.appspot.com',
-    iosClientId: '489417437365-83n73f38ambc43vbbroglacblqsefth7.apps.googleusercontent.com',
-    iosBundleId: 'com.example.healthMonitoringApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCOl1OYmequTuT8M1-NrHnBIx7OcOaUYr4',
-    appId: '1:489417437365:ios:cb09ada4146712d0a04efc',
-    messagingSenderId: '489417437365',
-    projectId: 'cmsc23-b7l-group2-health-app',
-    storageBucket: 'cmsc23-b7l-group2-health-app.appspot.com',
-    iosClientId: '489417437365-83n73f38ambc43vbbroglacblqsefth7.apps.googleusercontent.com',
-    iosBundleId: 'com.example.healthMonitoringApp',
+    apiKey: 'AIzaSyC7NF5SkIFWN8XWfslgQmz82hMzN5XrcXo',
+    appId: '1:434421807220:android:f0befa44370870b5347921',
+    messagingSenderId: '434421807220',
+    projectId: 'project-23-8e45e',
+    storageBucket: 'project-23-8e45e.appspot.com',
   );
 }

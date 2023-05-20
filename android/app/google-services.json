@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "489417437365",
-    "project_id": "cmsc23-b7l-group2-health-app",
-    "storage_bucket": "cmsc23-b7l-group2-health-app.appspot.com"
+    "project_number": "434421807220",
+    "project_id": "project-23-8e45e",
+    "storage_bucket": "project-23-8e45e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:489417437365:android:ed4dab9bf5803b57a04efc",
+        "mobilesdk_app_id": "1:434421807220:android:f0befa44370870b5347921",
         "android_client_info": {
           "package_name": "com.example.health_monitoring_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "489417437365-07aoblgma4n4gpqqoutcnmqk7lvvav36.apps.googleusercontent.com",
+          "client_id": "434421807220-fc4vmapeoneu8se9assmq0r5ojhtun31.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBC1kPR85AgB2Ik16linwUlELtzGh2_Bvk"
+          "current_key": "AIzaSyC7NF5SkIFWN8XWfslgQmz82hMzN5XrcXo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "489417437365-07aoblgma4n4gpqqoutcnmqk7lvvav36.apps.googleusercontent.com",
+              "client_id": "434421807220-fc4vmapeoneu8se9assmq0r5ojhtun31.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
