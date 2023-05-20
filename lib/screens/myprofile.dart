@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'healthEntries.dart';
 
@@ -11,6 +13,8 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   String data = "";
   String accountType = "admin";
+  bool unableToGenerateQRCode = false;
+
   static List healthEntries = [
     "a",
     "b",
@@ -53,24 +57,53 @@ class _MyProfileState extends State<MyProfile> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // ADMIN OR HEALTH MONITOR CONTROLLER PART
+              Text("Authorized Personnel Console"),
               (accountType == 'admin' || accountType == 'entrance monitor')
-                  ? SizedBox(
-                      height: 200,
-                      width: 200,
+                  ? Container(
+                      height: screenWidth * .7,
+                      width: screenWidth * .7,
+                      margin: EdgeInsets.only(top: 10),
                       child: GridView.count(
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         crossAxisCount: 2,
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
-                          TextButton(onPressed: () {}, child: Text("Yaur")),
-                          TextButton(onPressed: () {}, child: Text("Yaur")),
-                          TextButton(onPressed: () {}, child: Text("Yaur")),
-                          TextButton(onPressed: () {}, child: Text("Yaur")),
+                          ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5)))),
+                              child: Text("View All Students")),
+                          ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5)))),
+                              child: Text("View Quarantined Students")),
+                          ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5)))),
+                              child: Text("Under Monitoring Students")),
+                          ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5)))),
+                              child: Text("Student Requests")),
                         ],
                       ),
                     )
                   : Container(),
+
+              //WELCOME
               Container(
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.fromLTRB(0, 40, 40, 0),
@@ -131,9 +164,11 @@ class _MyProfileState extends State<MyProfile> {
                 ),
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/qr-code');
-                  },
+                  onPressed: (unableToGenerateQRCode)
+                      ? null
+                      : () {
+                          Navigator.pushNamed(context, '/qr-code');
+                        },
                   style: ElevatedButton.styleFrom(
                       fixedSize: Size(100, 20), shape: StadiumBorder()),
                   child: const Text("Show QR")),
