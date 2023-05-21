@@ -243,7 +243,7 @@ class _MyProfileState extends State<MyProfile> {
                 ),
               ),
               SizedBox(
-                  height: screenHeight * .25,
+                  height: 800,
                   width: screenWidth * .8,
                   child: ListView.builder(
                       itemCount: healthEntries.length,
