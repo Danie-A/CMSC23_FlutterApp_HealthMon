@@ -8,6 +8,7 @@ import '../screens/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import '../providers/userdetail_provider.dart';
+import '../screens/UserAddEntry.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const TodoPage(),
         '/login': (context) => const SigninPage(),
         '/todo': (context) => const SigninPage(),
-        '/user_details': (context) => const UserDetailsPage(),
+        '/user-details': (context) => const UserDetailsPage(),
+        '/user-add-entry': (context) => UserAddEntry()
       },
     );
   }
