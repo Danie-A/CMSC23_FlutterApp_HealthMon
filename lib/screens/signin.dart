@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:health_monitoring_app/screens/myprofile.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../screens/signup.dart';
+import '../screens/user_signup.dart';
+import '../screens/admin_monitor_signup.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+var identities = ['User', 'Admin', 'Entrance Monitor'];
+String identityValue = identities.first;
+
+class SigninPage extends StatefulWidget {
+  const SigninPage({super.key});
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SigninPageState createState() => _SigninPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     void showErrorDialog(String string) {
@@ -36,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
-    final _formLoginKey = GlobalKey<FormState>();
+    final _formSigninKey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
@@ -74,12 +77,34 @@ class _LoginPageState extends State<LoginPage> {
       }, // adds a validator in the form field
     );
 
-    final loginButton = Padding(
-      key: const Key('loginButton'),
+    final identity = DropdownButton<String>(
+      value: identityValue,
+      icon: const Icon(Icons.arrow_drop_down),
+      underline: SizedBox.shrink(),
+      onChanged: (String? newValue) {
+        // This is called when the user selects an item.
+        setState(() {
+          identityValue = newValue!;
+        });
+        print(identityValue);
+      },
+      items: identities.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(
+            'As $value',
+            style: const TextStyle(fontSize: 14),
+          ),
+        );
+      }).toList(),
+    );
+
+    final signinButton = Padding(
+      key: const Key('signinButton'),
       padding: const EdgeInsets.only(top: 30.0),
       child: ElevatedButton(
         onPressed: () async {
-          if (_formLoginKey.currentState!.validate()) {
+          if (_formSigninKey.currentState!.validate()) {
             String message = await context.read<AuthProvider>().signIn(
                 emailController.text.trim(), passwordController.text.trim());
             if (message == 'user-not-found') {
@@ -89,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         },
-        child: const Text('Log In', style: TextStyle(color: Colors.white)),
+        child: const Text('Sign In', style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -98,39 +123,35 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.only(top: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const SignupPage(),
-            ),
-          );
+          if (identityValue == 'User') {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const UserSignupPage(),
+              ),
+            );
+          } else if (identityValue == 'Admin' ||
+              identityValue == 'Entrance Monitor') {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const AdminMonitorSignupPage(),
+              ),
+            );
+          }
         },
         child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
       ),
     );
-    final myProfileButton = Padding(
-      key: const Key('myProfileButton'),
-      padding: const EdgeInsets.only(top: 16.0),
-      child: ElevatedButton(
-        onPressed: () async {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const MyProfile(),
-            ),
-          );
-        },
-        child: const Text('My Profile', style: TextStyle(color: Colors.white)),
-      ),
-    );
 
-    Widget showLoginForm(BuildContext context) {
+    Widget showSigninForm(BuildContext context) {
       return Form(
-          key: _formLoginKey,
+          key: _formSigninKey,
           child: Column(children: [
             email,
             password,
-            loginButton,
-            signUpButton,
-            myProfileButton
+            signinButton,
+            const SizedBox(height: 50),
+            const Text("Don't have an account?"),
+            Row(children: [signUpButton, identity])
           ]));
     }
 
@@ -138,10 +159,10 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.edit_square, color: Colors.green),
+          Icon(Icons.local_hospital_rounded, color: Colors.green),
           SizedBox(width: 14),
           Text(
-            "To Do List",
+            "HealthMon",
             style: TextStyle(fontWeight: FontWeight.bold),
           )
         ]),
@@ -153,11 +174,11 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.only(left: 40.0, right: 40.0),
           children: <Widget>[
             const Text(
-              "Log In",
+              "Sign In",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            showLoginForm(context)
+            showSigninForm(context)
           ],
         ),
       ),

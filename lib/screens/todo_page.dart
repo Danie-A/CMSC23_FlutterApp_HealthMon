@@ -6,8 +6,9 @@ import '../providers/todo_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/modal_todo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../screens/login.dart';
+import '../screens/signin.dart';
 import 'user_details.dart';
+import 'ViewStudents.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -35,7 +36,7 @@ class _TodoPageState extends State<TodoPage> {
               child: CircularProgressIndicator(),
             );
           } else if (!snapshot.hasData) {
-            return const LoginPage();
+            return const SigninPage();
           }
           // if user is logged in, display the scaffold containing the streambuilder for the todos
           return displayScaffold(context, todosStream);
@@ -61,6 +62,13 @@ class _TodoPageState extends State<TodoPage> {
           onTap: () {
             context.read<AuthProvider>().signOut();
             Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: const Text('View Students'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ViewStudents()));
           },
         ),
       ])),

@@ -4,10 +4,11 @@ import '../providers/todo_provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/todo_page.dart';
 import '../screens/user_details.dart';
-import '../screens/login.dart';
+import '../screens/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import '../providers/userdetail_provider.dart';
+import '../screens/UserAddEntry.dart';
 import '../screens/qrcode.dart';
 import '../screens/myprofile.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Health Monitor',
+      title: 'HealthMon App',
       initialRoute: '/',
       theme: ThemeData(
           useMaterial3: true,
@@ -42,9 +43,10 @@ class MyApp extends StatelessWidget {
           colorSchemeSeed: Colors.green),
       routes: {
         '/': (context) => const TodoPage(),
-        '/login': (context) => const LoginPage(),
-        '/todo': (context) => const LoginPage(),
-        '/user_details': (context) => const UserDetailsPage(),
+        '/login': (context) => const SigninPage(),
+        '/todo': (context) => const SigninPage(),
+        '/user-details': (context) => const UserDetailsPage(),
+        '/user-add-entry': (context) => UserAddEntry(),
         '/user-profile': (context) => const MyProfile(),
         '/qr-code': (context) => const QrCodePage(),
       },
