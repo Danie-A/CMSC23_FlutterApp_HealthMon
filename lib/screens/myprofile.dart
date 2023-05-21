@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'healthEntries.dart';
+import 'HealthEntry.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -156,7 +156,7 @@ class _MyProfileState extends State<MyProfile> {
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.only(top: 50),
                 child: const Text(
-                  "Generate building pass",
+                  "Generate Building Pass",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,

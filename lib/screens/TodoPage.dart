@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/todo_model.dart';
-import '../providers/todo_provider.dart';
-import '../providers/auth_provider.dart';
-import '../screens/modal_todo.dart';
+import '../models/Todo.dart';
+import '../providers/TodoListProvider.dart';
+import '../providers/AuthProvider.dart';
+import 'TodoModal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../screens/signin.dart';
-import 'user_details.dart';
-import 'ViewStudents.dart';
+import 'SigninPage.dart';
+import 'UserDetailsPage.dart';
+import 'AdminViewStudents.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -67,8 +67,10 @@ class _TodoPageState extends State<TodoPage> {
         ListTile(
           title: const Text('View Students'),
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ViewStudents()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AdminViewStudents()));
           },
         ),
       ])),

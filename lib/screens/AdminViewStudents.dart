@@ -1,21 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/todo_model.dart';
-import '../providers/todo_provider.dart';
-import '../providers/auth_provider.dart';
+import '../models/Todo.dart';
+import '../providers/TodoListProvider.dart';
+import '../providers/AuthProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../screens/signin.dart';
-import 'user_details.dart';
+import 'SigninPage.dart';
+import 'UserDetailsPage.dart';
 
-class ViewStudents extends StatefulWidget {
-  const ViewStudents({super.key});
+class AdminViewStudents extends StatefulWidget {
+  const AdminViewStudents({super.key});
 
   @override
-  State<ViewStudents> createState() => _ViewStudentsState();
+  State<AdminViewStudents> createState() => _ViewStudentsState();
 }
 
-class _ViewStudentsState extends State<ViewStudents> {
+class _ViewStudentsState extends State<AdminViewStudents> {
   List<String> students = ["Danie", "Sean", "Marcie", "Laydon"];
 
   Future<void> _showStudent(BuildContext context, String name) {
@@ -35,7 +35,7 @@ class _ViewStudentsState extends State<ViewStudents> {
                 onPressed: () => {}, child: const Text("Make Admin")),
             const SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () =>     {},
+                onPressed: () => {},
                 child: const Text("Make Entrance Monitor")),
             const SizedBox(height: 10),
             TextButton(

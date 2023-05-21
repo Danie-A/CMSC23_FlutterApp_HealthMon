@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/todo_provider.dart';
-import '../providers/auth_provider.dart';
-import '../screens/todo_page.dart';
-import '../screens/user_details.dart';
-import '../screens/signin.dart';
+import 'providers/TodoListProvider.dart';
+import 'providers/AuthProvider.dart';
+import 'screens/TodoPage.dart';
+import 'screens/UserDetailsPage.dart';
+import 'screens/SigninPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import '../providers/userdetail_provider.dart';
+import 'providers/UserDetailListProvider.dart';
 import '../screens/UserAddEntry.dart';
-import '../screens/qrcode.dart';
-import '../screens/myprofile.dart';
-import '../screens/ViewStudents.dart';
+import '../screens/QrCodePage.dart';
+import 'screens/MyProfile.dart';
+import 'screens/AdminViewStudents.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/user-add-entry': (context) => UserAddEntry(),
         '/user-profile': (context) => const MyProfile(),
         '/qr-code': (context) => const QrCodePage(),
-        '/admin-view-students': (context) => ViewStudents()
+        '/admin-view-students': (context) => AdminViewStudents()
       },
     );
   }
