@@ -2,6 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'HealthEntry.dart';
+import 'SigninPage.dart';
+import 'UserDetailsPage.dart';
+import 'AdminViewStudents.dart';
+import '../providers/AuthProvider.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -38,15 +44,63 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
+    Stream<User?> userStream = context.watch<AuthProvider>().uStream;
+
+    return StreamBuilder(
+        stream: userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Error encountered! ${snapshot.error}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (!snapshot.hasData) {
+            return const SigninPage();
+          }
+          // if user is logged in, display the scaffold containing the streambuilder for the todos
+          return displayScaffold(context);
+        });
+  }
+
+  Scaffold displayScaffold(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
         appBar: AppBar(
           title: const Text("My Profile"),
         ),
-        drawer: const Drawer(),
-        backgroundColor: Colors.grey.shade600,
+        drawer: Drawer(
+            child: ListView(padding: EdgeInsets.zero, children: [
+          ListTile(
+            title: const Text('Add Entry'),
+            onTap: () {
+              Navigator.pushNamed(context, '/user-add-entry');
+            },
+          ),
+          ListTile(
+            title: const Text('Show QR'),
+            onTap: () {
+              Navigator.pushNamed(context, '/show-qr');
+            },
+          ),
+          ListTile(
+            title: const Text('View Students'),
+            onTap: () {
+              Navigator.pushNamed(context, '/admin-view-students');
+            },
+          ),
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () {
+              context.read<AuthProvider>().signOut();
+              Navigator.pop(context);
+            },
+          ),
+        ])),
+        backgroundColor: Colors.black,
         floatingActionButton: FloatingActionButton(
             onPressed: () {/* add entry route */},
             child: const Icon(
@@ -110,7 +164,7 @@ class _MyProfileState extends State<MyProfile> {
                 child: const Text(
                   "Welcome,",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.green,
                     fontSize: 40,
                   ),
                 ),
@@ -121,7 +175,7 @@ class _MyProfileState extends State<MyProfile> {
                 child: const Text(
                   "Username !",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.green,
                     fontSize: 40,
                   ),
                 ),
@@ -135,7 +189,7 @@ class _MyProfileState extends State<MyProfile> {
                     child: const Text(
                       "Status: ",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 74, 210, 251),
+                        color: Colors.green,
                         fontSize: 20,
                       ),
                     ),
@@ -145,7 +199,7 @@ class _MyProfileState extends State<MyProfile> {
                     child: const Text(
                       "Cleared",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 4, 255, 75),
+                        color: Colors.green,
                         fontSize: 20,
                       ),
                     ),
@@ -167,7 +221,7 @@ class _MyProfileState extends State<MyProfile> {
                   onPressed: (unableToGenerateQRCode)
                       ? null
                       : () {
-                          Navigator.pushNamed(context, '/qr-code');
+                          Navigator.pushNamed(context, '/show-qr');
                         },
                   style: ElevatedButton.styleFrom(
                       fixedSize: Size(100, 20), shape: StadiumBorder()),
@@ -183,7 +237,7 @@ class _MyProfileState extends State<MyProfile> {
                 child: const Text(
                   "Health Entries List",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.green,
                     fontSize: 20,
                   ),
                 ),

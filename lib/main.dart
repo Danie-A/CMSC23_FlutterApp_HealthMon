@@ -43,13 +43,12 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           colorSchemeSeed: Colors.green),
       routes: {
-        '/': (context) => const TodoPage(),
+        '/': (context) => const MyProfile(),
         '/login': (context) => const SigninPage(),
-        '/todo': (context) => const SigninPage(),
+        '/user-profile': (context) => const SigninPage(),
         '/user-details': (context) => const UserDetailsPage(),
         '/user-add-entry': (context) => UserAddEntry(),
-        '/user-profile': (context) => const MyProfile(),
-        '/qr-code': (context) => const QrCodePage(),
+        '/show-qr': (context) => const QrCodePage(),
         '/admin-view-students': (context) => AdminViewStudents()
       },
     );

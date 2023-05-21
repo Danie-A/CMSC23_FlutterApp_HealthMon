@@ -86,7 +86,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
         ListTile(
-          title: const Text('To Do List'),
+          title: const Text('My Profile'),
           onTap: () {
             Navigator.pop(context);
             Navigator.pop(context);
