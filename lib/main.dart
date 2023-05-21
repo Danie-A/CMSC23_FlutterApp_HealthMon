@@ -11,6 +11,7 @@ import '../providers/userdetail_provider.dart';
 import '../screens/UserAddEntry.dart';
 import '../screens/qrcode.dart';
 import '../screens/myprofile.dart';
+import '../screens/ViewStudents.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/user-add-entry': (context) => UserAddEntry(),
         '/user-profile': (context) => const MyProfile(),
         '/qr-code': (context) => const QrCodePage(),
+        '/admin-view-students': (context) => ViewStudents()
       },
     );
   }
