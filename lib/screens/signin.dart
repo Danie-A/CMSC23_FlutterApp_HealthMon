@@ -152,9 +152,15 @@ class _SigninPageState extends State<SigninPage> {
             signinButton,
             const SizedBox(height: 50),
             const Text("Don't have an account?"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [signUpButton, identity]
+            Wrap(
+              spacing: 20,
+              children: [
+                signUpButton,
+                Container(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: identity
+                )
+              ]
             )
           ]));
     }
