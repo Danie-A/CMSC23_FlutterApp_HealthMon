@@ -80,6 +80,7 @@ class _SigninPageState extends State<SigninPage> {
     final identity = DropdownButton<String>(
       value: identityValue,
       icon: const Icon(Icons.arrow_drop_down),
+      dropdownColor: Colors.green,
       underline: SizedBox.shrink(),
       onChanged: (String? newValue) {
         // This is called when the user selects an item.
@@ -151,7 +152,10 @@ class _SigninPageState extends State<SigninPage> {
             signinButton,
             const SizedBox(height: 50),
             const Text("Don't have an account?"),
-            Row(children: [signUpButton, identity])
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [signUpButton, identity]
+            )
           ]));
     }
 

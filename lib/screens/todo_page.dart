@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../screens/signin.dart';
 import 'user_details.dart';
 import 'ViewStudents.dart';
+import 'ViewRequests.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -71,6 +72,17 @@ class _TodoPageState extends State<TodoPage> {
                 MaterialPageRoute(builder: (context) => const ViewStudents()));
           },
         ),
+
+
+        ListTile(
+          title: const Text('View Requests'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ViewRequests()));
+          },
+        ),
+
+
       ])),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 10, 41, 24),
