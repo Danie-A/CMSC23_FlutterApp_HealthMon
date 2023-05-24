@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.health_monitoring_app">
-
     <uses-permission android:name="android.permission.CAMERA"/>
    <application
         android:label="health_monitoring_app"
