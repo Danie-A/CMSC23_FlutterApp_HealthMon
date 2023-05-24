@@ -8,6 +8,7 @@ import 'screens/SigninPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'providers/UserDetailListProvider.dart';
+import '../providers/EntryListProvider.dart';
 import '../screens/UserAddEntry.dart';
 import '../screens/QrCodePage.dart';
 import 'screens/MyProfile.dart';
@@ -25,6 +26,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: ((context) => TodoListProvider())),
         ChangeNotifierProvider(create: ((context) => UserDetailListProvider())),
+        ChangeNotifierProvider(create: ((context) => EntryListProvider())),
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
       ],
       child: MyApp(),
