@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/screens/UserAddEntry.dart';
 import 'HealthEntry.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
@@ -109,8 +110,11 @@ class _MyProfileState extends State<MyProfile> {
           ),
         ])),
         floatingActionButton: FloatingActionButton(
+            //Add Entry Button
             backgroundColor: Colors.teal[200],
-            onPressed: () {/* add entry route */},
+            onPressed: () {
+              Navigator.pushNamed(context, '/user-add-entry');
+            },
             child: const Icon(Icons.medical_information_outlined,
                 color: Color(0xFF004D40))),
         body: SingleChildScrollView(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';
 import '../models/Entry.dart';
 import '../providers/EntryListProvider.dart';
+import '../screens/myprofile.dart';
+import 'package:intl/intl.dart';
 
 class UserAddEntry extends StatefulWidget {
   @override
@@ -28,6 +31,9 @@ class _UserAddEntryState extends State<UserAddEntry> {
 
   @override
   Widget build(BuildContext context) {
+    final now = new DateTime.now();
+    String entryDate = DateFormat('yMd').format(now);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('User Entry'),
@@ -182,7 +188,8 @@ class _UserAddEntryState extends State<UserAddEntry> {
                         status: status,
                         user_key: user_key,
                         edit_request: edit_request,
-                        delete_request: delete_request);
+                        delete_request: delete_request,
+                        entry_date: entryDate);
 
                     if (newEntry.fever == true ||
                         newEntry.feverish == true ||
