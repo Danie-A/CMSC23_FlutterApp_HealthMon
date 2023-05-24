@@ -233,7 +233,6 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
           )
         ]),
       ),
-      backgroundColor: Colors.black,
       body: Center(
         child: ListView(
           shrinkWrap: true,

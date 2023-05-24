@@ -69,8 +69,10 @@ class _MyProfileState extends State<MyProfile> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+        backgroundColor: Colors.teal[50],
         appBar: AppBar(
           title: const Text("My Profile"),
+          backgroundColor: Colors.teal[200],
         ),
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
@@ -106,19 +108,24 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
         ])),
-        backgroundColor: Colors.black,
         floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.teal[200],
             onPressed: () {/* add entry route */},
-            child: const Icon(
-              Icons.medical_information_outlined,
-            )),
+            child: const Icon(Icons.medical_information_outlined,
+                color: Color(0xFF004D40))),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // ADMIN OR HEALTH MONITOR CONTROLLER PART
-              Text("Authorized Personnel Console"),
+              Padding(
+                  padding: EdgeInsets.only(top: 40, bottom: 20),
+                  child: Text("Authorized Personnel Console",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal[900]))),
               (accountType == 'admin' || accountType == 'entrance monitor')
                   ? Container(
                       height: screenWidth * .7,
@@ -136,28 +143,36 @@ class _MyProfileState extends State<MyProfile> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5)))),
-                              child: Text("View All Students")),
+                              child: Center(
+                                  child: Text("View All Students",
+                                      textAlign: TextAlign.center))),
                           ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5)))),
-                              child: Text("View Quarantined Students")),
+                              child: Center(
+                                  child: Text("View Quarantined Students",
+                                      textAlign: TextAlign.center))),
                           ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5)))),
-                              child: Text("Under Monitoring Students")),
+                              child: Center(
+                                  child: Text("Under Monitoring Students",
+                                      textAlign: TextAlign.center))),
                           ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(5)))),
-                              child: Text("Student Requests")),
+                              child: Center(
+                                  child: Text("Student Requests",
+                                      textAlign: TextAlign.center))),
                         ],
                       ),
                     )
@@ -165,89 +180,121 @@ class _MyProfileState extends State<MyProfile> {
 
               //WELCOME
               Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.fromLTRB(0, 40, 40, 0),
-                child: const Text(
-                  "Welcome,",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 40,
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(left: 60),
-                child: const Text(
-                  "Username !",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 40,
-                  ),
-                ),
-              ),
+                  margin: const EdgeInsets.only(top: 40, bottom: 20),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.waving_hand_outlined, color: Colors.teal),
+                        Text(
+                          "Welcome,   ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF004D40),
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          "{username}!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF004D40),
+                            fontSize: 20,
+                          ),
+                        )
+                      ])),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      "Status: ",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 20,
-                      ),
+                  const Text(
+                    "Status: ",
+                    style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: 18,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      disabledBackgroundColor:
+                          Colors.teal[100], // Background color
+                    ),
+                    onPressed: null,
                     child: const Text(
                       "Cleared",
                       style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 20,
-                      ),
+                          color: Colors.teal,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
+                  SizedBox(height: 80),
                 ],
               ),
+              const Divider(
+                thickness: 1,
+                color: Colors.white,
+              ),
               Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(top: 50),
-                child: const Text(
-                  "Generate Building Pass",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
+                  color: Colors.white,
+                  padding: EdgeInsets.all(30),
+                  width: screenWidth,
+                  child: Column(children: [
+                    Container(
+                      child: const Text(
+                        "Generate Building Pass",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                        onPressed: (unableToGenerateQRCode)
+                            ? null
+                            : () {
+                                Navigator.pushNamed(context, '/show-qr');
+                              },
+                        style: ElevatedButton.styleFrom(
+                            // Background color
+                            fixedSize: Size(150, 20),
+                            shape: StadiumBorder()),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.qr_code_outlined,
+                            ),
+                            const Text(
+                              "Show QR",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        )),
+                  ])),
+              const Divider(
+                thickness: 1,
+                color: Colors.white,
               ),
-              ElevatedButton(
-                  onPressed: (unableToGenerateQRCode)
-                      ? null
-                      : () {
-                          Navigator.pushNamed(context, '/show-qr');
-                        },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(100, 20), shape: StadiumBorder()),
-                  child: const Text("Show QR")),
-              const SizedBox(
-                height: 30,
-                width: 10,
-              ),
-              const Divider(thickness: 3),
               Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(bottom: 10),
-                child: const Text(
-                  "Health Entries List",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(bottom: 20, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.monitor_heart_outlined,
+                        color: Color(0xFF004D40),
+                      ),
+                      SizedBox(width: 10),
+                      const Text(
+                        "Health Entries List",
+                        style: TextStyle(
+                            color: Colors.teal,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )),
               SizedBox(
                   height: 800,
                   width: screenWidth * .8,

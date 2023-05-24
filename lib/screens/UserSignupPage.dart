@@ -254,7 +254,6 @@ class _UserSignupPageState extends State<UserSignupPage> {
           )
         ]),
       ),
-      backgroundColor: Colors.black,
       body: Center(
         child: ListView(
           shrinkWrap: true,

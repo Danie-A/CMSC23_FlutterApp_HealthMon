@@ -41,8 +41,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       theme: ThemeData(
           useMaterial3: true,
-          brightness: Brightness.dark,
-          colorSchemeSeed: Colors.green),
+          textTheme: Theme.of(context).textTheme.apply(
+                bodyColor: Color(0xFF004D40), //<-- SEE HERE
+                displayColor: Color(0xFF004D40),
+              ), //<-- SEE HERE
+          brightness: Brightness.light,
+          colorSchemeSeed: Colors.teal),
       routes: {
         '/': (context) => const MyProfile(),
         '/login': (context) => const SigninPage(),

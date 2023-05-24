@@ -18,8 +18,7 @@ class _ViewRequestsState extends State<ViewRequests> {
     "President Obama"
   ];
 
-  List<bool> isDeleteRequest= [true, false, true, true, false, false, true];
-  
+  List<bool> isDeleteRequest = [true, false, true, true, false, false, true];
 
   Future<void> _confirmDelete(BuildContext context, String name) {
     return showDialog<void>(
@@ -27,11 +26,9 @@ class _ViewRequestsState extends State<ViewRequests> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Allow ${name} to delete his/her entry?'),
-          content: Text(
-            'By confirming his/her request,\n'
-            'you are allowing ${name} to delete his/her entry. \n\n'
-            'Please be noted that your choice is irrevokable.\n'
-          ),
+          content: Text('By confirming his/her request,\n'
+              'you are allowing ${name} to delete his/her entry. \n\n'
+              'Please be noted that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () => {}, child: Text("Allow delete entry")),
@@ -57,11 +54,9 @@ class _ViewRequestsState extends State<ViewRequests> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Allow ${name} to edit his/her entry?'),
-          content: Text(
-            'By confirming his/her request,\n'
-            'you are allowing ${name} to edit his/her entry. \n\n'
-            'Please be noted that your choice is irrevokable.\n'
-          ),
+          content: Text('By confirming his/her request,\n'
+              'you are allowing ${name} to edit his/her entry. \n\n'
+              'Please be noted that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () => {}, child: Text("Allow edit entry")),
@@ -88,8 +83,7 @@ class _ViewRequestsState extends State<ViewRequests> {
         return AlertDialog(
           title: Text("Reject ${name}'s request?"),
           actions: <Widget>[
-            ElevatedButton(
-                onPressed: () => {}, child: Text("Reject request")),
+            ElevatedButton(onPressed: () => {}, child: Text("Reject request")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -115,28 +109,26 @@ class _ViewRequestsState extends State<ViewRequests> {
       itemCount: requests.length,
       itemBuilder: (context, index) {
         return isDeleteRequest[index]
-          ? InkWell(
-            hoverColor: Color.fromARGB(255, 10, 41, 24),
-            // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-            splashColor: Colors
-                .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-            child: ListTile(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 2, color: Colors.red),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                leading: Icon(Icons.delete, color: Colors.red),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("${requests[index]}"),
-                    Text("Delete Request", style: TextStyle(fontSize: 12, color: Colors.grey))
-                  ]
-                ), // name
-                // subtitle: Text("${friend.nickname}"), // filter subtitle
-                trailing: Wrap(
-                  spacing: 5,
-                  children: <Widget>[
+            ? InkWell(
+                hoverColor: Color.fromARGB(255, 10, 41, 24),
+                // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                splashColor: Colors
+                    .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: Colors.red),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  leading: Icon(Icons.delete, color: Colors.red),
+                  title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${requests[index]}"),
+                        Text("Delete Request",
+                            style: TextStyle(fontSize: 12, color: Colors.grey))
+                      ]), // name
+                  // subtitle: Text("${friend.nickname}"), // filter subtitle
+                  trailing: Wrap(spacing: 5, children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.check_circle),
                       color: Colors.green,
@@ -151,31 +143,28 @@ class _ViewRequestsState extends State<ViewRequests> {
                         _confirmReject(context, requests[index]);
                       },
                     ),
-                ]),
-            ))
-
-          : InkWell(
-            hoverColor: Color.fromARGB(255, 10, 41, 24),
-            // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-            splashColor: Colors
-                .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-            child: ListTile(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 2, color: Colors.blue),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                leading: Icon(Icons.edit_note, color: Colors.blue),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("${requests[index]}"),
-                    Text("Edit Request", style: TextStyle(fontSize: 12, color: Colors.grey))
-                  ]
-                ), // name
-                // subtitle: Text("${friend.nickname}"), // filter subtitle
-                trailing: Wrap(
-                  spacing: 5,
-                  children: <Widget>[
+                  ]),
+                ))
+            : InkWell(
+                hoverColor: Color.fromARGB(255, 10, 41, 24),
+                // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                splashColor: Colors
+                    .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: Colors.blue),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  leading: Icon(Icons.edit_note, color: Colors.blue),
+                  title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${requests[index]}"),
+                        Text("Edit Request",
+                            style: TextStyle(fontSize: 12, color: Colors.grey))
+                      ]), // name
+                  // subtitle: Text("${friend.nickname}"), // filter subtitle
+                  trailing: Wrap(spacing: 5, children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.check_circle),
                       color: Colors.green,
@@ -190,8 +179,8 @@ class _ViewRequestsState extends State<ViewRequests> {
                         _confirmReject(context, requests[index]);
                       },
                     ),
-                ]),
-            ));
+                  ]),
+                ));
       },
     );
   }

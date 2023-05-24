@@ -78,9 +78,10 @@ class _SigninPageState extends State<SigninPage> {
     );
 
     final identity = DropdownButton<String>(
+      borderRadius: BorderRadius.circular(20),
       value: identityValue,
       icon: const Icon(Icons.arrow_drop_down),
-      dropdownColor: Colors.green,
+      dropdownColor: Colors.teal[100],
       underline: SizedBox.shrink(),
       onChanged: (String? newValue) {
         // This is called when the user selects an item.
@@ -91,12 +92,14 @@ class _SigninPageState extends State<SigninPage> {
       },
       items: identities.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
-          value: value,
-          child: Text(
-            'As $value',
-            style: const TextStyle(fontSize: 14),
-          ),
-        );
+            value: value,
+            child: Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                'As $value',
+                style: const TextStyle(fontSize: 14),
+              ),
+            ));
       }).toList(),
     );
 
@@ -115,7 +118,7 @@ class _SigninPageState extends State<SigninPage> {
             }
           }
         },
-        child: const Text('Sign In', style: TextStyle(color: Colors.white)),
+        child: const Text('Sign In'),
       ),
     );
 
@@ -139,7 +142,7 @@ class _SigninPageState extends State<SigninPage> {
             );
           }
         },
-        child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
+        child: const Text('Sign Up'),
       ),
     );
 
@@ -152,32 +155,27 @@ class _SigninPageState extends State<SigninPage> {
             signinButton,
             const SizedBox(height: 50),
             const Text("Don't have an account?"),
-            Wrap(
-              spacing: 20,
-              children: [
-                signUpButton,
-                Container(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: identity
-                )
-              ]
-            )
+            Wrap(spacing: 20, children: [
+              signUpButton,
+              Container(
+                  padding: const EdgeInsets.only(top: 8.0), child: identity)
+            ])
           ]));
     }
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.local_hospital_rounded, color: Colors.green),
+          Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text(
-            "HealthMon",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
+          Text("HealthMon",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF004D40),
+              ))
         ]),
+        backgroundColor: Colors.teal[100],
       ),
-      backgroundColor: Colors.black,
       body: Center(
         child: ListView(
           shrinkWrap: true,
