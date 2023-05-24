@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         '/show-qr': (context) => const QrCodePage(),
         '/admin-view-requests': (context) => ViewRequests(),
         '/admin-view-students': (context) => AdminViewStudents(),
-        '/admin-view-under-monitoring': (context) => AdminUnderMonitoring(),
+        '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
       },
     );
   }
