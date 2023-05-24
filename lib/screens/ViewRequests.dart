@@ -113,13 +113,15 @@ class _ViewRequestsState extends State<ViewRequests> {
                 hoverColor: Color.fromARGB(255, 10, 41, 24),
                 // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                 splashColor: Colors
-                    .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                    .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
                 child: ListTile(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2, color: Colors.red),
+                    side: BorderSide(
+                        width: 2, color: Color.fromARGB(255, 165, 85, 80)),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  leading: Icon(Icons.delete, color: Colors.red),
+                  leading: Icon(Icons.delete,
+                      color: Color.fromARGB(255, 165, 85, 80)),
                   title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -131,14 +133,14 @@ class _ViewRequestsState extends State<ViewRequests> {
                   trailing: Wrap(spacing: 5, children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.check_circle),
-                      color: Colors.green,
+                      color: Colors.teal,
                       onPressed: () {
                         _confirmDelete(context, requests[index]);
                       },
                     ),
                     IconButton(
                       icon: const Icon(Icons.cancel),
-                      color: Colors.red,
+                      color: Color.fromARGB(255, 165, 85, 80),
                       onPressed: () {
                         _confirmReject(context, requests[index]);
                       },
@@ -149,13 +151,13 @@ class _ViewRequestsState extends State<ViewRequests> {
                 hoverColor: Color.fromARGB(255, 10, 41, 24),
                 // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                 splashColor: Colors
-                    .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                    .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
                 child: ListTile(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2, color: Colors.blue),
+                    side: BorderSide(width: 2, color: Colors.teal),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  leading: Icon(Icons.edit_note, color: Colors.blue),
+                  leading: Icon(Icons.edit_note, color: Colors.teal),
                   title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -167,14 +169,14 @@ class _ViewRequestsState extends State<ViewRequests> {
                   trailing: Wrap(spacing: 5, children: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.check_circle),
-                      color: Colors.green,
+                      color: Colors.teal,
                       onPressed: () {
                         _confirmEdit(context, requests[index]);
                       },
                     ),
                     IconButton(
                       icon: const Icon(Icons.cancel),
-                      color: Colors.red,
+                      color: Color.fromARGB(255, 165, 85, 80),
                       onPressed: () {
                         _confirmReject(context, requests[index]);
                       },
@@ -216,15 +218,16 @@ class _ViewRequestsState extends State<ViewRequests> {
         ),
       ])),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.pending_actions, color: Colors.green),
+          Icon(Icons.pending_actions, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text(
-            "View Pending Requests",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
+          Text("View Requests",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF004D40),
+              ))
         ]),
+        backgroundColor: Colors.teal[100],
       ),
       body: Container(
           padding: const EdgeInsets.only(top: 16), child: viewAllRequests()),
