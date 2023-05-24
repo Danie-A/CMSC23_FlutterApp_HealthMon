@@ -93,6 +93,12 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
           ListTile(
+            title: const Text('View Requests'),
+            onTap: () {
+              Navigator.pushNamed(context, '/view-requests');
+            },
+          ),
+          ListTile(
             title: const Text('Logout'),
             onTap: () {
               context.read<AuthProvider>().signOut();
