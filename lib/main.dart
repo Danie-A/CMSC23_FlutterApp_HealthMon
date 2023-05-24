@@ -14,6 +14,7 @@ import '../screens/QrCodePage.dart';
 import 'screens/MyProfile.dart';
 import 'screens/AdminViewStudents.dart';
 import 'screens/ViewRequests.dart';
+import 'screens/AdminViewQuarantined.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         '/show-qr': (context) => const QrCodePage(),
         '/view-students': (context) => AdminViewStudents(),
         '/view-requests': (context) => ViewRequests(),
+        '/view-quarantined': (context) => AdminViewQuarantined()
       },
     );
   }
