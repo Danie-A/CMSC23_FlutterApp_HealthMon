@@ -9,67 +9,60 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
-  String data = "";
+  Map data = {
+    "firstName": "Marcel Luiz",
+    "lastName": "Luneza",
+    "id": "2U2n8QuGQpFz7pE2NzWp",
+    "date": "December 01, 2002",
+    "studentNo": "2021-00000"
+  };
+
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("QR Code Sample"),
+        title: const Text("QR Code"),
       ),
       backgroundColor: Colors.grey.shade600,
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: screenHeight * .1),
             Center(
               child: QrImage(
-                data: data,
+                data: data['id'],
                 backgroundColor: Colors.white,
-                size: 300.0,
+                size: screenWidth * .65,
               ),
-            ),
-            SizedBox(
-              height: 24,
             ),
             Container(
-              width: 300.0,
-              child: TextField(
-                //we will generate a new qr code when the input value change
-                onChanged: (value) {
-                  setState(() {
-                    data = value;
-                  });
+              margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.all(5.0),
+              child: Center(
+                  child: Text("${data["firstName"]} ${data["lastName"]}")),
+            ),
+            Container(
+              padding: const EdgeInsets.all(5.0),
+              child: Center(child: Text("${data["studentNo"]}")),
+            ),
+            Container(
+              padding: const EdgeInsets.all(5.0),
+              child: Center(child: Text("${data["date"]}")),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(child: Text("INSERT MORE EME")),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
                 },
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                decoration: InputDecoration(
-                  hintText: "Type the Data",
-                  filled: true,
-                  fillColor: Colors.black54,
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 24.0,
-            ),
-            RawMaterialButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              fillColor: Colors.amber.shade100,
-              shape: StadiumBorder(),
-              padding: EdgeInsets.symmetric(
-                horizontal: 36.0,
-                vertical: 16.0,
-              ),
-              child: Text(
-                "Back",
-              ),
-            )
+                child: Text("Back")),
           ],
         ),
       ),
