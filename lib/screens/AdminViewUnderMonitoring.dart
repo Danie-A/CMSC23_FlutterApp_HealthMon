@@ -8,14 +8,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
 
-class AdminViewStudents extends StatefulWidget {
-  const AdminViewStudents({super.key});
+class AdminViewUnderMonitoring extends StatefulWidget {
+  const AdminViewUnderMonitoring({super.key});
 
   @override
-  State<AdminViewStudents> createState() => _ViewStudentsState();
+  State<AdminViewUnderMonitoring> createState() => _ViewStudentsState();
 }
 
-class _ViewStudentsState extends State<AdminViewStudents> {
+class _ViewStudentsState extends State<AdminViewUnderMonitoring> {
   List<String> students = ["Danie", "Sean", "Marcie", "Laydon"];
 
   Future<void> _showStudent(BuildContext context, String name) {
@@ -111,16 +111,15 @@ class _ViewStudentsState extends State<AdminViewStudents> {
         ),
       ])),
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
+          Icon(Icons.contact_mail_outlined, color: Colors.green),
           SizedBox(width: 14),
-          Text("View Students",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF004D40),
-              ))
+          Text(
+            "View Students",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )
         ]),
-        backgroundColor: Colors.teal[100],
       ),
       body: Container(
           padding: const EdgeInsets.only(top: 16), child: viewAllStudents()),

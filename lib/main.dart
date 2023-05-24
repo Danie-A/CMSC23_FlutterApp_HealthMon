@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/TodoListProvider.dart';
 import 'providers/AuthProvider.dart';
-import 'screens/TodoPage.dart';
 import 'screens/UserDetailsPage.dart';
 import 'screens/SigninPage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,8 +11,9 @@ import '../providers/EntryListProvider.dart';
 import '../screens/UserAddEntry.dart';
 import '../screens/QrCodePage.dart';
 import 'screens/MyProfile.dart';
-import 'screens/AdminViewStudents.dart';
 import 'screens/ViewRequests.dart';
+import 'screens/AdminViewStudents.dart';
+import 'screens/AdminViewUnderMonitoring.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,8 +56,9 @@ class MyApp extends StatelessWidget {
         '/user-details': (context) => const UserDetailsPage(),
         '/user-add-entry': (context) => UserAddEntry(),
         '/show-qr': (context) => const QrCodePage(),
-        '/view-students': (context) => AdminViewStudents(),
-        '/view-requests': (context) => ViewRequests(),
+        '/admin-view-requests': (context) => ViewRequests(),
+        '/admin-view-students': (context) => AdminViewStudents(),
+        '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
       },
     );
   }
