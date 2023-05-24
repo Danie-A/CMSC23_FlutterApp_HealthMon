@@ -117,6 +117,12 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
           ListTile(
+            title: const Text('Search Logs'),
+            onTap: () {
+              Navigator.pushNamed(context, '/search-logs');
+            },
+          ),
+          ListTile(
             title: const Text('Logout'),
             onTap: () {
               context.read<AuthProvider>().signOut();

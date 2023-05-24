@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/screens/EntMonSearchLogs.dart';
 import 'package:provider/provider.dart';
 import 'providers/TodoListProvider.dart';
 import 'providers/AuthProvider.dart';
@@ -16,6 +17,7 @@ import 'screens/AdminViewStudents.dart';
 import 'screens/ViewRequests.dart';
 import 'screens/AdminViewQuarantined.dart';
 import 'screens/AdminViewUnderMonitoring.dart';
+import 'screens/EntMonSearchLogs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +63,8 @@ class MyApp extends StatelessWidget {
         '/admin-view-requests': (context) => ViewRequests(),
         '/admin-view-students': (context) => AdminViewStudents(),
         '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
-        '/view-quarantined': (context) => AdminViewQuarantined()
+        '/view-quarantined': (context) => AdminViewQuarantined(),
+        '/search-logs': (context) => const EntMonSearchLogs()
       },
     );
   }

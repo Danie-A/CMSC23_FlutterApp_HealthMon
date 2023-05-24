@@ -118,8 +118,8 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
           title: Row(children: const [
             Icon(Icons.medication_outlined,
                 color: Color.fromRGBO(0, 77, 64, 1)),
-            SizedBox(width: 14),
-            Text("View Under Monitoring Students",
+            SizedBox(width: 2),
+            Text("Under Monitoring Students",
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
                     color: Color.fromRGBO(0, 77, 64, 1)))
