@@ -8,14 +8,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
 
-class AdminViewStudents extends StatefulWidget {
-  const AdminViewStudents({super.key});
+class EntMonViewLogs extends StatefulWidget {
+  const EntMonViewLogs({super.key});
 
   @override
-  State<AdminViewStudents> createState() => _ViewStudentsState();
+  State<EntMonViewLogs> createState() => _ViewStudentsState();
 }
 
-class _ViewStudentsState extends State<AdminViewStudents> {
+// MAKE LISTTILES OF DETAILS W TRAILING ICON FOR EDIT
+class _ViewStudentsState extends State<EntMonViewLogs> {
   List<String> logIDs = [
     "asdsadad",
     "Seasadan",
@@ -89,12 +90,12 @@ class _ViewStudentsState extends State<AdminViewStudents> {
   ListView viewAllStudents() {
     return ListView.builder(
       // displays friend names through multiple instances of List Tile
-      itemCount: students.length,
+      itemCount: logIDs.length,
       itemBuilder: (context, index) {
         return InkWell(
           // InkWell widget adds some hover effect to the ListTile
           onTap: () {
-            _showStudent(context, students[index]);
+            _showStudent(context, logIDs[index]);
           },
           hoverColor: Colors.teal[200],
           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
@@ -102,12 +103,12 @@ class _ViewStudentsState extends State<AdminViewStudents> {
               100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
           child: ListTile(
               leading: Icon(Icons.person, color: Colors.teal),
-              title: Text("${students[index]}"), // name
+              title: Text("${logIDs[index]}"), // name
               // subtitle: Text("${friend.nickname}"), // filter subtitle
               trailing: IconButton(
                 icon: const Icon(Icons.medication),
                 onPressed: () {
-                  _showAddToQuarantine(context, students[index]);
+                  _showAddToQuarantine(context, logIDs[index]);
                 },
               )),
         );

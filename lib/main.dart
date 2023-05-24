@@ -14,7 +14,10 @@ import '../screens/QrCodePage.dart';
 import 'screens/MyProfile.dart';
 import 'screens/ViewRequests.dart';
 import 'screens/AdminViewStudents.dart';
-import 'screens/AdminUnderMonitoring.dart';
+import 'screens/ViewRequests.dart';
+import 'screens/AdminViewQuarantined.dart';
+import 'screens/AdminViewUnderMonitoring.dart';
+import 'screens/EntMonViewLogs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
