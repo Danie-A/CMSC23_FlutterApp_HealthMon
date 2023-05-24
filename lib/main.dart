@@ -59,11 +59,12 @@ class MyApp extends StatelessWidget {
         '/user-details': (context) => const UserDetailsPage(),
         '/user-add-entry': (context) => UserAddEntry(),
         '/show-qr': (context) => const QrCodePage(),
+        '/scan-qr': (context) => QrScanPage(),
         '/admin-view-requests': (context) => ViewRequests(),
         '/admin-view-students': (context) => AdminViewStudents(),
         '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
         '/view-quarantined': (context) => AdminViewQuarantined(),
-        '/scan-qr': (context) => QrScanPage()
+        '/entmon-view-logs': (context) => EntMonViewLogs(),
       },
     );
   }

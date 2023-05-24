@@ -88,6 +88,12 @@ class _MyProfileState extends State<MyProfile> {
         ),
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.teal.shade50,
+            ),
+            child: Text('Sample Drawer Header'),
+          ),
           ListTile(
             title: const Text('Add Entry'),
             onTap: () {
@@ -119,6 +125,12 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
           ListTile(
+            title: const Text('View Logs'),
+            onTap: () {
+              Navigator.pushNamed(context, '/entmon-view-logs');
+            },
+          ),
+          ListTile(
             title: const Text('Logout'),
             onTap: () {
               context.read<AuthProvider>().signOut();
@@ -140,13 +152,6 @@ class _MyProfileState extends State<MyProfile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // ADMIN OR HEALTH MONITOR CONTROLLER PART
-              Padding(
-                  padding: EdgeInsets.only(top: 40, bottom: 20),
-                  child: Text("Authorized Personnel Console",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.teal[900]))),
               if (accountType == 'admin') AdminConsole(),
               if (accountType == 'entrance monitor') EntranceMonitorConsole(),
 
