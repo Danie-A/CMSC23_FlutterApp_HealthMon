@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/UserDetail.dart';
-import '../api/firebase_userdetail_api.dart';
+import '../api/FirebaseUserDetailAPI.dart';
 
 class UserDetailListProvider with ChangeNotifier {
   late FirebaseUserDetailAPI firebaseService;
