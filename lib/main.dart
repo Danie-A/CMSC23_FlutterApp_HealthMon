@@ -11,6 +11,7 @@ import 'providers/UserDetailListProvider.dart';
 import '../providers/EntryListProvider.dart';
 import '../screens/UserAddEntry.dart';
 import '../screens/QrCodePage.dart';
+import '../screens/QrScanPage.dart';
 import 'screens/MyProfile.dart';
 import 'screens/AdminViewStudents.dart';
 import 'screens/ViewRequests.dart';
@@ -59,7 +60,8 @@ class MyApp extends StatelessWidget {
         '/show-qr': (context) => const QrCodePage(),
         '/view-students': (context) => AdminViewStudents(),
         '/view-requests': (context) => ViewRequests(),
-        '/view-quarantined': (context) => AdminViewQuarantined()
+        '/view-quarantined': (context) => AdminViewQuarantined(),
+        '/scan-qr': (context) => QrScanPage()
       },
     );
   }

@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/screens/AdminConsole.dart';
+import 'package:health_monitoring_app/screens/EntranceMonitorConsole.dart';
 import 'package:health_monitoring_app/screens/UserAddEntry.dart';
 import 'HealthEntry.dart';
 import 'SigninPage.dart';
@@ -19,7 +21,7 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   String data = "";
-  String accountType = "admin";
+  String accountType = "entrance monitor";
   bool unableToGenerateQRCode = false;
 
   static List healthEntries = [
@@ -130,57 +132,8 @@ class _MyProfileState extends State<MyProfile> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.teal[900]))),
-              (accountType == 'admin' || accountType == 'entrance monitor')
-                  ? Container(
-                      height: screenWidth * .7,
-                      width: screenWidth * .7,
-                      margin: EdgeInsets.only(top: 10),
-                      child: GridView.count(
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        crossAxisCount: 2,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)))),
-                              child: Center(
-                                  child: Text("View All Students",
-                                      textAlign: TextAlign.center))),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)))),
-                              child: Center(
-                                  child: Text("View Quarantined Students",
-                                      textAlign: TextAlign.center))),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)))),
-                              child: Center(
-                                  child: Text("Under Monitoring Students",
-                                      textAlign: TextAlign.center))),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)))),
-                              child: Center(
-                                  child: Text("Student Requests",
-                                      textAlign: TextAlign.center))),
-                        ],
-                      ),
-                    )
-                  : Container(),
+              if (accountType == 'admin') AdminConsole(),
+              if (accountType == 'entrance monitor') EntranceMonitorConsole(),
 
               //WELCOME
               Container(
