@@ -125,6 +125,12 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
           ListTile(
+            title: const Text('Search Logs'),
+            onTap: () {
+              Navigator.pushNamed(context, '/search-logs');
+            },
+          ),
+          ListTile(
             title: const Text('View Logs'),
             onTap: () {
               Navigator.pushNamed(context, '/entmon-view-logs');
