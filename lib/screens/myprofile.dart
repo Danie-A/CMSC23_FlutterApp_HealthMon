@@ -73,7 +73,15 @@ class _MyProfileState extends State<MyProfile> {
     return Scaffold(
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
-          title: const Text("My Profile"),
+          title: Row(children: const [
+            Icon(Icons.medical_information_outlined, color: Color(0xFF004D40)),
+            SizedBox(width: 14),
+            Text("My Profile",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF004D40),
+                ))
+          ]),
           backgroundColor: Colors.teal[200],
         ),
         drawer: Drawer(
@@ -122,7 +130,7 @@ class _MyProfileState extends State<MyProfile> {
             onPressed: () {
               Navigator.pushNamed(context, '/user-add-entry');
             },
-            child: const Icon(Icons.medical_information_outlined,
+            child: const Icon(Icons.library_add_outlined,
                 color: Color(0xFF004D40))),
         body: SingleChildScrollView(
           child: Column(

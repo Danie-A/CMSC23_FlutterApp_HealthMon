@@ -114,75 +114,83 @@ class _ViewRequestsState extends State<ViewRequests> {
                 // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                 splashColor: Colors
                     .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        width: 2, color: Color.fromARGB(255, 165, 85, 80)),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  leading: Icon(Icons.delete,
-                      color: Color.fromARGB(255, 165, 85, 80)),
-                  title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${requests[index]}"),
-                        Text("Delete Request",
-                            style: TextStyle(fontSize: 12, color: Colors.grey))
-                      ]), // name
-                  // subtitle: Text("${friend.nickname}"), // filter subtitle
-                  trailing: Wrap(spacing: 5, children: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.check_circle),
-                      color: Colors.teal,
-                      onPressed: () {
-                        _confirmDelete(context, requests[index]);
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.cancel),
-                      color: Color.fromARGB(255, 165, 85, 80),
-                      onPressed: () {
-                        _confirmReject(context, requests[index]);
-                      },
-                    ),
-                  ]),
-                ))
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: ListTile(
+                      tileColor: Color.fromARGB(255, 239, 224, 224),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            width: 1, color: Color.fromARGB(255, 165, 85, 80)),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      leading: Icon(Icons.delete,
+                          color: Color.fromARGB(255, 165, 85, 80)),
+                      title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${requests[index]}"),
+                            Text("Delete Request",
+                                style:
+                                    TextStyle(fontSize: 12, color: Colors.grey))
+                          ]), // name
+                      // subtitle: Text("${friend.nickname}"), // filter subtitle
+                      trailing: Wrap(spacing: 5, children: <Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.check_circle),
+                          color: Colors.teal,
+                          onPressed: () {
+                            _confirmDelete(context, requests[index]);
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.cancel),
+                          color: Color.fromARGB(255, 165, 85, 80),
+                          onPressed: () {
+                            _confirmReject(context, requests[index]);
+                          },
+                        ),
+                      ]),
+                    )))
             : InkWell(
                 hoverColor: Color.fromARGB(255, 10, 41, 24),
                 // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                 splashColor: Colors
                     .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2, color: Colors.teal),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  leading: Icon(Icons.edit_note, color: Colors.teal),
-                  title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("${requests[index]}"),
-                        Text("Edit Request",
-                            style: TextStyle(fontSize: 12, color: Colors.grey))
-                      ]), // name
-                  // subtitle: Text("${friend.nickname}"), // filter subtitle
-                  trailing: Wrap(spacing: 5, children: <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.check_circle),
-                      color: Colors.teal,
-                      onPressed: () {
-                        _confirmEdit(context, requests[index]);
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.cancel),
-                      color: Color.fromARGB(255, 165, 85, 80),
-                      onPressed: () {
-                        _confirmReject(context, requests[index]);
-                      },
-                    ),
-                  ]),
-                ));
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: ListTile(
+                      tileColor: Colors.teal[50],
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 1, color: Colors.teal),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      leading: Icon(Icons.edit_note, color: Colors.teal),
+                      title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${requests[index]}"),
+                            Text("Edit Request",
+                                style:
+                                    TextStyle(fontSize: 12, color: Colors.grey))
+                          ]), // name
+                      // subtitle: Text("${friend.nickname}"), // filter subtitle
+                      trailing: Wrap(spacing: 5, children: <Widget>[
+                        IconButton(
+                          icon: const Icon(Icons.check_circle),
+                          color: Colors.teal,
+                          onPressed: () {
+                            _confirmEdit(context, requests[index]);
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.cancel),
+                          color: Color.fromARGB(255, 165, 85, 80),
+                          onPressed: () {
+                            _confirmReject(context, requests[index]);
+                          },
+                        ),
+                      ]),
+                    )));
       },
     );
   }

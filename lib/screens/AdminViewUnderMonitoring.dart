@@ -1,42 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/Todo.dart';
-import '../providers/TodoListProvider.dart';
-import '../providers/AuthProvider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
 
 class AdminViewUnderMonitoring extends StatefulWidget {
   const AdminViewUnderMonitoring({super.key});
 
   @override
-  State<AdminViewUnderMonitoring> createState() => _ViewStudentsState();
+  State<AdminViewUnderMonitoring> createState() =>
+      _AdminViewUnderMonitoringState();
 }
 
-class _ViewStudentsState extends State<AdminViewUnderMonitoring> {
-  List<String> students = ["Danie", "Sean", "Marcie", "Laydon"];
+class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
+  List<String> underMonitoringStudents = ["Danie", "Sean", "Marcie", "Laydon"];
 
-  Future<void> _showStudent(BuildContext context, String name) {
+  Future<void> _showMovetoQuarantine(BuildContext context, String name) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('${name}'),
           content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
+            'Are you sure you want to move this student to quarantine?',
           ),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: const Text("Make Admin")),
-            const SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () => {},
-                child: const Text("Make Entrance Monitor")),
+                onPressed: () => {}, child: const Text("Move to Quarantine")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -53,76 +39,103 @@ class _ViewStudentsState extends State<AdminViewUnderMonitoring> {
     );
   }
 
-  ListView viewAllStudents() {
-    return ListView.builder(
+  Expanded viewAllStudents() {
+    return Expanded(
+        child: ListView.builder(
       // displays friend names through multiple instances of List Tile
-      itemCount: students.length,
+      itemCount: underMonitoringStudents.length,
       itemBuilder: (context, index) {
         return InkWell(
+          onTap: () {},
           // InkWell widget adds some hover effect to the ListTile
-          onTap: () {
-            _showStudent(context, students[index]);
-          },
-          hoverColor: Color.fromARGB(255, 10, 41, 24),
+          hoverColor: Color(0xFFFBC6A4),
           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-          splashColor: Colors
-              .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+          splashColor: Colors.teal[
+              200], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
           child: ListTile(
-              leading: Icon(Icons.person, color: Colors.green),
-              title: Text("${students[index]}"), // name
-              // subtitle: Text("${friend.nickname}"), // filter subtitle
-              trailing: IconButton(
-                icon: const Icon(Icons.medication),
-                onPressed: () {},
-              )),
+            leading: Icon(Icons.person, color: Color(0xFFBE7575)),
+            title: Text("${underMonitoringStudents[index]}"), // name
+            // subtitle: Text("${friend.nickname}"), // filter subtitle
+            trailing: Wrap(spacing: 5, children: <Widget>[
+              IconButton(
+                icon: const Icon(
+                  Icons.coronavirus_outlined,
+                ),
+                color: Color(0xFFBE7575),
+                onPressed: () {
+                  _showMovetoQuarantine(
+                      context, underMonitoringStudents[index]);
+                },
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.remove_circle_outlined,
+                ),
+                onPressed: () {
+                  setState(() {
+                    underMonitoringStudents
+                        .remove(underMonitoringStudents[index]);
+                  });
+                },
+              )
+            ]),
+          ),
         );
       },
-    );
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-        ListTile(
-          title: const Text('My Profile'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
+        backgroundColor: Color.fromARGB(255, 255, 237, 226),
+        drawer: Drawer(
+            child: ListView(padding: EdgeInsets.zero, children: [
+          ListTile(
+            title: const Text('My Profile'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Details'),
+            onTap: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => const UserDetailsPage()));
+            },
+          ),
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () {
+              // context.read<AuthProvider>().signOut();
+              // Navigator.pop(context);
+            },
+          ),
+        ])),
+        appBar: AppBar(
+          title: Row(children: const [
+            Icon(Icons.medication_outlined,
+                color: Color.fromRGBO(0, 77, 64, 1)),
+            SizedBox(width: 14),
+            Text("View Under Monitoring Students",
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    color: Color.fromRGBO(0, 77, 64, 1)))
+          ]),
+          backgroundColor: Colors.teal[200],
         ),
-        ListTile(
-          title: const Text('Details'),
-          onTap: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => const UserDetailsPage()));
-          },
-        ),
-        ListTile(
-          title: const Text('Logout'),
-          onTap: () {
-            // context.read<AuthProvider>().signOut();
-            // Navigator.pop(context);
-          },
-        ),
-      ])),
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 10, 41, 24),
-        title: Row(children: const [
-          Icon(Icons.contact_mail_outlined, color: Colors.green),
-          SizedBox(width: 14),
-          Text(
-            "View Students",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
-        ]),
-      ),
-      body: Container(
-          padding: const EdgeInsets.only(top: 16), child: viewAllStudents()),
-    );
+        body: Column(
+          children: [
+            SizedBox(height: 10),
+            Text(
+              "Under Monitoring Student Count: ${underMonitoringStudents.length}",
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+            SizedBox(height: 10),
+            viewAllStudents()
+          ],
+        ));
   }
 }

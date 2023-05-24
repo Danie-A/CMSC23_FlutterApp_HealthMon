@@ -13,6 +13,8 @@ import '../screens/QrCodePage.dart';
 import 'screens/MyProfile.dart';
 import 'screens/ViewRequests.dart';
 import 'screens/AdminViewStudents.dart';
+import 'screens/ViewRequests.dart';
+import 'screens/AdminViewQuarantined.dart';
 import 'screens/AdminViewUnderMonitoring.dart';
 
 void main() async {
@@ -59,6 +61,7 @@ class MyApp extends StatelessWidget {
         '/admin-view-requests': (context) => ViewRequests(),
         '/admin-view-students': (context) => AdminViewStudents(),
         '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
+        '/view-quarantined': (context) => AdminViewQuarantined()
       },
     );
   }

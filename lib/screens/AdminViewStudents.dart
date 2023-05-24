@@ -53,6 +53,34 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     );
   }
 
+  Future<void> _showAddToQuarantine(BuildContext context, String name) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('${name}'),
+          content: const Text(
+            'Are you sure you want to add this student to quarantine?',
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () => {}, child: const Text("Add to Quarantine")),
+            const SizedBox(height: 10),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   ListView viewAllStudents() {
     return ListView.builder(
       // displays friend names through multiple instances of List Tile
@@ -63,17 +91,19 @@ class _ViewStudentsState extends State<AdminViewStudents> {
           onTap: () {
             _showStudent(context, students[index]);
           },
-          hoverColor: Color.fromARGB(255, 10, 41, 24),
+          hoverColor: Colors.teal[200],
           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-          splashColor: Colors
-              .green, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+          splashColor: Colors.teal[
+              100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
           child: ListTile(
-              leading: Icon(Icons.person, color: Colors.green),
+              leading: Icon(Icons.person, color: Colors.teal),
               title: Text("${students[index]}"), // name
               // subtitle: Text("${friend.nickname}"), // filter subtitle
               trailing: IconButton(
                 icon: const Icon(Icons.medication),
-                onPressed: () {},
+                onPressed: () {
+                  _showAddToQuarantine(context, students[index]);
+                },
               )),
         );
       },
@@ -88,8 +118,6 @@ class _ViewStudentsState extends State<AdminViewStudents> {
         ListTile(
           title: const Text('My Profile'),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
             Navigator.pop(context);
           },
         ),
