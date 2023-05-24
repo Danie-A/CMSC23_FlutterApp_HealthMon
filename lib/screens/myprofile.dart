@@ -11,6 +11,7 @@ import 'AdminViewStudents.dart';
 import '../providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'AdminViewUnderMonitoring.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -74,7 +75,15 @@ class _MyProfileState extends State<MyProfile> {
     return Scaffold(
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
-          title: const Text("My Profile"),
+          title: Row(children: const [
+            Icon(Icons.medical_information_outlined, color: Color(0xFF004D40)),
+            SizedBox(width: 14),
+            Text("My Profile",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF004D40),
+                ))
+          ]),
           backgroundColor: Colors.teal[200],
         ),
         drawer: Drawer(
@@ -100,7 +109,13 @@ class _MyProfileState extends State<MyProfile> {
           ListTile(
             title: const Text('View Requests'),
             onTap: () {
-              Navigator.pushNamed(context, '/view-requests');
+              Navigator.pushNamed(context, '/admin-view-requests');
+            },
+          ),
+          ListTile(
+            title: const Text('View Under Monitoring'),
+            onTap: () {
+              Navigator.pushNamed(context, '/admin-view-under-monitoring');
             },
           ),
           ListTile(
@@ -117,7 +132,7 @@ class _MyProfileState extends State<MyProfile> {
             onPressed: () {
               Navigator.pushNamed(context, '/user-add-entry');
             },
-            child: const Icon(Icons.medical_information_outlined,
+            child: const Icon(Icons.library_add_outlined,
                 color: Color(0xFF004D40))),
         body: SingleChildScrollView(
           child: Column(
@@ -205,6 +220,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: (unableToGenerateQRCode)
                             ? null

@@ -125,7 +125,7 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
       controller: empNoController,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please input employtee number';
+          return 'Please input employee number.';
         }
         return null;
       }, // adds a validator in the form field
@@ -191,7 +191,7 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
             _formKey.currentState?.save();
           }
         },
-        child: const Text('Sign up', style: TextStyle(color: Colors.white)),
+        child: const Text('Sign up'),
       ),
     );
 
@@ -201,7 +201,7 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
         onPressed: () async {
           Navigator.pop(context);
         },
-        child: const Text('Back', style: TextStyle(color: Colors.white)),
+        child: const Text('Back'),
       ),
     );
 
@@ -223,15 +223,16 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 10, 41, 24),
         title: Row(children: const [
-          Icon(Icons.edit_square, color: Colors.green),
+          Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text(
-            "To Do List",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )
+          Text("HealthMon",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF004D40),
+              ))
         ]),
+        backgroundColor: Colors.teal[100],
       ),
       body: Center(
         child: ListView(

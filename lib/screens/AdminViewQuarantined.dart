@@ -59,8 +59,6 @@ class _ViewQuarantinedState extends State<AdminViewQuarantined> {
             title: const Text('My Profile'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
             },
           ),
           ListTile(
@@ -95,7 +93,7 @@ class _ViewQuarantinedState extends State<AdminViewQuarantined> {
         body: Column(
           children: [
             SizedBox(height: 10),
-            Text("Quarantined Student count: ${quarantinedStudents.length}"),
+            Text("Quarantined Student Count: ${quarantinedStudents.length}"),
             viewAllStudents()
           ],
         ));
