@@ -68,7 +68,8 @@ class MyApp extends StatelessWidget {
         '/admin-view-students': (context) => AdminViewStudents(),
         '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
         '/view-quarantined': (context) => AdminViewQuarantined(),
-        '/search-logs': (context) => const EntMonSearchLogs()
+        '/search-logs': (context) => const EntMonSearchLogs(),
+        '/entmon-view-logs': (context) => const EntMonViewLogs(),
       },
     );
   }

@@ -17,37 +17,69 @@ class EntMonViewLogs extends StatefulWidget {
 
 // MAKE LISTTILES OF DETAILS W TRAILING ICON FOR EDIT
 class _ViewStudentsState extends State<EntMonViewLogs> {
-  List<String> logIDs = [
-    "asdsadad",
-    "Seasadan",
-    "Maasdsadsadrcie",
-    "Laydasdawdsadon"
+  List<Map<String, String>> dataArray = [
+    {
+      'location': 'New York',
+      'name': 'John Doe',
+      'studentNo': '123456789',
+      'date': '2023-05-25',
+      'time': '12:30 PM',
+      'status': 'completed',
+    },
+    {
+      'location': 'London',
+      'name': 'Jane Smith',
+      'studentNo': '987654321',
+      'date': '2023-05-26',
+      'time': '09:45 AM',
+      'status': 'under monitoring',
+    },
+    {
+      'location': 'Paris',
+      'name': 'David Johnson',
+      'studentNo': '456789123',
+      'date': '2023-05-27',
+      'time': '02:15 PM',
+      'status': 'quarantined',
+    },
+    {
+      'location': 'Tokyo',
+      'name': 'Emily Brown',
+      'studentNo': '789123456',
+      'date': '2023-05-28',
+      'time': '07:00 AM',
+      'status': 'completed',
+    },
+    {
+      'location': 'Sydney',
+      'name': 'Michael Wilson',
+      'studentNo': '654321987',
+      'date': '2023-05-29',
+      'time': '04:30 PM',
+      'status': 'under monitoring',
+    },
+    // Add more elements as needed...
   ];
 
-  Future<void> _showStudent(BuildContext context, String name) {
+  Future<void> _showStudent(BuildContext context, Map datum) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${name}'),
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
+          title: Text('${datum['name']}'),
+
+          // ANG LAKI NG CONTENT !!!! BAKIT ?
+          content: Column(
+            children: [
+              Text("${datum["name"]}"),
+              Text("${datum["studentNo"]}"),
+              Text("${datum["date"]}"),
+              Text("${datum["time"]}"),
+              Text("${datum["status"]}"),
+            ],
           ),
-          actions: <Widget>[
-            ElevatedButton(
-                onPressed: () => {}, child: const Text("Make Admin")),
-            const SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () => {},
-                child: const Text("Make Entrance Monitor")),
-            const SizedBox(height: 10),
+          actions: [
             TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
               child: const Text('Close'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -59,58 +91,29 @@ class _ViewStudentsState extends State<EntMonViewLogs> {
     );
   }
 
-  Future<void> _showAddToQuarantine(BuildContext context, String name) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('${name}'),
-          content: const Text(
-            'Are you sure you want to add this student to quarantine?',
-          ),
-          actions: <Widget>[
-            ElevatedButton(
-                onPressed: () => {}, child: const Text("Add to Quarantine")),
-            const SizedBox(height: 10),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  ListView viewAllStudents() {
+  ListView viewAllLogs() {
     return ListView.builder(
       // displays friend names through multiple instances of List Tile
-      itemCount: logIDs.length,
+      itemCount: dataArray.length,
       itemBuilder: (context, index) {
         return InkWell(
           // InkWell widget adds some hover effect to the ListTile
           onTap: () {
-            _showStudent(context, logIDs[index]);
+            _showStudent(context, dataArray[index]);
           },
           hoverColor: Colors.teal[200],
           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
           splashColor: Colors.teal[
               100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
           child: ListTile(
-              leading: Icon(Icons.person, color: Colors.teal),
-              title: Text("${logIDs[index]}"), // name
-              // subtitle: Text("${friend.nickname}"), // filter subtitle
-              trailing: IconButton(
-                icon: const Icon(Icons.medication),
-                onPressed: () {
-                  _showAddToQuarantine(context, logIDs[index]);
-                },
-              )),
+            leading: Icon(
+              Icons.folder_shared_outlined,
+              color: Colors.teal,
+            ),
+            title: Text(
+                "${dataArray[index]["name"]}: ${dataArray[index]["location"]}, ${dataArray[index]["date"]}"), // name
+            // subtitle: Text("${friend.nickname}"), // filter subtitle
+          ),
         );
       },
     );
@@ -148,7 +151,7 @@ class _ViewStudentsState extends State<EntMonViewLogs> {
         title: Row(children: const [
           Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text("View Students",
+          Text("View Logs",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF004D40),
@@ -157,7 +160,7 @@ class _ViewStudentsState extends State<EntMonViewLogs> {
         backgroundColor: Colors.teal[100],
       ),
       body: Container(
-          padding: const EdgeInsets.only(top: 16), child: viewAllStudents()),
+          padding: const EdgeInsets.only(top: 16), child: viewAllLogs()),
     );
   }
 }
