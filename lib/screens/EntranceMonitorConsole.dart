@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/screens/EntMonViewLogs.dart';
 
 class EntranceMonitorConsole extends StatelessWidget {
   const EntranceMonitorConsole({super.key});
@@ -28,7 +29,9 @@ class EntranceMonitorConsole extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/entmon-view-logs');
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
@@ -45,7 +48,9 @@ class EntranceMonitorConsole extends StatelessWidget {
                       child: Text("Read QR", textAlign: TextAlign.center))),
               ElevatedButton.icon(
                   icon: Icon(Icons.access_time_filled_sharp),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/search-logs');
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
