@@ -223,12 +223,39 @@ class _MyProfileState extends State<MyProfile> {
                   width: screenWidth,
                   child: Column(children: [
                     Container(
-                      child: const Text(
-                        "Generate Building Pass",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Generate Building Pass",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          IconButton(
+                              iconSize: 17,
+                              visualDensity:
+                                  VisualDensity(horizontal: -4, vertical: -4),
+                              icon: Icon(Icons.help_outline_outlined),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("I can't generate my QR!"),
+                                    content: Text(
+                                        "To be able to generate your QR code, you must complete your daily health entry, and have no symptoms"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Continue"))
+                                    ],
+                                  ),
+                                );
+                              })
+                        ],
                       ),
                     ),
                     SizedBox(height: 20),
@@ -255,6 +282,7 @@ class _MyProfileState extends State<MyProfile> {
                           ],
                         )),
                   ])),
+
               const Divider(
                 thickness: 1,
                 color: Colors.white,
