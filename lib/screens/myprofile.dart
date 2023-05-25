@@ -60,7 +60,9 @@ class _MyProfileState extends State<MyProfile> {
               'However you can choose to edit or delete your entry for today.\n'),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: Text("Edit Entry")),
+                onPressed: () => {
+                  Navigator.pushNamed(context, '/user-edit-entry')
+                }, child: Text("Edit Entry")),
             ElevatedButton(
                 onPressed: () => {}, child: Text("Delete Entry")),
             const SizedBox(height: 10),

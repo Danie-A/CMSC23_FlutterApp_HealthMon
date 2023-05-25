@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/EntMonSearchLogs.dart';
+import 'package:health_monitoring_app/screens/UserEditEntry.dart';
 import 'package:provider/provider.dart';
 import 'providers/TodoListProvider.dart';
 import 'providers/AuthProvider.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/user-profile': (context) => const SigninPage(),
         '/user-details': (context) => const UserDetailsPage(),
         '/user-add-entry': (context) => UserAddEntry(),
+        '/user-edit-entry': (context) => UserEditEntry(),
         '/show-qr': (context) => const QrCodePage(),
         '/scan-qr': (context) => QrScanPage(),
         '/admin-view-requests': (context) => ViewRequests(),
@@ -70,7 +72,12 @@ class MyApp extends StatelessWidget {
         '/view-quarantined': (context) => AdminViewQuarantined(),
         '/search-logs': (context) => const EntMonSearchLogs(),
         '/entmon-view-logs': (context) => const EntMonViewLogs(),
+        
       },
+      onGenerateRoute: (settings) {
+        
+      }
+      
     );
   }
 }
