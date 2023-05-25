@@ -115,26 +115,41 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     return Scaffold(
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
+        DrawerHeader(
+          decoration: BoxDecoration(
+            color: Colors.teal.shade50,
+          ),
+          child: Text('Sample Drawer Header'),
+        ),
         ListTile(
-          title: const Text('My Profile'),
+          title: const Text('View Quarantined Students'),
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
+            Navigator.pushNamed(context, '/view-quarantined'); //show qr
           },
         ),
         ListTile(
-          title: const Text('Details'),
+          title: const Text('View Under Monitoring'),
           onTap: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => const UserDetailsPage()));
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
+            Navigator.pushNamed(context, '/view-under-monitoring'); //scan qr
           },
         ),
         ListTile(
-          title: const Text('Logout'),
+          title: const Text('Student Requests'),
           onTap: () {
-            // context.read<AuthProvider>().signOut();
-            // Navigator.pop(context);
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
+            Navigator.pushNamed(context, '/view-requests'); //go to searchlogs
+          },
+        ),
+        ListTile(
+          title: const Text('Back'),
+          onTap: () {
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
           },
         ),
       ])),
@@ -142,7 +157,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
         title: Row(children: const [
           Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text("View Students",
+          Text("All Students",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF004D40),

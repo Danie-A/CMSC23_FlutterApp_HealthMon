@@ -28,7 +28,9 @@ class AdminConsole extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/view-students');
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
@@ -36,7 +38,9 @@ class AdminConsole extends StatelessWidget {
                       child: Text("View All Students",
                           textAlign: TextAlign.center))),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/view-quarantined');
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
@@ -44,7 +48,9 @@ class AdminConsole extends StatelessWidget {
                       child: Text("View Quarantined Students",
                           textAlign: TextAlign.center))),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/view-under-monitoring');
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
@@ -52,7 +58,9 @@ class AdminConsole extends StatelessWidget {
                       child: Text("Under Monitoring Students",
                           textAlign: TextAlign.center))),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/view-requests');
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
