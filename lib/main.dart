@@ -3,6 +3,7 @@ import 'package:health_monitoring_app/screens/EntMonSearchLogs.dart';
 import 'package:provider/provider.dart';
 import 'providers/TodoListProvider.dart';
 import 'providers/AuthProvider.dart';
+import 'screens/QrScanPage.dart';
 import 'screens/TodoPage.dart';
 import 'screens/UserDetailsPage.dart';
 import 'screens/SigninPage.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/user-details': (context) => const UserDetailsPage(),
         '/user-add-entry': (context) => UserAddEntry(),
         '/show-qr': (context) => const QrCodePage(),
+        '/scan-qr': (context) => QrScanPage(),
         '/admin-view-requests': (context) => ViewRequests(),
         '/admin-view-students': (context) => AdminViewStudents(),
         '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
