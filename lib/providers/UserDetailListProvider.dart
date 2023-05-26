@@ -7,6 +7,8 @@ class UserDetailListProvider with ChangeNotifier {
   late FirebaseUserDetailAPI firebaseService;
   late Stream<QuerySnapshot> _userDetailStream;
 
+  
+
   UserDetailListProvider() {
     firebaseService = FirebaseUserDetailAPI();
     fetchUserDetails();
@@ -19,6 +21,7 @@ class UserDetailListProvider with ChangeNotifier {
     _userDetailStream = firebaseService.getAllUserDetails();
     notifyListeners();
   }
+
 
   void addStudentDetail(UserDetail user) async {
     String message =

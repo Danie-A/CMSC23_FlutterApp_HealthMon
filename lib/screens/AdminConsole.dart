@@ -29,7 +29,7 @@ class AdminConsole extends StatelessWidget {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/admin-view-students');
+                    Navigator.pushNamed(context, '/view-students');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -60,9 +60,7 @@ class AdminConsole extends StatelessWidget {
                       ])),
 
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, '/admin-view-under-monitoring');
+                  onPressed: () { Navigator.pushNamed(context, '/view-under-monitoring');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -80,7 +78,7 @@ class AdminConsole extends StatelessWidget {
                       
               ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/admin-view-requests');
+                    Navigator.pushNamed(context, '/view-requests');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
