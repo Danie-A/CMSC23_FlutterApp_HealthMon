@@ -34,6 +34,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
 
   List<String> preExistingIllnessList = [];
 
+  bool _passwordHide = true;
+
   @override
   Widget build(BuildContext context) {
     void showErrorDialog(String string) {
@@ -84,11 +86,22 @@ class _UserSignupPageState extends State<UserSignupPage> {
       }, // adds a validator in the form field
     );
 
+    void _toggle() {
+      setState(() {
+        _passwordHide = !_passwordHide;
+      });
+    }
+
+    final passwordToggle = IconButton(
+        icon: Icon(_passwordHide ? Icons.visibility : Icons.visibility_off),
+        onPressed: _toggle);
+
     final password = TextFormField(
       controller: passwordController,
-      obscureText: true,
-      decoration: const InputDecoration(
+      obscureText: _passwordHide,
+      decoration: InputDecoration(
         hintText: 'Password',
+        suffixIcon: passwordToggle,
       ),
       validator: (value) {
         if (value.toString().length < 6) {
@@ -97,6 +110,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
         return null;
       }, // adds a validator in the form field
     );
+
+
 
     final fname = TextFormField(
       decoration: const InputDecoration(
