@@ -22,7 +22,7 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   String data = "";
-  String accountType = "entrance monitor";
+  String accountType = "admin";
   bool unableToGenerateQRCode = false;
 
   String todayEntry = "";

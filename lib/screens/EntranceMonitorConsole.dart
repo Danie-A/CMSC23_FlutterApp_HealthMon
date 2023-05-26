@@ -13,9 +13,9 @@ class EntranceMonitorConsole extends StatelessWidget {
       children: [
         Padding(
             padding: EdgeInsets.only(top: 40, bottom: 20),
-            child: Text("Authorized Personnel Console",
+            child: Text("AUTHORIZED PERSONNEL CONSOLE",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal[900]))),
         (Container(
