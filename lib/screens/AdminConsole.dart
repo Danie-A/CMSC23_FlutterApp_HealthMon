@@ -12,9 +12,9 @@ class AdminConsole extends StatelessWidget {
       children: [
         Padding(
             padding: EdgeInsets.only(top: 40, bottom: 20),
-            child: Text("Authorized Personnel Console",
+            child: Text("AUTHORIZED PERSONNEL CONSOLE",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal[900]))),
         (Container(
@@ -34,9 +34,14 @@ class AdminConsole extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  child: Center(
-                      child: Text("View All Students",
-                          textAlign: TextAlign.center))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.groups_rounded, size: screenWidth * 0.20),
+                        Text("View All Students", textAlign: TextAlign.center)
+                      ])),
+
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/view-quarantined');
@@ -44,19 +49,33 @@ class AdminConsole extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  child: Center(
-                      child: Text("View Quarantined Students",
-                          textAlign: TextAlign.center))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.local_hospital_rounded,
+                            size: screenWidth * 0.20),
+                        Text("View Quarantined Students",
+                            textAlign: TextAlign.center)
+                      ])),
+
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/view-under-monitoring');
+                  onPressed: () { Navigator.pushNamed(context, '/view-under-monitoring');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  child: Center(
-                      child: Text("Under Monitoring Students",
-                          textAlign: TextAlign.center))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.medication_outlined,
+                            size: screenWidth * 0.20),
+                        Text("Under Monitoring Students",
+                            textAlign: TextAlign.center)
+                      ])),
+
+                      
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/view-requests');
@@ -64,9 +83,13 @@ class AdminConsole extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  child: Center(
-                      child: Text("Student Requests",
-                          textAlign: TextAlign.center))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.pending_actions, size: screenWidth * 0.20),
+                        Text("Student Requests", textAlign: TextAlign.center)
+                      ])),
             ],
           ),
         )),

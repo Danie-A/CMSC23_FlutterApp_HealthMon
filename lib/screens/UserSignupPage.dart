@@ -12,6 +12,30 @@ class UserSignupPage extends StatefulWidget {
 }
 
 class _UserSignupPageState extends State<UserSignupPage> {
+
+  bool hypertension = false;
+  bool diabetes = false;
+  bool tuberculosis = false;
+  bool cancer = false;
+  bool kidneyDisease = false;
+  bool cardiacDisease = false;
+  bool autoimmuneDisease = false;
+  bool asthma = false;
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController fnameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController collegeController = TextEditingController();
+  TextEditingController courseController = TextEditingController();
+  TextEditingController studentNoController = TextEditingController();
+
+  List<String> preExistingIllnessList = [];
+
+  bool _passwordHide = true;
+
   @override
   Widget build(BuildContext context) {
     void showErrorDialog(String string) {
@@ -41,15 +65,6 @@ class _UserSignupPageState extends State<UserSignupPage> {
       context.read<UserDetailListProvider>().addStudentDetail(userDetail);
     }
 
-    final _formKey = GlobalKey<FormState>();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController fnameController = TextEditingController();
-    TextEditingController lnameController = TextEditingController();
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController collegeController = TextEditingController();
-    TextEditingController courseController = TextEditingController();
-    TextEditingController studentNoController = TextEditingController();
 
     final email = TextFormField(
       decoration: const InputDecoration(
@@ -71,11 +86,22 @@ class _UserSignupPageState extends State<UserSignupPage> {
       }, // adds a validator in the form field
     );
 
+    void _toggle() {
+      setState(() {
+        _passwordHide = !_passwordHide;
+      });
+    }
+
+    final passwordToggle = IconButton(
+        icon: Icon(_passwordHide ? Icons.visibility : Icons.visibility_off),
+        onPressed: _toggle);
+
     final password = TextFormField(
       controller: passwordController,
-      obscureText: true,
-      decoration: const InputDecoration(
+      obscureText: _passwordHide,
+      decoration: InputDecoration(
         hintText: 'Password',
+        suffixIcon: passwordToggle,
       ),
       validator: (value) {
         if (value.toString().length < 6) {
@@ -84,6 +110,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
         return null;
       }, // adds a validator in the form field
     );
+
+
 
     final fname = TextFormField(
       decoration: const InputDecoration(
@@ -182,6 +210,89 @@ class _UserSignupPageState extends State<UserSignupPage> {
       }, // adds a validator in the form field
     );
 
+    final preExistingIllness = Text(
+        'Please check the box if you have the following pre existing illness:');
+
+    final hypertensionCheckbox = CheckboxListTile(
+      value: hypertension,
+      onChanged: (value) {
+        setState(() {
+          hypertension = value ?? false;
+        });
+      },
+      title: Text('Hypertension'),
+    );
+
+    final diabetesCheckbox = CheckboxListTile(
+      value: diabetes,
+      onChanged: (value) {
+        setState(() {
+          diabetes = value ?? false;
+        });
+      },
+      title: Text('Diabetes'),
+    );
+
+    final tuberculosisCheckbox = CheckboxListTile(
+      value: tuberculosis,
+      onChanged: (value) {
+        setState(() {
+          tuberculosis = value ?? false;
+        });
+      },
+      title: Text('Tuberculosis'),
+    );
+
+    final cancerCheckbox = CheckboxListTile(
+      value: cancer,
+      onChanged: (value) {
+        setState(() {
+          cancer = value ?? false;
+        });
+      },
+      title: Text('Cancer'),
+    );
+
+    final kindeyDiseaseCheckbox = CheckboxListTile(
+      value: kidneyDisease,
+      onChanged: (value) {
+        setState(() {
+          kidneyDisease = value ?? false;
+        });
+      },
+      title: Text('Kidney Disease'),
+    );
+
+    final cardiacDiseaseCheckbox = CheckboxListTile(
+      value: cardiacDisease,
+      onChanged: (value) {
+        setState(() {
+          cardiacDisease = value ?? false;
+        });
+      },
+      title: Text('Cardiac Disease'),
+    );
+
+    final autoimmuneDiseaseCheckbox = CheckboxListTile(
+      value: autoimmuneDisease,
+      onChanged: (value) {
+        setState(() {
+          autoimmuneDisease = value ?? false;
+        });
+      },
+      title: Text('Autoimmune disease'),
+    );
+
+    final asthmaCheckbox = CheckboxListTile(
+      value: asthma,
+      onChanged: (value) {
+        setState(() {
+          asthma = value ?? false;
+        });
+      },
+      title: Text('Asthma'),
+    );
+
     var signUpButton = Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: ElevatedButton(
@@ -194,6 +305,39 @@ class _UserSignupPageState extends State<UserSignupPage> {
             if (message == 'email-already-in-use') {
               showErrorDialog("Email Already In Use");
             } else if (message == '') {
+
+              if (hypertension == true) {
+                preExistingIllnessList.add("Hypertension");
+              }
+
+              if (diabetes == true) {
+                preExistingIllnessList.add("Diabetes");
+              }
+
+              if (tuberculosis == true) {
+                preExistingIllnessList.add("Tuberculosis");
+              }
+
+              if (cancer == true) {
+                preExistingIllnessList.add("Cancer");
+              }
+
+              if (kidneyDisease == true) {
+                preExistingIllnessList.add("Kidney Disease");
+              }
+
+              if (cardiacDisease == true) {
+                preExistingIllnessList.add("Cardiac Disease");
+              }
+
+              if (autoimmuneDisease == true) {
+                preExistingIllnessList.add("Autoimmune Disease");
+              }
+
+              if (asthma == true) {
+                preExistingIllnessList.add("Asthma");
+              }
+
               UserDetail userDetail = UserDetail(
                   email: emailController.text,
                   firstName: fnameController.text,
@@ -202,6 +346,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
                   college: collegeController.text,
                   course: courseController.text,
                   studentNo: int.parse(studentNoController.text),
+                  preExistingIllness: preExistingIllnessList,
                   status: 'No Health Entry',
                   userType: 'User');
               addStudentDetail(userDetail);
@@ -229,14 +374,23 @@ class _UserSignupPageState extends State<UserSignupPage> {
       return Form(
           key: _formKey,
           child: Column(children: [
-            email,
-            password,
-            fname,
-            lname,
-            username,
-            college,
-            course,
-            studentNo,
+            SizedBox(height: 60, child: email),
+            SizedBox(height: 60, child: password),
+            SizedBox(height: 60, child: fname),
+            SizedBox(height: 60, child: lname),
+            SizedBox(height: 60, child: username),
+            SizedBox(height: 60, child: college),
+            SizedBox(height: 60, child: course),
+            SizedBox(height: 90, child: studentNo),
+            SizedBox(height: 30, child: preExistingIllness),
+            Transform.scale(scale: 0.9, child: hypertensionCheckbox),
+            Transform.scale(scale: 0.9, child: diabetesCheckbox),
+            Transform.scale(scale: 0.9, child: tuberculosisCheckbox),
+            Transform.scale(scale: 0.9, child: cancerCheckbox),
+            Transform.scale(scale: 0.9, child: kindeyDiseaseCheckbox),
+            Transform.scale(scale: 0.9, child: cardiacDiseaseCheckbox),
+            Transform.scale(scale: 0.9, child: autoimmuneDiseaseCheckbox),
+            Transform.scale(scale: 0.9, child: asthmaCheckbox),
             signUpButton,
             backButton
           ]));
