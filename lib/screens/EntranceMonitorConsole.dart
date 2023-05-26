@@ -30,7 +30,7 @@ class EntranceMonitorConsole extends StatelessWidget {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/entmon-view-logs');
+                    Navigator.pushNamed(context, '/view-logs');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

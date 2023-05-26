@@ -64,12 +64,14 @@ class MyApp extends StatelessWidget {
         '/user-add-entry': (context) => UserAddEntry(),
         '/show-qr': (context) => const QrCodePage(),
         '/scan-qr': (context) => QrScanPage(),
-        '/admin-view-requests': (context) => ViewRequests(),
-        '/admin-view-students': (context) => AdminViewStudents(),
-        '/admin-view-under-monitoring': (context) => AdminViewUnderMonitoring(),
+        //admin console
+        '/view-students': (context) => AdminViewStudents(),
         '/view-quarantined': (context) => AdminViewQuarantined(),
+        '/view-under-monitoring': (context) => AdminViewUnderMonitoring(),
+        '/view-requests': (context) => ViewRequests(),
+        //entmon console
         '/search-logs': (context) => const EntMonSearchLogs(),
-        '/entmon-view-logs': (context) => const EntMonViewLogs(),
+        '/view-logs': (context) => const EntMonViewLogs(),
       },
     );
   }
