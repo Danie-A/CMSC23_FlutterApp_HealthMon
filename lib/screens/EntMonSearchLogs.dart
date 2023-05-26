@@ -88,9 +88,17 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
-            child: TextFormField(
+            child: TextField(
               controller: _searchLogsController,
-              decoration: const InputDecoration(border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                suffixIcon: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.search, color: Color(0xFF004D40))),
+                ),
+              ),
             ),
           ),
           Expanded(child: viewAllStudents()),
