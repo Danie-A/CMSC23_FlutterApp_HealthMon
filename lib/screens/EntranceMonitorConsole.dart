@@ -28,6 +28,8 @@ class EntranceMonitorConsole extends StatelessWidget {
             crossAxisCount: 2,
             physics: const NeverScrollableScrollPhysics(),
             children: [
+
+
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/entmon-view-logs');
@@ -35,8 +37,15 @@ class EntranceMonitorConsole extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  child: Center(
-                      child: Text("View Logs", textAlign: TextAlign.center))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.local_hospital_rounded,
+                            size: screenWidth * 0.20),
+                        Text("View Logs", textAlign: TextAlign.center)
+                      ])),
+
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/scan-qr');
@@ -44,18 +53,31 @@ class EntranceMonitorConsole extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  child: Center(
-                      child: Text("Read QR", textAlign: TextAlign.center))),
-              ElevatedButton.icon(
-                  icon: Icon(Icons.access_time_filled_sharp),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.qr_code, size: screenWidth * 0.20),
+                        Text("Read QR", textAlign: TextAlign.center)
+                      ])),
+              ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/search-logs');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)))),
-                  label: Center(
-                      child: Text("Search Logs", textAlign: TextAlign.center))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.screen_search_desktop_outlined,
+                            size: screenWidth * 0.20),
+                        Text("Search Logs", textAlign: TextAlign.center)
+                      ])),
+
+
+
             ],
           ),
         )),
