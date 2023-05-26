@@ -5,35 +5,40 @@ import '../models/Entry.dart';
 import '../providers/EntryListProvider.dart';
 import '../screens/myprofile.dart';
 import 'package:intl/intl.dart';
-import '../providers/UserDetailListProvider.dart';
 
-class UserAddEntry extends StatefulWidget {
+class UserEditEntry extends StatefulWidget {
   @override
-  _UserAddEntryState createState() => _UserAddEntryState();
+
+  _UserEditEntryState createState() => _UserEditEntryState();
 }
 
-class _UserAddEntryState extends State<UserAddEntry> {
-  bool fever = false;
-  bool feverish = false;
-  bool muscle_joint_pain = false;
-  bool cough = false;
-  bool cold = false;
-  bool sore_throat = false;
-  bool difficulty_breathing = false;
-  bool diarrhea = false;
-  bool loss_taste = false;
-  bool loss_smell = false;
-  bool has_symptoms = false;
-  String had_contact = "No";
-  String status = "Cleared";
-  String user_key = " ";
-  bool edit_request = false;
-  bool delete_request = false;
+class _UserEditEntryState extends State<UserEditEntry> {
+  
+  
 
   @override
   Widget build(BuildContext context) {
     final now = new DateTime.now();
     String entryDate = DateFormat('yMd').format(now);
+
+    Entry entry = context.watch<EntryListProvider>().getCurrentEntry();
+
+    bool fever = entry.fever;
+    bool feverish = entry.feverish;
+    bool muscle_joint_pain = entry.muscle_joint_pain;
+    bool cough = entry.cough;
+    bool cold = entry.cold;
+    bool sore_throat = entry.sore_throat;
+    bool difficulty_breathing = entry.difficulty_breathing;
+    bool diarrhea = entry.diarrhea;
+    bool loss_taste = entry.loss_taste;
+    bool loss_smell = entry.loss_smell;
+    bool has_symptoms = entry.has_symptoms;
+    String had_contact = entry.had_contact;
+    String status = entry.status;
+    String user_key = entry.user_key;
+    bool edit_request = entry.edit_request;
+    bool delete_request = entry.delete_request;
 
     return Scaffold(
       appBar: AppBar(
@@ -205,7 +210,6 @@ class _UserAddEntryState extends State<UserAddEntry> {
                       newEntry.has_symptoms = true;
                       newEntry.status = "under_monitoring";
                     }
-
 
                     context.read<EntryListProvider>().addEntryDetail(newEntry);
 

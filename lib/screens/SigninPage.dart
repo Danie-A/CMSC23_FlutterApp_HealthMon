@@ -111,6 +111,7 @@ class _SigninPageState extends State<SigninPage> {
           if (_formSigninKey.currentState!.validate()) {
             String message = await context.read<AuthProvider>().signIn(
                 emailController.text.trim(), passwordController.text.trim());
+                
             if (message == 'user-not-found') {
               showErrorDialog("User Not Found");
             } else if (message == 'wrong-password') {

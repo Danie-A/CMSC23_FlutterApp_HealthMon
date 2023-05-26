@@ -22,6 +22,8 @@ class FirebaseUserDetailAPI {
     return db.collection("userDetails").snapshots();
   }
 
+  
+
   Future<String> deleteUserDetail(String? id) async {
     try {
       await db.collection("userDetails").doc(id).delete();

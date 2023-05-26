@@ -17,6 +17,17 @@ class FirebaseEntryAPI {
     return db.collection("entries").snapshots();
   }
 
+  Future<List> getEntriesList() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await db.collection("entries").get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+     return allData;
+
+}
+
   Future<String> deleteEntry(String? id) async {
     try {
       await db.collection("entries").doc(id).delete();
