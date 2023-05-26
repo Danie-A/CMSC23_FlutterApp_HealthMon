@@ -25,6 +25,9 @@ class _MyProfileState extends State<MyProfile> {
   String accountType = "entrance monitor";
   bool unableToGenerateQRCode = false;
 
+  String todayEntry = "";
+  DateTime dateToday = DateTime.now();
+
   static List healthEntries = [
     "a",
     "b",
@@ -45,6 +48,36 @@ class _MyProfileState extends State<MyProfile> {
     "b",
     "c",
   ];
+
+  Future<void> _alreadySubmittedPrompt(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("You have already submitted"),
+          content: Text('You can only submit one entry per day,\n'
+              'next submission of entry should be done tomorrow again.\n\n'
+              'However you can choose to edit or delete your entry for today.\n'),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () => {}, child: Text("Edit Entry")),
+            ElevatedButton(
+                onPressed: () => {}, child: Text("Delete Entry")),
+            const SizedBox(height: 10),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +181,16 @@ class _MyProfileState extends State<MyProfile> {
             //Add Entry Button
             backgroundColor: Colors.teal[200],
             onPressed: () {
-              Navigator.pushNamed(context, '/user-add-entry');
+
+              String date = "${dateToday.day}-${dateToday.month}-${dateToday.year}";
+
+              if(todayEntry == date) {
+                _alreadySubmittedPrompt(context);
+              } else {
+                todayEntry = date;
+                Navigator.pushNamed(context, '/user-add-entry');
+              }
+              
             },
             child: const Icon(Icons.library_add_outlined,
                 color: Color(0xFF004D40))),
