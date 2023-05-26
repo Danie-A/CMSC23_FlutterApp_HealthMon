@@ -22,7 +22,7 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   String data = "";
-  String accountType = "entrance monitor";
+  String accountType = "admin";
   bool unableToGenerateQRCode = false;
 
   String todayEntry = "";
@@ -60,7 +60,7 @@ class _MyProfileState extends State<MyProfile> {
               'However you can choose to edit or delete your entry for today.\n'),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: Text("Edit Entry")),
+                onPressed: () => {Navigator.pushNamed(context, '/user-edit-entry')}, child: Text("Edit Entry")),
             ElevatedButton(
                 onPressed: () => {}, child: Text("Delete Entry")),
             const SizedBox(height: 10),
@@ -125,7 +125,7 @@ class _MyProfileState extends State<MyProfile> {
             decoration: BoxDecoration(
               color: Colors.teal.shade50,
             ),
-            child: Text('Sample Drawer Header'),
+            child: Text('${dateToday}\n Sample Drawer Header'),
           ),
           ListTile(
             title: const Text('Add Entry'),
@@ -140,36 +140,6 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
           ListTile(
-            title: const Text('View Students'),
-            onTap: () {
-              Navigator.pushNamed(context, '/admin-view-students');
-            },
-          ),
-          ListTile(
-            title: const Text('View Requests'),
-            onTap: () {
-              Navigator.pushNamed(context, '/admin-view-requests');
-            },
-          ),
-          ListTile(
-            title: const Text('View Under Monitoring'),
-            onTap: () {
-              Navigator.pushNamed(context, '/admin-view-under-monitoring');
-            },
-          ),
-          ListTile(
-            title: const Text('Search Logs'),
-            onTap: () {
-              Navigator.pushNamed(context, '/search-logs');
-            },
-          ),
-          ListTile(
-            title: const Text('View Logs'),
-            onTap: () {
-              Navigator.pushNamed(context, '/entmon-view-logs');
-            },
-          ),
-          ListTile(
             title: const Text('Logout'),
             onTap: () {
               context.read<AuthProvider>().signOut();
@@ -181,16 +151,15 @@ class _MyProfileState extends State<MyProfile> {
             //Add Entry Button
             backgroundColor: Colors.teal[200],
             onPressed: () {
+              String date =
+                  "${dateToday.day}-${dateToday.month}-${dateToday.year}";
 
-              String date = "${dateToday.day}-${dateToday.month}-${dateToday.year}";
-
-              if(todayEntry == date) {
+              if (todayEntry == date) {
                 _alreadySubmittedPrompt(context);
               } else {
                 todayEntry = date;
                 Navigator.pushNamed(context, '/user-add-entry');
               }
-              
             },
             child: const Icon(Icons.library_add_outlined,
                 color: Color(0xFF004D40))),

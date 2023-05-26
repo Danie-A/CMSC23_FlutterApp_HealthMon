@@ -6,6 +6,7 @@ import '../api/FirebaseEntryAPI.dart';
 class EntryListProvider with ChangeNotifier {
   late FirebaseEntryAPI firebaseService;
   late Stream<QuerySnapshot> _entryStream;
+  Entry ?currentEntry;
 
   EntryListProvider() {
     firebaseService = FirebaseEntryAPI();
@@ -20,20 +21,32 @@ class EntryListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  setCurrentEntry(Entry entry){
+    currentEntry = entry;
+    notifyListeners();
+  }
+
+  getCurrentEntry(){
+    return currentEntry;
+  }
+
+
+
   void addEntryDetail(Entry entry) async {
     String message = await firebaseService.addEntry(entry.entryToJson(entry));
+    setCurrentEntry(entry);
     print(message);
-
+    print(currentEntry);
     notifyListeners();
   }
 
   // REMINDER: STILL NEED editEntry method
 
-  // void editEntry(String id, String newTitle) async {
-  //   String message = await firebaseService.editUserDetail(id, newTitle);
-  //   print(message);
-  //   notifyListeners();
-  // }
+  void editEntry(String id, String newTitle) async {
+     String message = await firebaseService.editEntry(id, newTitle);
+     print(message);
+     notifyListeners();
+  }
 
   void deleteEntry(String id) async {
     String message = await firebaseService.deleteEntry(id);

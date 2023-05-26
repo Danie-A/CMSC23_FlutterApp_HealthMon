@@ -11,6 +11,7 @@ class AdminMonitorSignupPage extends StatefulWidget {
 }
 
 class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
+  
   @override
   Widget build(BuildContext context) {
     void showErrorDialog(String string) {

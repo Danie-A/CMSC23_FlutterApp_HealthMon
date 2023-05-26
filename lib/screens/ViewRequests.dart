@@ -200,28 +200,42 @@ class _ViewRequestsState extends State<ViewRequests> {
     return Scaffold(
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
+        DrawerHeader(
+          decoration: BoxDecoration(
+            color: Colors.teal.shade50,
+          ),
+          child: Text('Sample Drawer Header'),
+        ),
         ListTile(
-          title: const Text('To Do List'),
+          title: const Text('View All Students'),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
+            Navigator.pushNamed(context, '/view-students'); //show qr
           },
         ),
         ListTile(
-          title: const Text('Details'),
+          title: const Text('View Quarantined Students'),
           onTap: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => const UserDetailsPage()));
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
+            Navigator.pushNamed(context, '/view-quarantined'); //scan qr
           },
         ),
         ListTile(
-          title: const Text('Logout'),
+          title: const Text('View Under Monitoring Students'),
           onTap: () {
-            // context.read<AuthProvider>().signOut();
-            // Navigator.pop(context);
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
+            Navigator.pushNamed(
+                context, '/view-under-monitoring'); //go to searchlogs
+          },
+        ),
+        ListTile(
+          title: const Text('Back'),
+          onTap: () {
+            Navigator.pop(context); //back drawer
+            Navigator.pop(context); //back to homepage
           },
         ),
       ])),
@@ -229,7 +243,7 @@ class _ViewRequestsState extends State<ViewRequests> {
         title: Row(children: const [
           Icon(Icons.pending_actions, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text("View Requests",
+          Text("Student Requests",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF004D40),

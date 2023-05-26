@@ -91,26 +91,41 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
         backgroundColor: Color.fromARGB(255, 255, 237, 226),
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.teal.shade50,
+            ),
+            child: Text('Sample Drawer Header'),
+          ),
           ListTile(
-            title: const Text('My Profile'),
+            title: const Text('View All Students'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(context); //back drawer
+              Navigator.pop(context); //back to homepage
+              Navigator.pushNamed(context, '/view-students'); //show qr
             },
           ),
           ListTile(
-            title: const Text('Details'),
+            title: const Text('View Quarantined'),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => const UserDetailsPage()));
+              Navigator.pop(context); //back drawer
+              Navigator.pop(context); //back to homepage
+              Navigator.pushNamed(context, '/view-quarantined'); //scan qr
             },
           ),
           ListTile(
-            title: const Text('Logout'),
+            title: const Text('Student Requests'),
             onTap: () {
-              // context.read<AuthProvider>().signOut();
-              // Navigator.pop(context);
+              Navigator.pop(context); //back drawer
+              Navigator.pop(context); //back to homepage
+              Navigator.pushNamed(context, '/view-requests'); //go to searchlogs
+            },
+          ),
+          ListTile(
+            title: const Text('Back'),
+            onTap: () {
+              Navigator.pop(context); //back drawer
+              Navigator.pop(context); //back to homepage
             },
           ),
         ])),
