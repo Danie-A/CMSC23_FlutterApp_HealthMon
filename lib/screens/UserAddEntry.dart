@@ -6,6 +6,7 @@ import '../providers/EntryListProvider.dart';
 import '../screens/myprofile.dart';
 import 'package:intl/intl.dart';
 import '../providers/UserDetailListProvider.dart';
+import '../providers/AuthProvider.dart';
 
 class UserAddEntry extends StatefulWidget {
   @override
@@ -187,7 +188,7 @@ class _UserAddEntryState extends State<UserAddEntry> {
                         has_symptoms: has_symptoms,
                         had_contact: had_contact,
                         status: status,
-                        user_key: user_key,
+                        user_key: context.read<AuthProvider>().userId,
                         edit_request: edit_request,
                         delete_request: delete_request,
                         entry_date: entryDate);
@@ -206,8 +207,11 @@ class _UserAddEntryState extends State<UserAddEntry> {
                       newEntry.status = "under_monitoring";
                     }
 
-
                     context.read<EntryListProvider>().addEntryDetail(newEntry);
+                    // change status of user in UserDetailListProvider
+                    // context.read<UserDetailListProvider>().editStatus(
+                    //     context.read<UserDetailListProvider>().currentId,
+                    //     newEntry.status);
 
                     Navigator.pop(context);
 

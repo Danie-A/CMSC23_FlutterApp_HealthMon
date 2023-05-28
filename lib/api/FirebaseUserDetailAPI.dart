@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseUserDetailAPI {
@@ -22,13 +21,20 @@ class FirebaseUserDetailAPI {
     return db.collection("userDetails").snapshots();
   }
 
-  
-
   Future<String> deleteUserDetail(String? id) async {
     try {
       await db.collection("userDetails").doc(id).delete();
 
       return "Successfully deleted user detail!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> editStatus(String? id, String status) async {
+    try {
+      await db.collection("userDetails").doc(id).update({"status": status});
+      return "Successfully edited status of user!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }

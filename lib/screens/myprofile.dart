@@ -21,6 +21,8 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  String uid = "";
+
   String data = "";
   String accountType = "admin";
   bool unableToGenerateQRCode = false;
@@ -60,9 +62,10 @@ class _MyProfileState extends State<MyProfile> {
               'However you can choose to edit or delete your entry for today.\n'),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {Navigator.pushNamed(context, '/user-edit-entry')}, child: Text("Edit Entry")),
-            ElevatedButton(
-                onPressed: () => {}, child: Text("Delete Entry")),
+                onPressed: () =>
+                    {Navigator.pushNamed(context, '/user-edit-entry')},
+                child: Text("Edit Entry")),
+            ElevatedButton(onPressed: () => {}, child: Text("Delete Entry")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -82,6 +85,27 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     Stream<User?> userStream = context.watch<AuthProvider>().uStream;
+
+    userStream.listen((User? user) {
+      if (user != null) {
+        uid = user.uid;
+        context.read<AuthProvider>().setUid(uid);
+        print("User ID: $uid");
+        // Do something with the user ID
+      } else {
+        // Handle the case when the user is null
+        print("User is null");
+      }
+    }, onError: (error) {
+      // Handle any errors that occur while listening to the stream
+      print("Error: $error");
+    }, onDone: () {
+      // Stream has completed
+      print("Stream completed");
+    });
+
+    // compare the uid to each document's uid field in the userdetails collection
+    // if equal, set the currentId of UserDetailListProvider to the id field of that document
 
     return StreamBuilder(
         stream: userStream,
@@ -151,6 +175,10 @@ class _MyProfileState extends State<MyProfile> {
             //Add Entry Button
             backgroundColor: Colors.teal[200],
             onPressed: () {
+              // get list of entries of user
+              // compare date of each entry with today's date
+              // if not equal to today's date, allow user to add entry
+
               String date =
                   "${dateToday.day}-${dateToday.month}-${dateToday.year}";
 
