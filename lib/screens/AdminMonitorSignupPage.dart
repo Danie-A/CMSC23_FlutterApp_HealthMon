@@ -11,7 +11,6 @@ class AdminMonitorSignupPage extends StatefulWidget {
 }
 
 class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
-  
   @override
   Widget build(BuildContext context) {
     void showErrorDialog(String string) {
@@ -175,7 +174,7 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
 
             if (message == 'email-already-in-use') {
               showErrorDialog("Email Already In Use");
-            } else if (message == '') {
+            } else {
               UserDetail userDetail = UserDetail(
                   email: emailController.text,
                   firstName: fnameController.text,
@@ -184,7 +183,8 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
                   position: positionController.text,
                   homeUnit: homeUnitController.text,
                   status: 'No Health Entry',
-                  userType: 'Admin');
+                  userType: 'Admin',
+                  uid: message);
               addAdminMonitorDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }

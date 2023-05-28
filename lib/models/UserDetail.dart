@@ -10,6 +10,7 @@ class UserDetail {
   String email;
   String status;
   String userType; // "student", "admin", "monitor"
+  String uid;
 
   // for student (user)
   String? username;
@@ -23,21 +24,23 @@ class UserDetail {
   String? position;
   String? homeUnit;
 
-  UserDetail(
-      {this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.status,
-      required this.userType,
-      this.username,
-      this.college,
-      this.course,
-      this.studentNo,
-      this.preExistingIllness,
-      this.empNo,
-      this.position,
-      this.homeUnit});
+  UserDetail({
+    this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.status,
+    required this.userType,
+    required this.uid,
+    this.username,
+    this.college,
+    this.course,
+    this.studentNo,
+    this.preExistingIllness,
+    this.empNo,
+    this.position,
+    this.homeUnit,
+  });
 
 // get STUDENT from JSON
   // Factory constructor to instantiate object from json format
@@ -49,6 +52,7 @@ class UserDetail {
         email: json['email'],
         status: json['status'],
         userType: json['userType'],
+        uid: json['uid'],
         username: json['username'],
         college: json['college'],
         course: json['course'],
@@ -65,6 +69,7 @@ class UserDetail {
       email: json['email'],
       status: json['status'],
       userType: json['userType'],
+      uid: json['uid'],
       empNo: json['empNo'],
       position: json['position'],
       homeUnit: json['homeUnit'],
@@ -95,6 +100,7 @@ class UserDetail {
       'email': student.email,
       'status': student.status,
       'userType': student.userType,
+      'uid': student.uid,
       'username': student.username,
       'college': student.college,
       'course': student.course,
@@ -111,6 +117,7 @@ class UserDetail {
       'email': adminMonitor.email,
       'status': adminMonitor.status,
       'userType': adminMonitor.userType,
+      'uid': adminMonitor.uid,
       'empNo': adminMonitor.empNo,
       'position': adminMonitor.position,
       'homeUnit': adminMonitor.homeUnit

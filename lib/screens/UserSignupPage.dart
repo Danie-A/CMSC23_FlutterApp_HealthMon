@@ -12,7 +12,6 @@ class UserSignupPage extends StatefulWidget {
 }
 
 class _UserSignupPageState extends State<UserSignupPage> {
-
   bool hypertension = false;
   bool diabetes = false;
   bool tuberculosis = false;
@@ -65,7 +64,6 @@ class _UserSignupPageState extends State<UserSignupPage> {
       context.read<UserDetailListProvider>().addStudentDetail(userDetail);
     }
 
-
     final email = TextFormField(
       decoration: const InputDecoration(
         // contentPadding: EdgeInsets.all(16),
@@ -110,8 +108,6 @@ class _UserSignupPageState extends State<UserSignupPage> {
         return null;
       }, // adds a validator in the form field
     );
-
-
 
     final fname = TextFormField(
       decoration: const InputDecoration(
@@ -304,8 +300,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
 
             if (message == 'email-already-in-use') {
               showErrorDialog("Email Already In Use");
-            } else if (message == '') {
-
+            } else {
               if (hypertension == true) {
                 preExistingIllnessList.add("Hypertension");
               }
@@ -348,7 +343,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
                   studentNo: int.parse(studentNoController.text),
                   preExistingIllness: preExistingIllnessList,
                   status: 'No Health Entry',
-                  userType: 'User');
+                  userType: 'User',
+                  uid: message);
               addStudentDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }
