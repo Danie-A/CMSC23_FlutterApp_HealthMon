@@ -28,7 +28,6 @@ class _MyProfileState extends State<MyProfile> {
   String status = "";
   String data = "";
   String accountType = "admin";
-  bool generateQRCode = true;
 
   String todayEntry = "";
   DateTime dateToday = DateTime.now();
@@ -87,6 +86,10 @@ class _MyProfileState extends State<MyProfile> {
 
   Widget _buildScrollView(BuildContext context, final screenWidth,
       final screenHeight, UserDetail userDetail) {
+    bool generateQRCode = true;
+    if (userDetail.status != 'Cleared') {
+      generateQRCode = false;
+    }
     return (SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -270,16 +273,6 @@ class _MyProfileState extends State<MyProfile> {
         print("User id is $id");
         context.read<UserDetailListProvider>().fetchUserDetail(id);
 
-        status =
-            await context.read<UserDetailListProvider>().getUserStatus(uid);
-
-        // if userdetail status is not "Cleared", then set generateQRCode to false
-        if (status != "Cleared") {
-          setState(() {
-            generateQRCode = false;
-          });
-        }
-
         // Do something with the user ID
       } else {
         // Handle the case when the user is null
@@ -384,7 +377,9 @@ class _MyProfileState extends State<MyProfile> {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             } else if (snapshot.hasData) {
               return (ListView.builder(
                   itemCount: snapshot.data?.docs.length,
