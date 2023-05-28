@@ -12,7 +12,7 @@ class AdminConsole extends StatelessWidget {
       children: [
         Padding(
             padding: EdgeInsets.only(top: 40, bottom: 20),
-            child: Text("AUTHORIZED PERSONNEL CONSOLE",
+            child: Text("AUTHORIZED ADMIN CONSOLE",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -41,7 +41,6 @@ class AdminConsole extends StatelessWidget {
                         Icon(Icons.groups_rounded, size: screenWidth * 0.20),
                         Text("View All Students", textAlign: TextAlign.center)
                       ])),
-
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/view-quarantined');
@@ -58,9 +57,9 @@ class AdminConsole extends StatelessWidget {
                         Text("View Quarantined Students",
                             textAlign: TextAlign.center)
                       ])),
-
               ElevatedButton(
-                  onPressed: () { Navigator.pushNamed(context, '/view-under-monitoring');
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/view-under-monitoring');
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -74,8 +73,6 @@ class AdminConsole extends StatelessWidget {
                         Text("Under Monitoring Students",
                             textAlign: TextAlign.center)
                       ])),
-
-                      
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/view-requests');

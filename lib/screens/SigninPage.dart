@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:provider/provider.dart';
 import '../providers/AuthProvider.dart';
 import 'UserSignupPage.dart';
@@ -89,6 +90,7 @@ class _SigninPageState extends State<SigninPage> {
           identityValue = newValue!;
         });
         print(identityValue);
+        context.read<UserDetailListProvider>().setUserType(identityValue);
       },
       items: identities.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
@@ -111,7 +113,7 @@ class _SigninPageState extends State<SigninPage> {
           if (_formSigninKey.currentState!.validate()) {
             String message = await context.read<AuthProvider>().signIn(
                 emailController.text.trim(), passwordController.text.trim());
-                
+
             if (message == 'user-not-found') {
               showErrorDialog("User Not Found");
             } else if (message == 'wrong-password') {

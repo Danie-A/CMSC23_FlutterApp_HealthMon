@@ -8,8 +8,9 @@ class HealthEntry extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
-          height: 50,
-          color: Colors.teal,
-        ));
+            alignment: Alignment.center,
+            height: 50,
+            color: Colors.teal,
+            child: Text("Health Entry")));
   }
 }

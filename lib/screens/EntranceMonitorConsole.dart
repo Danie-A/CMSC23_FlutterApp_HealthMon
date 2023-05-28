@@ -13,7 +13,7 @@ class EntranceMonitorConsole extends StatelessWidget {
       children: [
         Padding(
             padding: EdgeInsets.only(top: 40, bottom: 20),
-            child: Text("AUTHORIZED PERSONNEL CONSOLE",
+            child: Text("ENTRANCE MONITOR CONSOLE",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -28,8 +28,6 @@ class EntranceMonitorConsole extends StatelessWidget {
             crossAxisCount: 2,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-
-
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/view-logs');
@@ -45,7 +43,6 @@ class EntranceMonitorConsole extends StatelessWidget {
                             size: screenWidth * 0.20),
                         Text("View Logs", textAlign: TextAlign.center)
                       ])),
-
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/scan-qr');
@@ -75,9 +72,6 @@ class EntranceMonitorConsole extends StatelessWidget {
                             size: screenWidth * 0.20),
                         Text("Search Logs", textAlign: TextAlign.center)
                       ])),
-
-
-
             ],
           ),
         )),

@@ -5,6 +5,7 @@ import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:health_monitoring_app/screens/AdminConsole.dart';
 import 'package:health_monitoring_app/screens/EntranceMonitorConsole.dart';
 import 'package:health_monitoring_app/screens/UserAddEntry.dart';
+import 'package:intl/intl.dart';
 import 'HealthEntry.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'AdminViewUnderMonitoring.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -25,12 +27,8 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   String uid = "";
   String id = "";
-  String status = "";
   String data = "";
-  String accountType = "admin";
-
   String todayEntry = "";
-  DateTime dateToday = DateTime.now();
 
   static List healthEntries = [
     "a",
@@ -90,14 +88,17 @@ class _MyProfileState extends State<MyProfile> {
     if (userDetail.status != 'Cleared') {
       generateQRCode = false;
     }
+    String status = userDetail.status;
+
     return (SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // ADMIN OR HEALTH MONITOR CONTROLLER PART
-          if (accountType == 'admin') AdminConsole(),
-          if (accountType == 'entrance monitor') EntranceMonitorConsole(),
+          if (userDetail.userType == 'Admin') AdminConsole(),
+          if (userDetail.userType == 'Entrance Monitor')
+            EntranceMonitorConsole(),
 
           //WELCOME
           Container(
@@ -138,8 +139,8 @@ class _MyProfileState extends State<MyProfile> {
                   disabledBackgroundColor: Colors.teal[100], // Background color
                 ),
                 onPressed: null,
-                child: const Text(
-                  "Cleared",
+                child: Text(
+                  "${status}",
                   style: TextStyle(
                       color: Colors.teal,
                       fontSize: 18,
@@ -271,7 +272,6 @@ class _MyProfileState extends State<MyProfile> {
         // set the currentId in the UserDetailListProvider by comparing uid with the uid field in the userdetail document
         id = await context.read<UserDetailListProvider>().getCurrentId(uid);
         print("User id is $id");
-        context.read<UserDetailListProvider>().fetchUserDetail(id);
 
         // Do something with the user ID
       } else {
@@ -309,6 +309,8 @@ class _MyProfileState extends State<MyProfile> {
       BuildContext context, Stream<QuerySnapshot>? userDetailStream) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final today = new DateTime.now();
+    String entryDate = DateFormat('yMd').format(today);
     return Scaffold(
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
@@ -329,7 +331,7 @@ class _MyProfileState extends State<MyProfile> {
             decoration: BoxDecoration(
               color: Colors.teal.shade50,
             ),
-            child: Text('${dateToday}\n Sample Drawer Header'),
+            child: Text('\n\n\n${entryDate}'),
           ),
           ListTile(
             title: const Text('Add Entry'),
@@ -359,13 +361,10 @@ class _MyProfileState extends State<MyProfile> {
               // compare date of each entry with today's date
               // if not equal to today's date, allow user to add entry
 
-              String date =
-                  "${dateToday.day}-${dateToday.month}-${dateToday.year}";
-
-              if (todayEntry == date) {
+              if (todayEntry == entryDate) {
                 _alreadySubmittedPrompt(context);
               } else {
-                todayEntry = date;
+                todayEntry = entryDate;
                 Navigator.pushNamed(context, '/user-add-entry');
               }
             },

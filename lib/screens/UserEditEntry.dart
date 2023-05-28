@@ -8,14 +8,10 @@ import 'package:intl/intl.dart';
 
 class UserEditEntry extends StatefulWidget {
   @override
-
   _UserEditEntryState createState() => _UserEditEntryState();
 }
 
 class _UserEditEntryState extends State<UserEditEntry> {
-  
-  
-
   @override
   Widget build(BuildContext context) {
     final now = new DateTime.now();
@@ -208,7 +204,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
                         newEntry.loss_taste == true ||
                         newEntry.loss_smell == true) {
                       newEntry.has_symptoms = true;
-                      newEntry.status = "under_monitoring";
+                      newEntry.status = "Under Monitoring";
                     }
 
                     context.read<EntryListProvider>().addEntryDetail(newEntry);

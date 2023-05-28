@@ -204,7 +204,7 @@ class _UserAddEntryState extends State<UserAddEntry> {
                         newEntry.loss_taste == true ||
                         newEntry.loss_smell == true) {
                       newEntry.has_symptoms = true;
-                      newEntry.status = "under_monitoring";
+                      newEntry.status = "Under Monitoring";
                     }
 
                     context.read<EntryListProvider>().addEntryDetail(newEntry);

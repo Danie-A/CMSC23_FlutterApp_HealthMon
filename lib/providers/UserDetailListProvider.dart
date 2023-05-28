@@ -9,6 +9,7 @@ class UserDetailListProvider with ChangeNotifier {
   Stream<DocumentSnapshot<Object?>>? _userStream;
 
   String currentId = "";
+  String _userType = "";
 
   UserDetailListProvider() {
     firebaseService = FirebaseUserDetailAPI();
@@ -20,6 +21,11 @@ class UserDetailListProvider with ChangeNotifier {
   Stream<DocumentSnapshot<Object?>> get user => _userStream!;
 
   String get getId => currentId;
+
+  String get userType => _userType;
+  setUserType(String userType) {
+    this._userType = userType;
+  }
 
   setCurrentId(String id) {
     this.currentId = id;
