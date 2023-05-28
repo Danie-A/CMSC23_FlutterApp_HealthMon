@@ -88,9 +88,7 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     Stream<User?> userStream = context.watch<AuthProvider>().uStream;
-    Stream<DocumentSnapshot<Object?>> userDetailStream =
-        context.watch<UserDetailListProvider>().user;
-
+    Stream<DocumentSnapshot<Object?>>? userDetailStream;
     userStream.listen((User? user) async {
       if (user != null) {
         uid = user.uid;
@@ -101,7 +99,7 @@ class _MyProfileState extends State<MyProfile> {
         id = await context.read<UserDetailListProvider>().getCurrentId(uid);
         print("User id is $id");
         context.read<UserDetailListProvider>().fetchUserDetail(id);
-
+        userDetailStream = context.watch<UserDetailListProvider>().user;
         status =
             await context.read<UserDetailListProvider>().getUserStatus(uid);
 
@@ -145,7 +143,7 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Scaffold displayScaffold(BuildContext context,
-      Stream<DocumentSnapshot<Object?>> userDetailStream) {
+      Stream<DocumentSnapshot<Object?>>? userDetailStream) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(

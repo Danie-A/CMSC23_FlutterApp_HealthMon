@@ -78,13 +78,13 @@ class FirebaseUserDetailAPI {
     return db.collection("userDetails").snapshots();
   }
 
-  // Stream<QuerySnapshot> getCurrentUserDetail(String uid) {
-  //   return db
-  //       .collection("userDetails")
-  //       .where("uid", isEqualTo: uid)
-  //       .limit(1)
-  //       .snapshots();
-  // }
+  Stream<QuerySnapshot> getCurrentUserDetail(String uid) {
+    return db
+        .collection("userDetails")
+        .where("uid", isEqualTo: uid)
+        .limit(1)
+        .snapshots();
+  }
 
   DocumentReference getSpecificUser(String id) {
     print(FirebaseFirestore.instance.collection("userDetails").doc(id));
