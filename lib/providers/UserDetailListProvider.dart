@@ -6,6 +6,7 @@ import '../api/FirebaseUserDetailAPI.dart';
 class UserDetailListProvider with ChangeNotifier {
   late FirebaseUserDetailAPI firebaseService;
   late Stream<QuerySnapshot> _userDetailStream;
+
   String currentId = "";
 
   UserDetailListProvider() {
@@ -16,7 +17,8 @@ class UserDetailListProvider with ChangeNotifier {
   // getter
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
 
-  String get getCurrentId => currentId;
+  String get getId => currentId;
+
   setCurrentId(String id) {
     this.currentId = id;
   }
@@ -57,5 +59,18 @@ class UserDetailListProvider with ChangeNotifier {
   void editStatus(String id, String status) async {
     String message = await firebaseService.editStatus(id, status);
     notifyListeners();
+  }
+
+  Future<String> getCurrentId(String uid) async {
+    String message = await firebaseService.getCurrentId(uid);
+    setCurrentId(message);
+    notifyListeners();
+    return message;
+  }
+
+  Future<String> getUserStatus(String uid) async {
+    String status = await firebaseService.getUserStatus(uid);
+    notifyListeners();
+    return status;
   }
 }

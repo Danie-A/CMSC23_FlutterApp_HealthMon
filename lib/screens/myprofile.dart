@@ -1,6 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/models/UserDetail.dart';
+import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:health_monitoring_app/screens/AdminConsole.dart';
 import 'package:health_monitoring_app/screens/EntranceMonitorConsole.dart';
 import 'package:health_monitoring_app/screens/UserAddEntry.dart';
@@ -12,6 +13,7 @@ import '../providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'AdminViewUnderMonitoring.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -22,10 +24,11 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   String uid = "";
-
+  String id = "";
+  String status = "";
   String data = "";
   String accountType = "admin";
-  bool unableToGenerateQRCode = false;
+  bool generateQRCode = true;
 
   String todayEntry = "";
   DateTime dateToday = DateTime.now();
@@ -86,11 +89,26 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     Stream<User?> userStream = context.watch<AuthProvider>().uStream;
 
-    userStream.listen((User? user) {
+    userStream.listen((User? user) async {
       if (user != null) {
         uid = user.uid;
         context.read<AuthProvider>().setUid(uid);
         print("User ID: $uid");
+
+        // set the currentId in the UserDetailListProvider by comparing uid with the uid field in the userdetail document
+        id = await context.read<UserDetailListProvider>().getCurrentId(uid);
+        print("User id is $id");
+
+        status =
+            await context.read<UserDetailListProvider>().getUserStatus(uid);
+
+        // if userdetail status is not "Cleared", then set generateQRCode to false
+        if (status != "Cleared") {
+          setState(() {
+            generateQRCode = false;
+          });
+        }
+
         // Do something with the user ID
       } else {
         // Handle the case when the user is null
@@ -103,9 +121,6 @@ class _MyProfileState extends State<MyProfile> {
       // Stream has completed
       print("Stream completed");
     });
-
-    // compare the uid to each document's uid field in the userdetails collection
-    // if equal, set the currentId of UserDetailListProvider to the id field of that document
 
     return StreamBuilder(
         stream: userStream,
@@ -132,10 +147,10 @@ class _MyProfileState extends State<MyProfile> {
     return Scaffold(
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
-          title: Row(children: const [
+          title: Row(children: [
             Icon(Icons.medical_information_outlined, color: Color(0xFF004D40)),
             SizedBox(width: 14),
-            Text("My Profile",
+            Text("My Profile ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF004D40),
@@ -299,11 +314,11 @@ class _MyProfileState extends State<MyProfile> {
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
-                        onPressed: (unableToGenerateQRCode)
-                            ? null
-                            : () {
+                        onPressed: (generateQRCode)
+                            ? () {
                                 Navigator.pushNamed(context, '/show-qr');
-                              },
+                              }
+                            : null,
                         style: ElevatedButton.styleFrom(
                             // Background color
                             fixedSize: Size(150, 20),

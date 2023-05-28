@@ -60,6 +60,19 @@ class UserDetail {
         preExistingIllness: json['preExistingIllness']);
   }
 
+  factory UserDetail.userFromJson(Map<String, dynamic> json) {
+    return UserDetail(
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        status: json['status'],
+        userType: json['userType'],
+        uid: json['uid'],
+        username: json['username'],
+        college: json['college']);
+  }
+
 // get ADMIN or MONITOR from JSON
   factory UserDetail.adminMonitorFromJson(Map<String, dynamic> json) {
     return UserDetail(
