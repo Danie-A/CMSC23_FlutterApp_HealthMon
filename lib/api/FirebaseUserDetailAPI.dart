@@ -86,6 +86,11 @@ class FirebaseUserDetailAPI {
   //       .snapshots();
   // }
 
+  DocumentReference getSpecificUser(String id) {
+    print(FirebaseFirestore.instance.collection("userDetails").doc(id));
+    return FirebaseFirestore.instance.collection("userDetails").doc(id);
+  }
+
   Future<String> deleteUserDetail(String? id) async {
     try {
       await db.collection("userDetails").doc(id).delete();

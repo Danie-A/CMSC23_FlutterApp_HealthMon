@@ -18,6 +18,7 @@ class AuthProvider with ChangeNotifier {
   String get userId => uid;
   setUid(String uid) {
     this.uid = uid;
+    notifyListeners();
   }
 
   void fetchAuthentication() {
