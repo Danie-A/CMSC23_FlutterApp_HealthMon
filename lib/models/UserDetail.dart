@@ -89,6 +89,14 @@ class UserDetail {
     );
   }
 
+// list of users
+  static List<UserDetail> usersList(String jsonData) {
+    final Iterable<dynamic> data = jsonDecode(jsonData);
+    return data
+        .map<UserDetail>((dynamic d) => UserDetail.studentFromJson(d))
+        .toList();
+  }
+
 // list of students
   static List<UserDetail> studentsFromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);

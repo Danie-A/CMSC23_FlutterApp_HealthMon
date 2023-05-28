@@ -85,10 +85,180 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
+  Widget _buildScrollView(BuildContext context, final screenWidth,
+      final screenHeight, UserDetail userDetail) {
+    return (SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // ADMIN OR HEALTH MONITOR CONTROLLER PART
+          if (accountType == 'admin') AdminConsole(),
+          if (accountType == 'entrance monitor') EntranceMonitorConsole(),
+
+          //WELCOME
+          Container(
+              margin: const EdgeInsets.only(top: 40, bottom: 20),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Icon(Icons.waving_hand_outlined, color: Colors.teal),
+                Text(
+                  "Welcome,   ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF004D40),
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  "${userDetail.firstName}!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF004D40),
+                    fontSize: 20,
+                  ),
+                )
+              ])),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Status: ",
+                style: TextStyle(
+                  color: Colors.teal,
+                  fontSize: 18,
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  disabledBackgroundColor: Colors.teal[100], // Background color
+                ),
+                onPressed: null,
+                child: const Text(
+                  "Cleared",
+                  style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 80),
+            ],
+          ),
+          const Divider(
+            thickness: 1,
+            color: Colors.white,
+          ),
+          Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(30),
+              width: screenWidth,
+              child: Column(children: [
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Generate Building Pass",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      IconButton(
+                          iconSize: 17,
+                          visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                          icon: Icon(Icons.help_outline_outlined),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("I can't generate my QR!"),
+                                content: Text(
+                                    "To be able to generate your QR code, you must complete your daily health entry, and have no symptoms"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Continue"))
+                                ],
+                              ),
+                            );
+                          })
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                    onPressed: (generateQRCode)
+                        ? () {
+                            Navigator.pushNamed(context, '/show-qr');
+                          }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                        // Background color
+                        fixedSize: Size(150, 20),
+                        shape: StadiumBorder()),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.qr_code_outlined,
+                        ),
+                        const Text(
+                          "Show QR",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    )),
+              ])),
+
+          const Divider(
+            thickness: 1,
+            color: Colors.white,
+          ),
+          Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 20, top: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.monitor_heart_outlined,
+                    color: Color(0xFF004D40),
+                  ),
+                  SizedBox(width: 10),
+                  const Text(
+                    "Health Entries List",
+                    style: TextStyle(
+                        color: Colors.teal,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
+          SizedBox(
+              height: 800,
+              width: screenWidth * .8,
+              child: ListView.builder(
+                  itemCount: healthEntries.length,
+                  itemBuilder: (context, index) {
+                    return const HealthEntry();
+                  })),
+        ],
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Stream<User?> userStream = context.watch<AuthProvider>().uStream;
-    Stream<DocumentSnapshot<Object?>>? userDetailStream;
+    Stream<QuerySnapshot> userDetailStream =
+        context.watch<UserDetailListProvider>().userDetails;
+    ;
     userStream.listen((User? user) async {
       if (user != null) {
         uid = user.uid;
@@ -99,7 +269,7 @@ class _MyProfileState extends State<MyProfile> {
         id = await context.read<UserDetailListProvider>().getCurrentId(uid);
         print("User id is $id");
         context.read<UserDetailListProvider>().fetchUserDetail(id);
-        userDetailStream = context.watch<UserDetailListProvider>().user;
+
         status =
             await context.read<UserDetailListProvider>().getUserStatus(uid);
 
@@ -142,8 +312,8 @@ class _MyProfileState extends State<MyProfile> {
         });
   }
 
-  Scaffold displayScaffold(BuildContext context,
-      Stream<DocumentSnapshot<Object?>>? userDetailStream) {
+  Scaffold displayScaffold(
+      BuildContext context, Stream<QuerySnapshot>? userDetailStream) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -208,194 +378,34 @@ class _MyProfileState extends State<MyProfile> {
             },
             child: const Icon(Icons.library_add_outlined,
                 color: Color(0xFF004D40))),
-        body: StreamBuilder<DocumentSnapshot>(
+        body: StreamBuilder<QuerySnapshot>(
           stream: userDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
+            } else if (snapshot.hasData) {
+              return (ListView.builder(
+                  itemCount: snapshot.data?.docs.length,
+                  itemBuilder: (context, index) {
+                    UserDetail userDetail = UserDetail.userFromJson(
+                        snapshot.data?.docs[index].data()
+                            as Map<String, dynamic>);
+
+                    if (userDetail.uid == uid) {
+                      return (_buildScrollView(
+                          context, screenWidth, screenHeight, userDetail));
+                      // return Container(child: Text(userDetail.firstName));
+                    } else {
+                      return Container();
+                    }
+                  }));
             }
-
-            if (snapshot.hasData) {
-              var documentData = snapshot.data?.data();
-              // Access fields in documentData as needed
-              // Example: var status = documentData?['status'];
-
-              return Text('User Stream Data: $documentData');
-            }
-
-            return Text('No data available');
+            return Center(
+              child: Text("No User Details Found"),
+            );
           },
         ));
   }
 }
-
-// SingleChildScrollView(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               // ADMIN OR HEALTH MONITOR CONTROLLER PART
-//               if (accountType == 'admin') AdminConsole(),
-//               if (accountType == 'entrance monitor') EntranceMonitorConsole(),
-
-//               //WELCOME
-//               Container(
-//                   margin: const EdgeInsets.only(top: 40, bottom: 20),
-//                   child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Icon(Icons.waving_hand_outlined, color: Colors.teal),
-//                         Text(
-//                           "Welcome,   ",
-//                           textAlign: TextAlign.center,
-//                           style: TextStyle(
-//                             color: Color(0xFF004D40),
-//                             fontSize: 20,
-//                           ),
-//                         ),
-//                         Text(
-//                           "{username}!",
-//                           textAlign: TextAlign.center,
-//                           style: TextStyle(
-//                             fontWeight: FontWeight.bold,
-//                             color: Color(0xFF004D40),
-//                             fontSize: 20,
-//                           ),
-//                         )
-//                       ])),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   const Text(
-//                     "Status: ",
-//                     style: TextStyle(
-//                       color: Colors.teal,
-//                       fontSize: 18,
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                     style: ElevatedButton.styleFrom(
-//                       disabledBackgroundColor:
-//                           Colors.teal[100], // Background color
-//                     ),
-//                     onPressed: null,
-//                     child: const Text(
-//                       "Cleared",
-//                       style: TextStyle(
-//                           color: Colors.teal,
-//                           fontSize: 18,
-//                           fontWeight: FontWeight.bold),
-//                     ),
-//                   ),
-//                   SizedBox(height: 80),
-//                 ],
-//               ),
-//               const Divider(
-//                 thickness: 1,
-//                 color: Colors.white,
-//               ),
-//               Container(
-//                   color: Colors.white,
-//                   padding: EdgeInsets.all(30),
-//                   width: screenWidth,
-//                   child: Column(children: [
-//                     Container(
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.center,
-//                         children: [
-//                           const Text(
-//                             "Generate Building Pass",
-//                             style: TextStyle(
-//                               fontWeight: FontWeight.bold,
-//                               fontSize: 18,
-//                             ),
-//                           ),
-//                           IconButton(
-//                               iconSize: 17,
-//                               visualDensity:
-//                                   VisualDensity(horizontal: -4, vertical: -4),
-//                               icon: Icon(Icons.help_outline_outlined),
-//                               onPressed: () {
-//                                 showDialog(
-//                                   context: context,
-//                                   builder: (context) => AlertDialog(
-//                                     title: Text("I can't generate my QR!"),
-//                                     content: Text(
-//                                         "To be able to generate your QR code, you must complete your daily health entry, and have no symptoms"),
-//                                     actions: [
-//                                       TextButton(
-//                                           onPressed: () {
-//                                             Navigator.pop(context);
-//                                           },
-//                                           child: Text("Continue"))
-//                                     ],
-//                                   ),
-//                                 );
-//                               })
-//                         ],
-//                       ),
-//                     ),
-//                     SizedBox(height: 20),
-//                     ElevatedButton(
-//                         onPressed: (generateQRCode)
-//                             ? () {
-//                                 Navigator.pushNamed(context, '/show-qr');
-//                               }
-//                             : null,
-//                         style: ElevatedButton.styleFrom(
-//                             // Background color
-//                             fixedSize: Size(150, 20),
-//                             shape: StadiumBorder()),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Icon(
-//                               Icons.qr_code_outlined,
-//                             ),
-//                             const Text(
-//                               "Show QR",
-//                               style: TextStyle(fontWeight: FontWeight.bold),
-//                             )
-//                           ],
-//                         )),
-//                   ])),
-
-//               const Divider(
-//                 thickness: 1,
-//                 color: Colors.white,
-//               ),
-//               Container(
-//                   padding: const EdgeInsets.all(10),
-//                   margin: const EdgeInsets.only(bottom: 20, top: 20),
-//                   child: Row(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Icon(
-//                         Icons.monitor_heart_outlined,
-//                         color: Color(0xFF004D40),
-//                       ),
-//                       SizedBox(width: 10),
-//                       const Text(
-//                         "Health Entries List",
-//                         style: TextStyle(
-//                             color: Colors.teal,
-//                             fontSize: 20,
-//                             fontWeight: FontWeight.bold),
-//                       ),
-//                     ],
-//                   )),
-//               SizedBox(
-//                   height: 800,
-//                   width: screenWidth * .8,
-//                   child: ListView.builder(
-//                       itemCount: healthEntries.length,
-//                       itemBuilder: (context, index) {
-//                         return const HealthEntry();
-//                       })),
-//             ],
-//           ),
-//         )

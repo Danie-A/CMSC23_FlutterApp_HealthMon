@@ -30,6 +30,10 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<Stream<QuerySnapshot>> getCurrentUserDetail(String uid) async {
+    return await firebaseService.getCurrentUserDetail(uid);
+  }
+
   void addStudentDetail(UserDetail user) async {
     String message =
         await firebaseService.addUserDetail(user.studentToJson(user));
