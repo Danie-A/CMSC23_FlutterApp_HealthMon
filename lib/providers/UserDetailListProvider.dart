@@ -16,6 +16,7 @@ class UserDetailListProvider with ChangeNotifier {
 
   // getter
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
+  Stream<QuerySnapshot> get userStream => _userDetailStream;
 
   String get getId => currentId;
 
@@ -73,4 +74,10 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
     return status;
   }
+
+  // void fetchUserDetail(String uid) {
+  //   userStream = await firebaseService.getUserDetail(uid);
+
+  //   notifyListeners();
+  // }
 }
