@@ -344,7 +344,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
                   preExistingIllness: preExistingIllnessList,
                   status: 'No Health Entry',
                   userType: 'User',
-                  uid: message);
+                  uid: message,
+                  latestEntry: "");
               addStudentDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }

@@ -211,6 +211,8 @@ class _UserAddEntryState extends State<UserAddEntry> {
                     // change status of user in UserDetailListProvider
                     context.read<UserDetailListProvider>().editStatus(
                         context.read<AuthProvider>().userId, newEntry.status);
+                    context.read<UserDetailListProvider>().editLatestEntry(
+                        context.read<AuthProvider>().userId, entryDate);
 
                     Navigator.pop(context);
 
