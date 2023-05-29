@@ -100,7 +100,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
               title: Text("${students[index]}"), // name
               // subtitle: Text("${friend.nickname}"), // filter subtitle
               trailing: IconButton(
-                icon: const Icon(Icons.medication),
+                icon: const Icon(Icons.coronavirus_rounded),
                 onPressed: () {
                   _showAddToQuarantine(context, students[index]);
                 },

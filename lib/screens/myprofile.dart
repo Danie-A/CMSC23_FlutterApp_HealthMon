@@ -400,7 +400,7 @@ class _MyProfileState extends State<MyProfile> {
             decoration: BoxDecoration(
               color: Colors.teal.shade50,
             ),
-            child: Text('\n\n\n${dateToday}'),
+            child: Text('\n\n\n\n\n\n${dateToday}'),
           ),
           ListTile(
             title: const Text('Add Entry'),
@@ -438,6 +438,9 @@ class _MyProfileState extends State<MyProfile> {
                     UserDetail userDetail = UserDetail.userFromJson(
                         snapshot.data?.docs[index].data()
                             as Map<String, dynamic>);
+
+                    context.read<UserDetailListProvider>().setCurrentUser(
+                        userDetail); // get current user details in provider to be accessed by other pages
 
                     if (userDetail.uid == uid) {
                       return (_buildScrollView(
