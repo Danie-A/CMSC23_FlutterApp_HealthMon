@@ -1,12 +1,15 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/models/Entry.dart';
 import 'package:health_monitoring_app/models/UserDetail.dart';
+import 'package:health_monitoring_app/providers/EntryListProvider.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:health_monitoring_app/screens/AdminConsole.dart';
 import 'package:health_monitoring_app/screens/EntranceMonitorConsole.dart';
 import 'package:health_monitoring_app/screens/UserAddEntry.dart';
 import 'package:intl/intl.dart';
-import 'HealthEntry.dart';
+import '../models/Entry.dart';
+import '../providers/EntryListProvider.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
 import 'AdminViewStudents.dart';
@@ -16,6 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'AdminViewUnderMonitoring.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'HealthEntry.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -181,7 +185,7 @@ class _MyProfileState extends State<MyProfile> {
                               builder: (context) => AlertDialog(
                                 title: Text("I can't generate my QR!"),
                                 content: Text(
-                                    "To be able to generate your QR code, you must complete your daily health entry, and have no symptoms"),
+                                    "To generate your QR code, you must complete your daily health entry and experience no symptoms. You must also not be quarantined."),
                                 actions: [
                                   TextButton(
                                       onPressed: () {
@@ -245,13 +249,47 @@ class _MyProfileState extends State<MyProfile> {
                 ],
               )),
           SizedBox(
-              height: 800,
+              height: 240,
               width: screenWidth * .8,
-              child: ListView.builder(
-                  itemCount: healthEntries.length,
-                  itemBuilder: (context, index) {
-                    return const HealthEntry();
-                  })),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: context.watch<EntryListProvider>().entryDetails,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasData) {
+                    // get entries of current user only
+                    return (ListView.builder(
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, index) {
+                          Entry entry = Entry.entryFromJson(
+                              snapshot.data?.docs[index].data()
+                                  as Map<String, dynamic>);
+
+                          if (entry.user_key == uid) {
+                            return (HealthEntry(entry: entry));
+                            // return Container(child: Text(userDetail.firstName));
+                          } else {
+                            return Container();
+                          }
+                        }));
+                  }
+                  return Center(
+                    child: Text("No User Details Found"),
+                  );
+                },
+              )
+              // child: ListView.builder(
+              //     itemCount: healthEntries.length,
+              //     itemBuilder: (context, index) {
+              //       return const HealthEntry();
+              //     })
+
+              ),
         ],
       ),
     ));

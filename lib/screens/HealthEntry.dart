@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import '../models/Entry.dart';
 
 class HealthEntry extends StatelessWidget {
-  const HealthEntry({super.key});
+  Entry entry;
+  HealthEntry({super.key, required this.entry});
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +13,6 @@ class HealthEntry extends StatelessWidget {
             alignment: Alignment.center,
             height: 50,
             color: Colors.teal,
-            child: Text("Health Entry")));
+            child: Text("${entry.entry_date} - ${entry.status}")));
   }
 }
