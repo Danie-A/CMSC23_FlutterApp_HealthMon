@@ -48,10 +48,10 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
         return InkWell(
           onTap: () {},
           // InkWell widget adds some hover effect to the ListTile
-          hoverColor: Color(0xFFFBC6A4),
+          hoverColor: Colors.teal[200],
           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-          splashColor: Colors.teal[
-              200], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+          splashColor: Color(
+              0xFFFBC6A4), // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
           child: ListTile(
             leading: Icon(Icons.person, color: Color(0xFFBE7575)),
             title: Text("${underMonitoringStudents[index]}"), // name
@@ -88,7 +88,7 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 237, 226),
+        backgroundColor: Colors.teal[50],
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
           DrawerHeader(

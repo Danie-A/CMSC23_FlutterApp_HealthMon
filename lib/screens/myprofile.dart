@@ -400,7 +400,7 @@ class _MyProfileState extends State<MyProfile> {
             decoration: BoxDecoration(
               color: Colors.teal.shade50,
             ),
-            child: Text('\n\n\n${dateToday}'),
+            child: Text('\n\n\n\n\n\n${dateToday}'),
           ),
           ListTile(
             title: const Text('Add Entry'),
