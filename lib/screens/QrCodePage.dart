@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:provider/provider.dart';
+import '../providers/AuthProvider.dart';
 
 class QrCodePage extends StatefulWidget {
   const QrCodePage({Key? key}) : super(key: key);
@@ -24,9 +26,18 @@ class _QrCodePageState extends State<QrCodePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("QR Code"),
+        title: Row(children: [
+          Icon(Icons.qr_code_2_rounded, color: Color(0xFF004D40)),
+          SizedBox(width: 14),
+          Text("QR Code",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF004D40),
+              ))
+        ]),
+        backgroundColor: Colors.teal[200],
       ),
-      backgroundColor: Colors.grey.shade600,
+      backgroundColor: Colors.teal[100],
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -35,8 +46,9 @@ class _QrCodePageState extends State<QrCodePage> {
             SizedBox(height: screenHeight * .1),
             Center(
               child: QrImage(
-                data: data['id'],
-                backgroundColor: Colors.white,
+                data: context.read<AuthProvider>().uid,
+                backgroundColor: Color.fromRGBO(128, 203, 196, 1),
+                foregroundColor: Color.fromRGBO(0, 77, 64, 1),
                 size: screenWidth * .65,
               ),
             ),
