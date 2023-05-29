@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:provider/provider.dart';
 import '../providers/AuthProvider.dart';
+import '../providers/UserDetailListProvider.dart';
+import '../models/UserDetail.dart';
 
 class QrCodePage extends StatefulWidget {
   const QrCodePage({Key? key}) : super(key: key);
@@ -11,18 +13,19 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
-  Map data = {
-    "firstName": "Marcel Luiz",
-    "lastName": "Luneza",
-    "id": "2U2n8QuGQpFz7pE2NzWp",
-    "date": "December 01, 2002",
-    "studentNo": "2021-00000"
-  };
+  // Map data = {
+  //   "firstName": "Marcel Luiz",
+  //   "lastName": "Luneza",
+  //   "id": "2U2n8QuGQpFz7pE2NzWp",
+  //   "date": "December 01, 2002",
+  //   "studentNo": "2021-00000"
+  // };
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    UserDetail? user = context.read<UserDetailListProvider>().currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -56,25 +59,26 @@ class _QrCodePageState extends State<QrCodePage> {
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.all(5.0),
               child: Center(
-                  child: Text("${data["firstName"]} ${data["lastName"]}")),
+                  child: Text("Name: ${user?.firstName} ${user?.lastName}")),
             ),
             Container(
               padding: const EdgeInsets.all(5.0),
-              child: Center(child: Text("${data["studentNo"]}")),
+              child: Center(child: Text("Status: ${user?.status}")),
             ),
             Container(
               padding: const EdgeInsets.all(5.0),
-              child: Center(child: Text("${data["date"]}")),
+              child: Center(child: Text("Entry Date: ${user?.latestEntry}")),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(child: Text("INSERT MORE EME")),
-            ),
-            TextButton(
+            SizedBox(height: 20),
+            // Padding(
+            //   padding: const EdgeInsets.all(20.0),
+            //   child: Center(child: Text("INSERT MORE EME")),
+            // ),
+            ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Back")),
+                child: Text("Back", style: TextStyle(color: Colors.teal[900]))),
           ],
         ),
       ),
