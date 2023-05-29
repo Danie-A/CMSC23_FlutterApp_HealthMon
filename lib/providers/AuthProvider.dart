@@ -6,6 +6,7 @@ class AuthProvider with ChangeNotifier {
   late FirebaseAuthAPI authService;
   late Stream<User?> uStream;
   User? userObj;
+  String uid = "";
 
   AuthProvider() {
     authService = FirebaseAuthAPI();
@@ -13,6 +14,12 @@ class AuthProvider with ChangeNotifier {
   }
 
   Stream<User?> get userStream => uStream;
+
+  String get userId => uid;
+  setUid(String uid) {
+    this.uid = uid;
+    notifyListeners();
+  }
 
   void fetchAuthentication() {
     uStream = authService.getUser();

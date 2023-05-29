@@ -183,8 +183,9 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
                   position: positionController.text,
                   homeUnit: homeUnitController.text,
                   status: 'No Health Entry',
-                  userType: 'Admin',
-                  uid: message);
+                  userType: context.read<UserDetailListProvider>().userType,
+                  uid: message,
+                  latestEntry: "");
               addAdminMonitorDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }

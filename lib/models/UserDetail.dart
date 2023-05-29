@@ -23,6 +23,7 @@ class UserDetail {
   int? empNo;
   String? position;
   String? homeUnit;
+  String latestEntry;
 
   UserDetail({
     this.id,
@@ -32,6 +33,7 @@ class UserDetail {
     required this.status,
     required this.userType,
     required this.uid,
+    required this.latestEntry,
     this.username,
     this.college,
     this.course,
@@ -57,23 +59,46 @@ class UserDetail {
         college: json['college'],
         course: json['course'],
         studentNo: json['studentNo'],
-        preExistingIllness: json['preExistingIllness']);
+        preExistingIllness: json['preExistingIllness'],
+        latestEntry: json['latestEntry']);
+  }
+
+  factory UserDetail.userFromJson(Map<String, dynamic> json) {
+    return UserDetail(
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        status: json['status'],
+        userType: json['userType'],
+        uid: json['uid'],
+        username: json['username'],
+        college: json['college'],
+        latestEntry: json['latestEntry']);
   }
 
 // get ADMIN or MONITOR from JSON
   factory UserDetail.adminMonitorFromJson(Map<String, dynamic> json) {
     return UserDetail(
-      id: json['id'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      email: json['email'],
-      status: json['status'],
-      userType: json['userType'],
-      uid: json['uid'],
-      empNo: json['empNo'],
-      position: json['position'],
-      homeUnit: json['homeUnit'],
-    );
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        status: json['status'],
+        userType: json['userType'],
+        uid: json['uid'],
+        empNo: json['empNo'],
+        position: json['position'],
+        homeUnit: json['homeUnit'],
+        latestEntry: json['latestEntry']);
+  }
+
+// list of users
+  static List<UserDetail> usersList(String jsonData) {
+    final Iterable<dynamic> data = jsonDecode(jsonData);
+    return data
+        .map<UserDetail>((dynamic d) => UserDetail.studentFromJson(d))
+        .toList();
   }
 
 // list of students
@@ -105,7 +130,8 @@ class UserDetail {
       'college': student.college,
       'course': student.course,
       'studentNo': student.studentNo,
-      'preExistingIllness': student.preExistingIllness
+      'preExistingIllness': student.preExistingIllness,
+      'latestEntry': student.latestEntry,
     };
   }
 
@@ -120,7 +146,8 @@ class UserDetail {
       'uid': adminMonitor.uid,
       'empNo': adminMonitor.empNo,
       'position': adminMonitor.position,
-      'homeUnit': adminMonitor.homeUnit
+      'homeUnit': adminMonitor.homeUnit,
+      'latestEntry': adminMonitor.latestEntry,
     };
   }
 }
