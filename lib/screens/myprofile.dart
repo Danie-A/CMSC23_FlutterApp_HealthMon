@@ -32,7 +32,8 @@ class _MyProfileState extends State<MyProfile> {
   String uid = "";
   String id = "";
   String data = "";
-  String todayEntry = "";
+  var today;
+  String dateToday = "";
 
   static List healthEntries = [
     "a",
@@ -60,10 +61,10 @@ class _MyProfileState extends State<MyProfile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("You have already submitted"),
-          content: Text('You can only submit one entry per day,\n'
-              'next submission of entry should be done tomorrow again.\n\n'
-              'However you can choose to edit or delete your entry for today.\n'),
+          title: Text("You have already submitted."),
+          content: Text('You can only submit one entry per day.\n\n'
+              'The next submission of entry should be done tomorrow again.\n\n'
+              'However, you can still choose to edit or delete your entry for today.\n'),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () =>
@@ -89,11 +90,16 @@ class _MyProfileState extends State<MyProfile> {
   Widget _buildScrollView(BuildContext context, final screenWidth,
       final screenHeight, UserDetail userDetail) {
     bool generateQRCode = true;
+
+    if (userDetail.status == 'Cleared' && dateToday != userDetail.latestEntry) {
+      context.read<UserDetailListProvider>().editStatus(uid, 'No Health Entry');
+    } // set status of user to no health entry if user status is cleared but has not submitted any entries for the day yet
+
     if (userDetail.status != 'Cleared') {
       generateQRCode = false;
-    }
-    String status = userDetail.status;
+    } // fail to generate QR code if user status is not cleared
 
+    String status = userDetail.status;
     return (SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -159,75 +165,80 @@ class _MyProfileState extends State<MyProfile> {
             color: Colors.white,
           ),
           Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(30),
-              width: screenWidth,
-              child: Column(children: [
-                Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(30),
+            width: screenWidth,
+            child: Column(children: [
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Generate Building Pass",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    IconButton(
+                        iconSize: 17,
+                        visualDensity:
+                            VisualDensity(horizontal: -4, vertical: -4),
+                        icon: Icon(Icons.help_outline_outlined),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("I can't generate my QR!"),
+                              content: Text(
+                                  "To generate your QR code, you must complete your daily health entry and experience no symptoms.\n\n"
+                                  "You must also not be quarantined."),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Continue"))
+                              ],
+                            ),
+                          );
+                        })
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                  onPressed: (generateQRCode)
+                      ? () {
+                          Navigator.pushNamed(context, '/show-qr');
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                      // Background color
+                      fixedSize: Size(150, 20),
+                      shape: StadiumBorder()),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Generate Building Pass",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+                      Icon(
+                        Icons.qr_code_outlined,
                       ),
-                      IconButton(
-                          iconSize: 17,
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          icon: Icon(Icons.help_outline_outlined),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text("I can't generate my QR!"),
-                                content: Text(
-                                    "To generate your QR code, you must complete your daily health entry and experience no symptoms. You must also not be quarantined."),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("Continue"))
-                                ],
-                              ),
-                            );
-                          })
+                      const Text(
+                        "Show QR",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
                     ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                    onPressed: (generateQRCode)
-                        ? () {
-                            Navigator.pushNamed(context, '/show-qr');
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                        // Background color
-                        fixedSize: Size(150, 20),
-                        shape: StadiumBorder()),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.qr_code_outlined,
-                        ),
-                        const Text(
-                          "Show QR",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    )),
-              ])),
+                  )),
+            ]),
+          ),
 
           const Divider(
             thickness: 1,
             color: Colors.white,
           ),
+
+          SizedBox(height: 20),
+
           Container(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.only(bottom: 20, top: 20),
@@ -246,6 +257,25 @@ class _MyProfileState extends State<MyProfile> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(width: 20),
+                  FloatingActionButton.extended(
+                      //Add Entry Button
+
+                      backgroundColor: Colors.teal[200],
+                      onPressed: () {
+                        // get list of entries of user
+                        // compare date of each entry with today's date
+                        // if not equal to today's date, allow user to add entry
+
+                        if (userDetail.latestEntry == dateToday) {
+                          _alreadySubmittedPrompt(context);
+                        } else {
+                          Navigator.pushNamed(context, '/user-add-entry');
+                        }
+                      },
+                      icon: const Icon(Icons.library_add_outlined,
+                          color: Color(0xFF004D40)),
+                      label: const Text("Add Entry")),
                 ],
               )),
           SizedBox(
@@ -347,8 +377,9 @@ class _MyProfileState extends State<MyProfile> {
       BuildContext context, Stream<QuerySnapshot>? userDetailStream) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final today = new DateTime.now();
-    String entryDate = DateFormat('yMd').format(today);
+    today = new DateTime.now();
+    dateToday = DateFormat('yMd').format(today);
+
     return Scaffold(
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
@@ -369,7 +400,7 @@ class _MyProfileState extends State<MyProfile> {
             decoration: BoxDecoration(
               color: Colors.teal.shade50,
             ),
-            child: Text('\n\n\n${entryDate}'),
+            child: Text('\n\n\n${dateToday}'),
           ),
           ListTile(
             title: const Text('Add Entry'),
@@ -391,23 +422,6 @@ class _MyProfileState extends State<MyProfile> {
             },
           ),
         ])),
-        floatingActionButton: FloatingActionButton(
-            //Add Entry Button
-            backgroundColor: Colors.teal[200],
-            onPressed: () {
-              // get list of entries of user
-              // compare date of each entry with today's date
-              // if not equal to today's date, allow user to add entry
-
-              if (todayEntry == entryDate) {
-                _alreadySubmittedPrompt(context);
-              } else {
-                todayEntry = entryDate;
-                Navigator.pushNamed(context, '/user-add-entry');
-              }
-            },
-            child: const Icon(Icons.library_add_outlined,
-                color: Color(0xFF004D40))),
         body: StreamBuilder<QuerySnapshot>(
           stream: userDetailStream,
           builder: (context, snapshot) {
