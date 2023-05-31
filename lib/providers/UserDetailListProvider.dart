@@ -11,6 +11,7 @@ class UserDetailListProvider with ChangeNotifier {
   String currentId = "";
   String _userType = "";
   UserDetail? _currentUser;
+  Map<UserDetail, String>? _studentUsers;
 
   UserDetailListProvider() {
     firebaseService = FirebaseUserDetailAPI();
@@ -20,6 +21,7 @@ class UserDetailListProvider with ChangeNotifier {
   // getter
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
   Stream<DocumentSnapshot<Object?>> get user => _userStream!;
+  Map<UserDetail, String>? get studentUsers => _studentUsers;
   UserDetail? get currentUser => _currentUser;
 
   String get getId => currentId;
@@ -37,9 +39,17 @@ class UserDetailListProvider with ChangeNotifier {
     this._currentUser = user;
   }
 
+  setStudentUsers(Map<UserDetail, String>? students) {
+    this._studentUsers = students;
+  }
+
   fetchUserDetails() {
     _userDetailStream = firebaseService.getAllUserDetails();
     notifyListeners();
+  }
+
+  Future<Stream<QuerySnapshot>> getStudentDetails(String userType) async {
+    return await firebaseService.getStudentDetails(userType);
   }
 
   Future<Stream<QuerySnapshot>> getCurrentUserDetail(String uid) async {
