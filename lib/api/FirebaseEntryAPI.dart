@@ -5,7 +5,8 @@ class FirebaseEntryAPI {
 
   Future<String> addEntry(Map<String, dynamic> todo) async {
     try {
-      await db.collection("entries").add(todo);
+      final docRef = await db.collection("entries").add(todo);
+      await db.collection("entries").doc(docRef.id).update({'id': docRef.id});
 
       return "Successfully added entry!";
     } on FirebaseException catch (e) {
@@ -24,9 +25,8 @@ class FirebaseEntryAPI {
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-     return allData;
-
-}
+    return allData;
+  }
 
   Future<String> deleteEntry(String? id) async {
     try {
