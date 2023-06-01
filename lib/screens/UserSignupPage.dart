@@ -20,6 +20,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
   bool cardiacDisease = false;
   bool autoimmuneDisease = false;
   bool asthma = false;
+  bool allergy = false;
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -30,6 +31,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
   TextEditingController collegeController = TextEditingController();
   TextEditingController courseController = TextEditingController();
   TextEditingController studentNoController = TextEditingController();
+
+  TextEditingController allergyController = TextEditingController();
 
   List<String> preExistingIllnessList = [];
 
@@ -206,6 +209,18 @@ class _UserSignupPageState extends State<UserSignupPage> {
       }, // adds a validator in the form field
     );
 
+    final allergyTextField = TextFormField(
+      decoration: const InputDecoration(
+        // contentPadding: EdgeInsets.all(16),
+        // border: OutlineInputBorder(),
+        hintText: "Allergy (Enumerate all allergies seperated by a comma)",
+        // labelText: "Last Name",
+      ),
+      controller: allergyController,
+    );
+
+    
+
     final preExistingIllness = Text(
         'Please check the box if you have the following pre existing illness:');
 
@@ -289,6 +304,16 @@ class _UserSignupPageState extends State<UserSignupPage> {
       title: Text('Asthma'),
     );
 
+    final allergyCheckbox = CheckboxListTile(
+      value: allergy,
+      onChanged: (value) {
+        setState(() {
+          allergy = value ?? false;
+        });
+      },
+      title: Text('Allergy'),
+    );
+
     var signUpButton = Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: ElevatedButton(
@@ -340,6 +365,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
                   username: usernameController.text,
                   college: collegeController.text,
                   course: courseController.text,
+                  allergy: allergyController.text,
                   studentNo: int.parse(studentNoController.text),
                   preExistingIllness: preExistingIllnessList,
                   status: 'No Health Entry',
@@ -388,6 +414,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
             Transform.scale(scale: 0.9, child: cardiacDiseaseCheckbox),
             Transform.scale(scale: 0.9, child: autoimmuneDiseaseCheckbox),
             Transform.scale(scale: 0.9, child: asthmaCheckbox),
+            Transform.scale(scale: 0.9, child: allergyCheckbox),
+            allergy ? allergyTextField : const SizedBox(), 
             signUpButton,
             backButton
           ]));

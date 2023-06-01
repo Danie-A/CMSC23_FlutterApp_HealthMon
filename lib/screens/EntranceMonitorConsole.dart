@@ -72,6 +72,20 @@ class EntranceMonitorConsole extends StatelessWidget {
                             size: screenWidth * 0.20),
                         Text("Search Logs", textAlign: TextAlign.center)
                       ])),
+              ElevatedButton(
+                  onPressed: () {
+                    //Navigator.pushNamed(context, '/view-requests');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)))),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.location_on, size: screenWidth * 0.20),
+                        Text("Add Location", textAlign: TextAlign.center)
+                      ])),
             ],
           ),
         )),
