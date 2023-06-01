@@ -17,7 +17,7 @@ class UserDetail {
   String? college;
   String? course;
   int? studentNo;
-  List<String>? preExistingIllness;
+  List<dynamic>? preExistingIllness;
 
   // for admin or entrance monitor
   int? empNo;

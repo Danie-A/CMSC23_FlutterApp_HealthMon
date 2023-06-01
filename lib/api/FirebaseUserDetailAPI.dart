@@ -97,13 +97,6 @@ class FirebaseUserDetailAPI {
     return db.collection("userDetails").snapshots();
   }
 
-  Stream<QuerySnapshot> getStudentDetails(userType) {
-    return db
-        .collection("userDetails")
-        .where("userType", isEqualTo: userType)
-        .snapshots();
-  }
-
   Stream<QuerySnapshot> getCurrentUserDetail(String uid) {
     return db
         .collection("userDetails")
