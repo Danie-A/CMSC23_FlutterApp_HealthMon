@@ -47,6 +47,8 @@ class _QrCodePageState extends State<QrCodePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: screenHeight * .1),
+
+            /*
             Center(
               child: QrImage(
                 data: context.read<AuthProvider>().uid,
@@ -55,6 +57,7 @@ class _QrCodePageState extends State<QrCodePage> {
                 size: screenWidth * .65,
               ),
             ),
+            */
             Container(
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.all(5.0),

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/Todo.dart';
-import '../providers/TodoListProvider.dart';
+import '../models/UserDetail.dart';
 import '../providers/AuthProvider.dart';
+import '../providers/UserDetailListProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
@@ -16,8 +16,6 @@ class AdminViewStudents extends StatefulWidget {
 }
 
 class _ViewStudentsState extends State<AdminViewStudents> {
-  List<String> students = ["Danie", "Sean", "Marcie", "Laydon"];
-
   Future<void> _showStudent(BuildContext context, String name) {
     return showDialog<void>(
       context: context,
@@ -81,37 +79,38 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     );
   }
 
-  ListView viewAllStudents() {
-    return ListView.builder(
-      // displays friend names through multiple instances of List Tile
-      itemCount: students.length,
-      itemBuilder: (context, index) {
-        return InkWell(
-          // InkWell widget adds some hover effect to the ListTile
-          onTap: () {
-            _showStudent(context, students[index]);
-          },
-          hoverColor: Colors.teal[200],
-          // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-          splashColor: Colors.teal[
-              100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-          child: ListTile(
-              leading: Icon(Icons.person, color: Colors.teal),
-              title: Text("${students[index]}"), // name
-              // subtitle: Text("${friend.nickname}"), // filter subtitle
-              trailing: IconButton(
-                icon: const Icon(Icons.coronavirus_rounded),
-                onPressed: () {
-                  _showAddToQuarantine(context, students[index]);
-                },
-              )),
-        );
-      },
-    );
-  }
+  // ListView viewAllStudents(Stream<QuerySnapshot<Object?>> userDetailStream,
+  //     AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+
+  // }
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> userDetailStream =
+        context.watch<UserDetailListProvider>().userDetails;
+    Stream<User?> userStream = context.watch<AuthProvider>().uStream;
+
+    return StreamBuilder(
+        stream: userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Error encountered! ${snapshot.error}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (!snapshot.hasData) {
+            return const SigninPage();
+          }
+          // if user is logged in, display the scaffold containing the streambuilder for the todos
+          return displayScaffold(context, userDetailStream);
+        });
+  }
+
+  Scaffold displayScaffold(
+      BuildContext context, Stream<QuerySnapshot<Object?>> userDetailStream) {
     return Scaffold(
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
@@ -166,7 +165,61 @@ class _ViewStudentsState extends State<AdminViewStudents> {
         backgroundColor: Colors.teal[100],
       ),
       body: Container(
-          padding: const EdgeInsets.only(top: 16), child: viewAllStudents()),
+        padding: const EdgeInsets.only(top: 16),
+        child: StreamBuilder(
+            stream: userDetailStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error encountered! ${snapshot.error}"),
+                );
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (!snapshot.hasData) {
+                return const Center(
+                  child: Text("No Todos Found"),
+                );
+              }
+
+              //just get all users
+              return ListView.builder(
+                // displays friend names through multiple instances of List Tile
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (context, index) {
+                  UserDetail userDetail = UserDetail.studentFromJson(
+                      snapshot.data?.docs[index].data()
+                          as Map<String, dynamic>);
+                  return (userDetail.userType != "User")
+
+                      //if user is not a regular "User" (meaning student) dont render
+                      ? Container()
+                      : InkWell(
+                          // InkWell widget adds some hover effect to the ListTile
+                          onTap: () {
+                            _showStudent(context, userDetail.firstName);
+                          },
+                          hoverColor: Colors.teal[200],
+                          // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                          splashColor: Colors.teal[
+                              100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                          child: ListTile(
+                              leading: Icon(Icons.person, color: Colors.teal),
+                              title: Text("${userDetail.firstName}"), // name
+                              // subtitle: Text("${friend.nickname}"), // filter subtitle
+                              trailing: IconButton(
+                                icon: const Icon(Icons.coronavirus_rounded),
+                                onPressed: () {
+                                  _showAddToQuarantine(
+                                      context, userDetail.firstName);
+                                },
+                              )),
+                        );
+                },
+              );
+            }),
+      ),
     );
   }
 }

@@ -1,4 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/providers/AuthProvider.dart';
+import 'package:provider/provider.dart';
+
+import '../models/UserDetail.dart';
+import '../providers/UserDetailListProvider.dart';
+import 'SigninPage.dart';
 
 class AdminViewUnderMonitoring extends StatefulWidget {
   const AdminViewUnderMonitoring({super.key});
@@ -39,54 +47,79 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
     );
   }
 
-  Expanded viewAllStudents() {
-    return Expanded(
-        child: ListView.builder(
-      // displays friend names through multiple instances of List Tile
-      itemCount: underMonitoringStudents.length,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () {},
-          // InkWell widget adds some hover effect to the ListTile
-          hoverColor: Colors.teal[200],
-          // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-          splashColor: Color(
-              0xFFFBC6A4), // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-          child: ListTile(
-            leading: Icon(Icons.person, color: Color(0xFFBE7575)),
-            title: Text("${underMonitoringStudents[index]}"), // name
-            // subtitle: Text("${friend.nickname}"), // filter subtitle
-            trailing: Wrap(spacing: 5, children: <Widget>[
-              IconButton(
-                icon: const Icon(
-                  Icons.coronavirus_outlined,
-                ),
-                color: Color(0xFFBE7575),
-                onPressed: () {
-                  _showMovetoQuarantine(
-                      context, underMonitoringStudents[index]);
-                },
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.remove_circle_outlined,
-                ),
-                onPressed: () {
-                  setState(() {
-                    underMonitoringStudents
-                        .remove(underMonitoringStudents[index]);
-                  });
-                },
-              )
-            ]),
-          ),
-        );
-      },
-    ));
-  }
+  // Expanded viewAllStudents(AsyncSnapshot<User?> snapshot) {
+  //   return Expanded(
+  //       child: ListView.builder(
+  //     // displays friend names through multiple instances of List Tile
+  //     itemCount: underMonitoringStudents.length,
+  //     itemBuilder: (context, index) {
+  //       return InkWell(
+  //         onTap: () {},
+  //         // InkWell widget adds some hover effect to the ListTile
+  //         hoverColor: Colors.teal[200],
+  //         // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+  //         splashColor: Color(
+  //             0xFFFBC6A4), // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+  //         child: ListTile(
+  //           leading: Icon(Icons.person, color: Color(0xFFBE7575)),
+  //           title: Text("${underMonitoringStudents[index]}"), // name
+  //           // subtitle: Text("${friend.nickname}"), // filter subtitle
+  //           trailing: Wrap(spacing: 5, children: <Widget>[
+  //             IconButton(
+  //               icon: const Icon(
+  //                 Icons.coronavirus_outlined,
+  //               ),
+  //               color: Color(0xFFBE7575),
+  //               onPressed: () {
+  //                 _showMovetoQuarantine(
+  //                     context, underMonitoringStudents[index]);
+  //               },
+  //             ),
+  //             IconButton(
+  //               icon: const Icon(
+  //                 Icons.remove_circle_outlined,
+  //               ),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   underMonitoringStudents
+  //                       .remove(underMonitoringStudents[index]);
+  //                 });
+  //               },
+  //             )
+  //           ]),
+  //         ),
+  //       );
+  //     },
+  //   ));
+  // }
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> userDetailStream =
+        context.watch<UserDetailListProvider>().userDetails;
+    Stream<User?> userStream = context.watch<AuthProvider>().uStream;
+
+    return StreamBuilder(
+        stream: userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Error encountered! ${snapshot.error}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (!snapshot.hasData) {
+            return const SigninPage();
+          }
+          // if user is logged in, display the scaffold containing the streambuilder for the todos
+          return displayScaffold(context, userDetailStream);
+        });
+  }
+
+  Scaffold displayScaffold(
+      BuildContext context, Stream<QuerySnapshot<Object?>> userDetailStream) {
     return Scaffold(
         backgroundColor: Colors.teal[50],
         drawer: Drawer(
@@ -141,16 +174,81 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
           ]),
           backgroundColor: Colors.teal[200],
         ),
-        body: Column(
-          children: [
-            SizedBox(height: 10),
-            Text(
-              "Under Monitoring Student Count: ${underMonitoringStudents.length}",
-              style: TextStyle(fontStyle: FontStyle.italic),
-            ),
-            SizedBox(height: 10),
-            viewAllStudents()
-          ],
-        ));
+        body: StreamBuilder(
+            stream: userDetailStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error encountered! ${snapshot.error}"),
+                );
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (!snapshot.hasData) {
+                return const Center(
+                  child: Text("No Todos Found"),
+                );
+              }
+              return Column(
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                    "Under Monitoring Student Count: ",
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 10),
+                  Expanded(
+                      child: ListView.builder(
+                    // displays friend names through multiple instances of List Tile
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: (context, index) {
+                      UserDetail userDetail = UserDetail.studentFromJson(
+                          snapshot.data?.docs[index].data()
+                              as Map<String, dynamic>);
+                      return (userDetail.status != "Under Monitoring")
+                          ? Container()
+                          : InkWell(
+                              onTap: () {},
+                              // InkWell widget adds some hover effect to the ListTile
+                              hoverColor: Colors.teal[200],
+                              // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                              splashColor: Color(
+                                  0xFFFBC6A4), // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                              child: ListTile(
+                                leading: Icon(Icons.person,
+                                    color: Color(0xFFBE7575)),
+                                title: Text("${userDetail.firstName}"), // name
+                                // subtitle: Text("${friend.nickname}"), // filter subtitle
+                                trailing: Wrap(spacing: 5, children: <Widget>[
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.coronavirus_outlined,
+                                    ),
+                                    color: Color(0xFFBE7575),
+                                    onPressed: () {
+                                      _showMovetoQuarantine(
+                                          context, userDetail.firstName);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.remove_circle_outlined,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        underMonitoringStudents
+                                            .remove(userDetail.firstName);
+                                      });
+                                    },
+                                  )
+                                ]),
+                              ),
+                            );
+                    },
+                  )),
+                ],
+              );
+            }));
   }
 }
