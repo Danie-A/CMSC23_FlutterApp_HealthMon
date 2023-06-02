@@ -55,17 +55,16 @@ class _MyProfileState extends State<MyProfile> {
                 onPressed: () =>
                     {Navigator.pushNamed(context, '/user-edit-entry')},
                 child: Text("Edit Entry")),
-            ElevatedButton(onPressed: () {
+            ElevatedButton(
+                onPressed: () {
+                  // Request newReq = new Request(
+                  //         id: "", type: 'delete', date: curDate);
+                  //WE STILL NEED TO GET THE ID OF THe ENTRY
 
-              Request newReq = new Request(
-                      id: "", type: 'delete', date: curDate);
-                      //WE STILL NEED TO GET THE ID OF THe ENTRY
-
-                  context.read<RequestProvider>().addRequest(newReq);
+                  // context.read<RequestProvider>().addRequest(newReq);
                   Navigator.of(context).pop();
-              
-              
-            }, child: Text("Delete Entry")),
+                },
+                child: Text("Delete Entry")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(

@@ -49,7 +49,7 @@ class _QrCodePageState extends State<QrCodePage> {
             SizedBox(height: screenHeight * .1),
 
             Center(
-              child: QrImageView(
+              child: QrImage(
                 data: context.read<AuthProvider>().uid,
                 backgroundColor: Color.fromRGBO(128, 203, 196, 1),
                 // ignore: deprecated_member_use

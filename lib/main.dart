@@ -1,4 +1,4 @@
-import 'dart:js';
+// import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/EntMonSearchLogs.dart';
@@ -42,7 +42,6 @@ void main() async {
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
         ChangeNotifierProvider(create: ((context) => LogProvider())),
         ChangeNotifierProvider(create: ((context) => RequestProvider()))
-
       ],
       child: MyApp(),
     ),
