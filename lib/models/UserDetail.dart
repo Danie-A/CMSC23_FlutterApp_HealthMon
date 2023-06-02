@@ -25,6 +25,8 @@ class UserDetail {
   String? homeUnit;
   String latestEntry;
 
+  String? allergy;
+
   UserDetail({
     this.id,
     required this.firstName,
@@ -42,6 +44,7 @@ class UserDetail {
     this.empNo,
     this.position,
     this.homeUnit,
+    this.allergy
   });
 
 // get STUDENT from JSON
@@ -60,6 +63,7 @@ class UserDetail {
         course: json['course'],
         studentNo: json['studentNo'],
         preExistingIllness: json['preExistingIllness'],
+        allergy: json['allergy'],
         latestEntry: json['latestEntry']);
   }
 
@@ -74,6 +78,8 @@ class UserDetail {
         uid: json['uid'],
         username: json['username'],
         college: json['college'],
+        allergy: json['allergy'],
+        preExistingIllness: json['preExistingIllness'],
         latestEntry: json['latestEntry']);
   }
 
@@ -90,6 +96,8 @@ class UserDetail {
         empNo: json['empNo'],
         position: json['position'],
         homeUnit: json['homeUnit'],
+        allergy: json['allergy'],
+        preExistingIllness: json['preExistingIllness'],
         latestEntry: json['latestEntry']);
   }
 
@@ -131,6 +139,7 @@ class UserDetail {
       'course': student.course,
       'studentNo': student.studentNo,
       'preExistingIllness': student.preExistingIllness,
+      'allergy': student.allergy,
       'latestEntry': student.latestEntry,
     };
   }
@@ -148,6 +157,8 @@ class UserDetail {
       'position': adminMonitor.position,
       'homeUnit': adminMonitor.homeUnit,
       'latestEntry': adminMonitor.latestEntry,
+      'preExistingIllness': adminMonitor.preExistingIllness,
+      'allergy': adminMonitor.allergy,
     };
   }
 }
