@@ -21,6 +21,7 @@ class Entry {
   bool edit_request;
   bool delete_request;
   String entry_date;
+  String? id;
 
   Entry(
       {required this.fever,
@@ -39,7 +40,8 @@ class Entry {
       required this.user_key,
       required this.edit_request,
       required this.delete_request,
-      required this.entry_date});
+      required this.entry_date,
+      this.id});
 
 // get ENTRY from JSON
   // Factory constructor to instantiate object from json format
@@ -61,7 +63,8 @@ class Entry {
         user_key: json['user_key'],
         edit_request: json['edit_request'],
         delete_request: json['delete_request'],
-        entry_date: json['entry_date']);
+        entry_date: json['entry_date'],
+        id: json['id']);
   }
 
 // list of entries
