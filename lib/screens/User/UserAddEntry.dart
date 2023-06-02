@@ -34,7 +34,7 @@ class _UserAddEntryState extends State<UserAddEntry> {
   @override
   Widget build(BuildContext context) {
     final now = new DateTime.now();
-    String entryDate = DateFormat('yyyy-MM-dd').format(now);
+    String entryDate = DateFormat.yMMMMd('en_US').format(now);
 
     return Scaffold(
       appBar: AppBar(
