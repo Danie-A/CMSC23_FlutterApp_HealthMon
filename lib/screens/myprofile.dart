@@ -29,7 +29,7 @@ class _MyProfileState extends State<MyProfile> {
 
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     final now = DateTime.now();
-    String curDate = DateFormat('yMd').format(now);
+    String curDate = DateFormat('yyyy-MM-dd').format(now);
 
     return showDialog<void>(
       context: context,
@@ -361,7 +361,7 @@ class _MyProfileState extends State<MyProfile> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     today = new DateTime.now();
-    dateToday = DateFormat('yMd').format(today);
+    dateToday = DateFormat('yyyy-MM-dd').format(today);
 
     return Scaffold(
         backgroundColor: Colors.teal[50],

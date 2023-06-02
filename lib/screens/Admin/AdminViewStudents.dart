@@ -25,7 +25,8 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             'College: ${userDetail.college}\n'
             'Course: ${userDetail.course}\n'
             'Student No: ${userDetail.studentNo}\n'
-            'Pre-Existing Illness: ${userDetail.preExistingIllness}\n',
+            'Pre-Existing Illness: ${userDetail.preExistingIllness}\n'
+            'Latest Entry Date: ${userDetail.latestEntry}\n',
           ),
           actions: <Widget>[
             ElevatedButton(

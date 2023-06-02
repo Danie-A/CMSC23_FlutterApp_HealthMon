@@ -68,8 +68,8 @@ class _UserEditEntryState extends State<UserEditEntry> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    String entryDate = DateFormat('yMd').format(now);
-    String editDate = DateFormat('yMd').format(now);
+    String entryDate = DateFormat('yyyy-MM-dd').format(now);
+    String editDate = DateFormat('yyyy-MM-dd').format(now);
 
     return Scaffold(
       appBar: AppBar(
