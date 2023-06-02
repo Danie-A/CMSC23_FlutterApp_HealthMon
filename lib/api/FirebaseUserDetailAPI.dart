@@ -3,6 +3,39 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseUserDetailAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  // Query filteredQuery =
+  //     db.collection('userDetails').where('studentNo', isEqualTo: studentNumber);
+
+  Stream<QuerySnapshot> getSortStudentNo() {
+    Stream<QuerySnapshot> filteredStream =
+        db.collection('userDetails').orderBy('studentNo').snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortDate() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .orderBy("latestEntry", descending: true)
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortCourse(String course) {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('course', isEqualTo: course)
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortCollege(String college) {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('college', isEqualTo: college)
+        .snapshots();
+    return filteredStream;
+  }
+
   Future<String> addUserDetail(Map<String, dynamic> userDetail) async {
     try {
       final docRef = await db.collection("userDetails").add(userDetail);

@@ -8,6 +8,11 @@ class UserDetailListProvider with ChangeNotifier {
   late Stream<QuerySnapshot> _userDetailStream;
   late Stream<QuerySnapshot> _userDetailStream2;
 
+  late Stream<QuerySnapshot> _sortStudentNoStream;
+  late Stream<QuerySnapshot> _sortDateStream;
+  late Stream<QuerySnapshot> _sortCourseStream;
+  late Stream<QuerySnapshot> _sortCollegeStream;
+
   String currentId = "";
   String _userType = "";
   UserDetail? _currentUser;
@@ -20,6 +25,22 @@ class UserDetailListProvider with ChangeNotifier {
   // getter
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
   Stream<QuerySnapshot> get userDetails2 => _userDetailStream2;
+
+  // for sorting/filtering students
+  Stream<QuerySnapshot> get sortStudentNoStream => _sortStudentNoStream;
+  Stream<QuerySnapshot> get sortDateStream => _sortDateStream;
+  Stream<QuerySnapshot> get sortCourseStream => _sortCourseStream;
+  Stream<QuerySnapshot> get sortCollegeStream => _sortCollegeStream;
+
+  setCourseStream(String course) {
+    this._sortCourseStream = firebaseService.getSortCourse(course);
+    notifyListeners();
+  }
+
+  setCollegeStream(String college) {
+    this._sortCollegeStream = firebaseService.getSortCollege(college);
+    notifyListeners();
+  }
 
   UserDetail? get currentUser => _currentUser;
 
@@ -41,7 +62,14 @@ class UserDetailListProvider with ChangeNotifier {
   fetchUserDetails() {
     _userDetailStream = firebaseService.getAllUserDetails();
     _userDetailStream2 = firebaseService.getAllUserDetails();
+    _sortStudentNoStream = firebaseService.getSortStudentNo();
+    _sortDateStream = firebaseService.getSortDate();
     notifyListeners();
+  }
+
+  Stream<QuerySnapshot> getSortStudentNo() {
+    Stream<QuerySnapshot> filteredStream = firebaseService.getSortStudentNo();
+    return filteredStream;
   }
 
   Future<Stream<QuerySnapshot>> getCurrentUserDetail(String uid) async {
