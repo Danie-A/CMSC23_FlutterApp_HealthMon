@@ -17,27 +17,40 @@
 //   }
 
 
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
-// Assuming you have a list of date strings in the format "June 6, 2023"
-List<String> dates = [
-  'June 2, 2023',
-  'June 5, 2023',
-  'June 1, 2023',
-  'June 3, 2023',
-];
+// // Assuming you have a list of date strings in the format "June 6, 2023"
+// List<String> dates = [
+//   'June 2, 2023',
+//   'June 5, 2023',
+//   'June 1, 2023',
+//   'June 3, 2023',
+// ];
 
-// Create a formatter for the desired date format
-DateFormat dateFormat = DateFormat('MMMM d, yyyy');
+// // Create a formatter for the desired date format
+// DateFormat dateFormat = DateFormat('MMMM d, yyyy');
 
-// Parse the date strings into DateTime objects
-List<DateTime> parsedDates = dates.map((date) => dateFormat.parse(date)).toList();
+// // Parse the date strings into DateTime objects
+// List<DateTime> parsedDates = dates.map((date) => dateFormat.parse(date)).toList();
 
-// Sort the DateTime objects
-parsedDates.sort((a, b) => a.compareTo(b));
+// // Sort the DateTime objects
+// parsedDates.sort((a, b) => a.compareTo(b));
 
-// Convert the sorted DateTime objects back to the desired format
-List<String> sortedDates = parsedDates.map((date) => dateFormat.format(date)).toList();
+// // Convert the sorted DateTime objects back to the desired format
+// List<String> sortedDates = parsedDates.map((date) => dateFormat.format(date)).toList();
 
-// Output the sorted dates
-sortedDates.forEach(print);
+// // Output the sorted dates
+// sortedDates.forEach(print);
+
+
+
+
+// Widget _showSorted(BuildContext context, String filterValue) {
+//     Stream<QuerySnapshot> sortedStream;
+//     if (filterValue == 'StudentNumber') {
+//       sortedStream =
+//           context.watch<UserDetailListProvider>().sortStudentNoStream;
+//     } else {
+//       sortedStream =
+//           context.watch<UserDetailListProvider>().sortDateStream;
+//     }
