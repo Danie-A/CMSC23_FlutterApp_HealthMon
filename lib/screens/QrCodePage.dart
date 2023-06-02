@@ -48,16 +48,16 @@ class _QrCodePageState extends State<QrCodePage> {
           children: [
             SizedBox(height: screenHeight * .1),
 
-            /*
             Center(
-              child: QrImage(
+              child: QrImageView(
                 data: context.read<AuthProvider>().uid,
                 backgroundColor: Color.fromRGBO(128, 203, 196, 1),
+                // ignore: deprecated_member_use
                 foregroundColor: Color.fromRGBO(0, 77, 64, 1),
-                size: screenWidth * .65,
+                size: screenWidth * .5,
               ),
             ),
-            */
+
             Container(
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.all(5.0),
