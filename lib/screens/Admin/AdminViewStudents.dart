@@ -13,7 +13,83 @@ class AdminViewStudents extends StatefulWidget {
 }
 
 class _ViewStudentsState extends State<AdminViewStudents> {
+  Widget _showAdminForm(
+      BuildContext context,
+      GlobalKey<FormState> formKey,
+      TextEditingController empNoController,
+      TextEditingController positionController,
+      TextEditingController homeUnitController) {
+    return Form(
+        child: Column(
+      children: [
+        TextFormField(
+          decoration: const InputDecoration(
+            // contentPadding: EdgeInsets.all(16),
+            // border: OutlineInputBorder(),
+            hintText: "Employee Number",
+            // labelText: "Last Name",
+          ),
+          controller: empNoController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please input employee number.';
+            }
+            return null;
+          }, // adds a validator in the form field
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            // contentPadding: EdgeInsets.all(16),
+            // border: OutlineInputBorder(),
+            hintText: "Position",
+            // labelText: "Last Name",
+          ),
+          controller: positionController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please input position.';
+            }
+            return null;
+          }, // adds a validator in the form field
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            // contentPadding: EdgeInsets.all(16),
+            // border: OutlineInputBorder(),
+            hintText: "Home Unit",
+            // labelText: "Last Name",
+          ),
+          controller: homeUnitController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please input home unit.';
+            }
+            return null;
+          }, // adds a validator in the form field
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: ElevatedButton(
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                if (context.mounted) Navigator.pop(context);
+              }
+
+              formKey.currentState?.save();
+            },
+            child: const Text('Sign up'),
+          ),
+        )
+      ],
+    ));
+  }
+
   Future<void> _showStudent(BuildContext context, UserDetail userDetail) {
+    final formKey = GlobalKey<FormState>();
+    TextEditingController empNoController = TextEditingController();
+    TextEditingController positionController = TextEditingController();
+    TextEditingController homeUnitController = TextEditingController();
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -34,7 +110,8 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                       context
                           .watch<UserDetailListProvider>()
                           .changeUserType(userDetail.uid, "Admin"),
-                      Navigator.of(context).pop()
+                      _showAdminForm(context, formKey, empNoController,
+                          positionController, homeUnitController)
                     },
                 child: const Text("Make Admin")),
             const SizedBox(height: 10),
@@ -43,7 +120,6 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                       context
                           .watch<UserDetailListProvider>()
                           .changeUserType(userDetail.uid, "Entrance Monitor"),
-                      Navigator.of(context).pop()
                     },
                 child: const Text("Make Entrance Monitor")),
             const SizedBox(height: 10),
