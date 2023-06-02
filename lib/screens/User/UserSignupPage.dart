@@ -37,6 +37,45 @@ class _UserSignupPageState extends State<UserSignupPage> {
   List<String> preExistingIllnessList = [];
 
   bool _passwordHide = true;
+  List<String> colleges = [
+    'CAS',
+    'CDC',
+    'CFNR',
+    'CEAT',
+    'CEM',
+    'CHE',
+    'CAFS',
+    'CVM'
+  ];
+  String collegeValue = '';
+  var courses = [
+    'BS Computer Science',
+    'BA Communication Arts',
+    'BS Applied Physics',
+    'BS Biology',
+    'BS Chemistry',
+    'BS Statistics',
+    'BS Agricultural Chemistry',
+    'Doctor of Veterinary Medicine',
+    'BS Accountancy',
+    'BS Economics',
+    'BS Agribusiness Management',
+    'BS Development Communication',
+    'BS Civil Engineering',
+    'BS Chemical Engineering',
+    'BS Electrical Engineering',
+    'BS Forestry',
+    'BS Nutrition',
+    'BS Human Ecology'
+  ];
+  String courseValue = '';
+
+  @override
+  void initState() {
+    super.initState();
+    collegeValue = colleges.first;
+    courseValue = courses.first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,38 +199,6 @@ class _UserSignupPageState extends State<UserSignupPage> {
       }, // adds a validator in the form field
     );
 
-    final college = TextFormField(
-      decoration: const InputDecoration(
-        // contentPadding: EdgeInsets.all(16),
-        // border: OutlineInputBorder(),
-        hintText: "College",
-        // labelText: "Last Name",
-      ),
-      controller: collegeController,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please input college.';
-        }
-        return null;
-      }, // adds a validator in the form field
-    );
-
-    final course = TextFormField(
-      decoration: const InputDecoration(
-        // contentPadding: EdgeInsets.all(16),
-        // border: OutlineInputBorder(),
-        hintText: "Course",
-        // labelText: "Last Name",
-      ),
-      controller: courseController,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please input course.';
-        }
-        return null;
-      }, // adds a validator in the form field
-    );
-
     final studentNo = TextFormField(
       decoration: const InputDecoration(
         hintText: "Student Number",
@@ -209,18 +216,98 @@ class _UserSignupPageState extends State<UserSignupPage> {
       }, // adds a validator in the form field
     );
 
+    var college = DropdownButton<String>(
+        borderRadius: BorderRadius.circular(20),
+        value: collegeValue,
+        icon: const Icon(Icons.arrow_drop_down),
+        dropdownColor: Colors.teal[100],
+        underline: SizedBox.shrink(),
+        onChanged: (newValue) {
+          // This is called when the user selects an item.
+          setState(() {
+            collegeValue = newValue.toString();
+          });
+        },
+        items: colleges.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  '$value',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ));
+        }).toList());
+
+    // final college = TextFormField(
+    //   decoration: const InputDecoration(
+    //     // contentPadding: EdgeInsets.all(16),
+    //     // border: OutlineInputBorder(),
+    //     hintText: "College",
+    //     // labelText: "Last Name",
+    //   ),
+    //   controller: collegeController,
+    //   validator: (value) {
+    //     if (value == null || value.isEmpty) {
+    //       return 'Please input college.';
+    //     }
+    //     return null;
+    //   }, // adds a validator in the form field
+    // );
+
+    var course = DropdownButton<String>(
+        borderRadius: BorderRadius.circular(20),
+        value: courseValue,
+        icon: const Icon(Icons.arrow_drop_down),
+        dropdownColor: Colors.teal[100],
+        underline: SizedBox.shrink(),
+        onChanged: (newValue) {
+          // This is called when the user selects an item.
+          setState(() {
+            courseValue = newValue.toString();
+          });
+        },
+        items: courses.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  '$value',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ));
+        }).toList());
+
+    // final course = TextFormField(
+    //   decoration: const InputDecoration(
+    //     // contentPadding: EdgeInsets.all(16),
+    //     // border: OutlineInputBorder(),
+    //     hintText: "Course",
+    //     // labelText: "Last Name",
+    //   ),
+    //   controller: courseController,
+    //   validator: (value) {
+    //     if (value == null || value.isEmpty) {
+    //       return 'Please input course.';
+    //     }
+    //     return null;
+    //   }, // adds a validator in the form field
+    // );
+
     final allergyTextField = TextFormField(
       decoration: const InputDecoration(
         // contentPadding: EdgeInsets.all(16),
         // border: OutlineInputBorder(),
-        hintText: "Allergy (Enumerate all allergies seperated by a comma)",
+        hintText: "Others (Separate By Commas)",
         // labelText: "Last Name",
       ),
       controller: allergyController,
     );
 
     final preExistingIllness = Text(
-        'Please check the box if you have the following pre existing illness:');
+        'Please check the box if you have the following pre-existing illness:');
 
     final hypertensionCheckbox = CheckboxListTile(
       value: hypertension,
@@ -309,7 +396,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
           allergy = value ?? false;
         });
       },
-      title: Text('Allergy'),
+      title: Text('Allergy/Others'),
     );
 
     var signUpButton = Padding(
@@ -361,8 +448,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
                   firstName: fnameController.text,
                   lastName: lnameController.text,
                   username: usernameController.text,
-                  college: collegeController.text,
-                  course: courseController.text,
+                  college: collegeValue,
+                  course: courseValue,
                   allergy: allergyController.text,
                   studentNo: int.parse(studentNoController.text),
                   preExistingIllness: preExistingIllnessList,
@@ -400,9 +487,29 @@ class _UserSignupPageState extends State<UserSignupPage> {
             SizedBox(height: 60, child: fname),
             SizedBox(height: 60, child: lname),
             SizedBox(height: 60, child: username),
-            SizedBox(height: 60, child: college),
-            SizedBox(height: 60, child: course),
-            SizedBox(height: 90, child: studentNo),
+            SizedBox(height: 60, child: studentNo),
+            SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    Text('College: ',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    college,
+                  ],
+                )),
+            SizedBox(height: 10),
+            SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    Text('Course: ',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    course,
+                  ],
+                )),
+            SizedBox(height: 20),
             SizedBox(height: 30, child: preExistingIllness),
             Transform.scale(scale: 0.9, child: hypertensionCheckbox),
             Transform.scale(scale: 0.9, child: diabetesCheckbox),
@@ -437,6 +544,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
           shrinkWrap: true,
           padding: const EdgeInsets.only(left: 40.0, right: 40.0),
           children: <Widget>[
+            const SizedBox(height: 20),
             const Text(
               "Sign Up",
               textAlign: TextAlign.center,
