@@ -416,10 +416,9 @@ class _MyProfileState extends State<MyProfile> {
                         snapshot.data?.docs[index].data()
                             as Map<String, dynamic>);
 
-                    context.read<UserDetailListProvider>().setCurrentUser(
-                        userDetail); // get current user details in provider to be accessed by other pages
-
                     if (userDetail.uid == uid) {
+                      context.read<UserDetailListProvider>().setCurrentUser(
+                          userDetail); // get current user details in provider to be accessed by other pages
                       return (_buildScrollView(
                           context, screenWidth, screenHeight, userDetail));
                       // return Container(child: Text(userDetail.firstName));
