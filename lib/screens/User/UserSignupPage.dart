@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/AuthProvider.dart';
-import '../providers/UserDetailListProvider.dart';
-import '../models/UserDetail.dart';
+import '../../providers/AuthProvider.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../../models/UserDetail.dart';
 import 'package:flutter/services.dart';
 
 class UserSignupPage extends StatefulWidget {
@@ -219,8 +219,6 @@ class _UserSignupPageState extends State<UserSignupPage> {
       controller: allergyController,
     );
 
-    
-
     final preExistingIllness = Text(
         'Please check the box if you have the following pre existing illness:');
 
@@ -415,7 +413,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
             Transform.scale(scale: 0.9, child: autoimmuneDiseaseCheckbox),
             Transform.scale(scale: 0.9, child: asthmaCheckbox),
             Transform.scale(scale: 0.9, child: allergyCheckbox),
-            allergy ? allergyTextField : const SizedBox(), 
+            allergy ? allergyTextField : const SizedBox(),
             signUpButton,
             backButton
           ]));

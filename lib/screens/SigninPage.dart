@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:provider/provider.dart';
 import '../providers/AuthProvider.dart';
-import 'UserSignupPage.dart';
-import 'AdminMonitorSignupPage.dart';
+import 'User/UserSignupPage.dart';
+import 'Admin/AdminMonitorSignupPage.dart';
 
 var identities = ['User', 'Admin', 'Entrance Monitor'];
 String identityValue = identities.first;

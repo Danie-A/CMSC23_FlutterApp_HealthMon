@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/Todo.dart';
-import '../providers/TodoListProvider.dart';
+import '../../models/Todo.dart';
+import '../../providers/TodoListProvider.dart';
 
 class TodoModal extends StatelessWidget {
   String type;

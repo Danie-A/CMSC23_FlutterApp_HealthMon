@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';
-import '../models/Entry.dart';
-import '../providers/EntryListProvider.dart';
-import '../screens/myprofile.dart';
+import '../../models/Entry.dart';
+import '../../providers/EntryListProvider.dart';
+import '../../screens/myprofile.dart';
 import 'package:intl/intl.dart';
-import '../providers/UserDetailListProvider.dart';
-import '../providers/AuthProvider.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../../providers/AuthProvider.dart';
 
 class UserAddEntry extends StatefulWidget {
   @override

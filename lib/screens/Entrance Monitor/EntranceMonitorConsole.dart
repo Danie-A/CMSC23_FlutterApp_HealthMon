@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/providers/AuthProvider.dart';
-import 'package:health_monitoring_app/screens/EntMonViewLogs.dart';
 import 'package:provider/provider.dart';
-import '../providers/UserDetailListProvider.dart';
+import '../../providers/UserDetailListProvider.dart';
 
 class EntranceMonitorConsole extends StatelessWidget {
   EntranceMonitorConsole({super.key});

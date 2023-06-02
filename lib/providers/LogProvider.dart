@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/Log.dart';
@@ -46,7 +45,7 @@ class LogProvider with ChangeNotifier {
   }
   */
 
-  void deleteLog(String id) async { 
+  void deleteLog(String id) async {
     String message = await firebaseService.deleteLog(id);
     print(message);
     notifyListeners();

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';
-import '../models/Entry.dart';
-import '../providers/EntryListProvider.dart';
-import '../screens/myprofile.dart';
+import '../../models/Entry.dart';
+import '../../providers/EntryListProvider.dart';
+import '../../screens/myprofile.dart';
 import 'package:intl/intl.dart';
-import '../models/Request.dart';
-import '../api/FirebaseRequestAPI.dart';
-import '../providers/RequestProvider.dart';
+import '../../models/Request.dart';
+import '../../api/FirebaseRequestAPI.dart';
+import '../../providers/RequestProvider.dart';
 
 class UserEditEntry extends StatefulWidget {
   @override
@@ -261,8 +261,8 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     newEntry.delete_request,
                     newEntry.entry_date,
                   ];
-                  Request newReq = new Request(entry: entryList,
-                      id: id, type: 'edit', date: editDate);
+                  Request newReq = new Request(
+                      entry: entryList, id: id, type: 'edit', date: editDate);
 
                   context.read<RequestProvider>().addRequest(newReq);
 

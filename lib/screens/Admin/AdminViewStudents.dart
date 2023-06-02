@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/UserDetail.dart';
-import '../providers/AuthProvider.dart';
-import '../providers/UserDetailListProvider.dart';
+import '../../models/UserDetail.dart';
+import '../../providers/UserDetailListProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
 
 class AdminViewStudents extends StatefulWidget {
   const AdminViewStudents({super.key});

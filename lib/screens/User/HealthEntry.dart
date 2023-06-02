@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import '../models/Entry.dart';
+import 'package:health_monitoring_app/models/Entry.dart';
 
 class HealthEntry extends StatelessWidget {
   Entry entry;

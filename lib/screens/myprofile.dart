@@ -1,28 +1,17 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/models/Entry.dart';
 import 'package:health_monitoring_app/models/UserDetail.dart';
 import 'package:health_monitoring_app/providers/EntryListProvider.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
-import 'package:health_monitoring_app/screens/AdminConsole.dart';
-import 'package:health_monitoring_app/screens/EntranceMonitorConsole.dart';
-import 'package:health_monitoring_app/screens/UserAddEntry.dart';
+import 'package:health_monitoring_app/screens/admin/AdminConsole.dart';
+import 'package:health_monitoring_app/screens/Entrance Monitor/EntranceMonitorConsole.dart';
 import 'package:intl/intl.dart';
-import '../models/Entry.dart';
-import '../providers/EntryListProvider.dart';
 import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
-import 'AdminViewStudents.dart';
 import '../providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'AdminViewUnderMonitoring.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import 'HealthEntry.dart';
-import '../models/Request.dart';
-import '../api/FirebaseRequestAPI.dart';
-import '../providers/RequestProvider.dart';
+import 'User/HealthEntry.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -391,23 +380,17 @@ class _MyProfileState extends State<MyProfile> {
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('\n\n\n\n\n\n${dateToday}'),
-          ),
-          ListTile(
-            title: const Text('Add Entry'),
-            onTap: () {
-              Navigator.pushNamed(context, '/user-add-entry');
-            },
-          ),
-          ListTile(
-            title: const Text('Show QR'),
-            onTap: () {
-              Navigator.pushNamed(context, '/show-qr');
-            },
-          ),
+              decoration: BoxDecoration(
+                color: Colors.teal.shade50,
+              ),
+              child: Column(children: [
+                Text('\nHealthMon',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF004D40))),
+                Text('\nCMSC 23 Group 2\nAraez Concepcion \nDela Cruz Luñeza'),
+              ])),
           ListTile(
             title: const Text('Logout'),
             onTap: () {

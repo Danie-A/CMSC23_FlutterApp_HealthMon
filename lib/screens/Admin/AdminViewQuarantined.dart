@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/Todo.dart';
-import '../providers/TodoListProvider.dart';
-import '../providers/AuthProvider.dart';
+import '../../providers/AuthProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../providers/UserDetailListProvider.dart';
-import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../User/UserDetailsPage.dart';
 
 class AdminViewQuarantined extends StatefulWidget {
   const AdminViewQuarantined({super.key});
