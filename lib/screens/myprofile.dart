@@ -35,27 +35,6 @@ class _MyProfileState extends State<MyProfile> {
   var today;
   String dateToday = "";
 
-  static List healthEntries = [
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-  ];
-
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     return showDialog<void>(
       context: context,
@@ -330,7 +309,7 @@ class _MyProfileState extends State<MyProfile> {
     Stream<User?> userStream = context.watch<AuthProvider>().uStream;
     Stream<QuerySnapshot> userDetailStream =
         context.watch<UserDetailListProvider>().userDetails;
-    ;
+
     userStream.listen((User? user) async {
       if (user != null) {
         uid = user.uid;

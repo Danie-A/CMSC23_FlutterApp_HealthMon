@@ -19,6 +19,13 @@ class UserDetailListProvider with ChangeNotifier {
 
   // getter
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
+  Stream<QuerySnapshot> get userDetails1 => _userDetailStream;
+
+  Stream<QuerySnapshot> get streamAgain {
+    fetchUserDetails();
+    return _userDetailStream;
+  }
+
   Stream<DocumentSnapshot<Object?>> get user => _userStream!;
   UserDetail? get currentUser => _currentUser;
 

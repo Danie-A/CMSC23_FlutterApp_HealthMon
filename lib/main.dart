@@ -57,6 +57,33 @@ class MyApp extends StatelessWidget {
               ), //<-- SEE HERE
           brightness: Brightness.light,
           colorSchemeSeed: Colors.teal),
+      // onGenerateRoute: (settings) {
+      //   switch (settings.name) {
+      //     case '/': // route for homepage
+      //       return MaterialPageRoute(
+      //         builder: (context) => MyProfile(),
+      //       );
+      //     case '/login': // route for sign in
+      //       return MaterialPageRoute(
+      //         builder: (context) => SigninPage(),
+      //       );
+      //     case '/user-profile': // route for sign in
+      //       return MaterialPageRoute(
+      //         builder: (context) => SigninPage(),
+      //       );
+      //     case '/user-details': // route for sign in
+      //       return MaterialPageRoute(
+      //         builder: (context) => UserDetailsPage(),
+      //       );
+      //     case '/user-profile': // route for info of a specific friend
+      //       final args = settings.arguments as Friend;
+      //       return MaterialPageRoute(
+      //         builder: (context) => FriendDetails(friend: args),
+      //       );
+      //     default:
+      //       return null;
+      //   }
+      // },
       routes: {
         '/': (context) => const MyProfile(),
         '/login': (context) => const SigninPage(),
@@ -75,10 +102,6 @@ class MyApp extends StatelessWidget {
         '/search-logs': (context) => const EntMonSearchLogs(),
         '/view-logs': (context) => const EntMonViewLogs(),
       },
-      onGenerateRoute: (settings) {
-        
-      }
-      
     );
   }
 }
