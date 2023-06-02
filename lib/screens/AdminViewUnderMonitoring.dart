@@ -19,18 +19,25 @@ class AdminViewUnderMonitoring extends StatefulWidget {
 class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
   List<String> underMonitoringStudents = ["Danie", "Sean", "Marcie", "Laydon"];
 
-  Future<void> _showMovetoQuarantine(BuildContext context, String name) {
+  Future<void> _showMovetoQuarantine(
+      BuildContext context, UserDetail userDetail) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${name}'),
+          title: Text('${userDetail.firstName}'),
           content: const Text(
             'Are you sure you want to move this student to quarantine?',
           ),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: const Text("Move to Quarantine")),
+                onPressed: () => {
+                      context
+                          .watch<UserDetailListProvider>()
+                          .editStatus(userDetail.uid, "Quarantined"),
+                      Navigator.of(context).pop()
+                    },
+                child: const Text("Move to Quarantine")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -228,7 +235,7 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
                                     color: Color(0xFFBE7575),
                                     onPressed: () {
                                       _showMovetoQuarantine(
-                                          context, userDetail.firstName);
+                                          context, userDetail);
                                     },
                                   ),
                                   IconButton(

@@ -16,12 +16,12 @@ class AdminViewStudents extends StatefulWidget {
 }
 
 class _ViewStudentsState extends State<AdminViewStudents> {
-  Future<void> _showStudent(BuildContext context, String name) {
+  Future<void> _showStudent(BuildContext context, UserDetail userDetail) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${name}'),
+          title: Text('${userDetail.firstName}'),
           content: const Text(
             'A dialog is a type of modal window that\n'
             'appears in front of app content to\n'
@@ -30,10 +30,21 @@ class _ViewStudentsState extends State<AdminViewStudents> {
           ),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: const Text("Make Admin")),
+                onPressed: () => {
+                      context
+                          .watch<UserDetailListProvider>()
+                          .changeUserType(userDetail.uid, "Admin"),
+                      Navigator.of(context).pop()
+                    },
+                child: const Text("Make Admin")),
             const SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () => {},
+                onPressed: () => {
+                      context
+                          .watch<UserDetailListProvider>()
+                          .changeUserType(userDetail.uid, "Entrance Monitor"),
+                      Navigator.of(context).pop()
+                    },
                 child: const Text("Make Entrance Monitor")),
             const SizedBox(height: 10),
             TextButton(
@@ -51,18 +62,25 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     );
   }
 
-  Future<void> _showAddToQuarantine(BuildContext context, String name) {
+  Future<void> _showAddToQuarantine(
+      BuildContext context, UserDetail userDetail) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${name}'),
+          title: Text('${userDetail.firstName}'),
           content: const Text(
             'Are you sure you want to add this student to quarantine?',
           ),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: const Text("Add to Quarantine")),
+                onPressed: () => {
+                      context
+                          .watch<UserDetailListProvider>()
+                          .editStatus(userDetail.uid, "Quarantined"),
+                      Navigator.of(context).pop()
+                    },
+                child: const Text("Add to Quarantine")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -180,7 +198,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                       : InkWell(
                           // InkWell widget adds some hover effect to the ListTile
                           onTap: () {
-                            _showStudent(context, userDetail.firstName);
+                            _showStudent(context, userDetail);
                           },
                           hoverColor: Colors.teal[200],
                           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
@@ -193,8 +211,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                               trailing: IconButton(
                                 icon: const Icon(Icons.coronavirus_rounded),
                                 onPressed: () {
-                                  _showAddToQuarantine(
-                                      context, userDetail.firstName);
+                                  _showAddToQuarantine(context, userDetail);
                                 },
                               )),
                         );

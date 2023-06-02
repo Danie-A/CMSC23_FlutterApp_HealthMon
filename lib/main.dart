@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/EntMonSearchLogs.dart';
 import 'package:health_monitoring_app/screens/UserEditEntry.dart';
@@ -11,6 +13,7 @@ import 'screens/SigninPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'providers/UserDetailListProvider.dart';
+import 'providers/LogProvider.dart';
 import '../providers/EntryListProvider.dart';
 import '../screens/UserAddEntry.dart';
 import '../screens/QrCodePage.dart';
@@ -22,6 +25,7 @@ import 'screens/AdminViewQuarantined.dart';
 import 'screens/AdminViewUnderMonitoring.dart';
 import 'screens/EntMonSearchLogs.dart';
 import 'screens/EntMonViewLogs.dart';
+import 'providers/RequestProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +40,9 @@ void main() async {
         ChangeNotifierProvider(create: ((context) => UserDetailListProvider())),
         ChangeNotifierProvider(create: ((context) => EntryListProvider())),
         ChangeNotifierProvider(create: ((context) => AuthProvider())),
+        ChangeNotifierProvider(create: ((context) => LogProvider())),
+        ChangeNotifierProvider(create: ((context) => RequestProvider()))
+
       ],
       child: MyApp(),
     ),

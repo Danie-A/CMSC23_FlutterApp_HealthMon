@@ -5,6 +5,7 @@ import '../models/Todo.dart';
 import '../providers/TodoListProvider.dart';
 import '../providers/AuthProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../providers/UserDetailListProvider.dart';
 import 'SigninPage.dart';
 import 'UserDetailsPage.dart';
 
@@ -52,6 +53,10 @@ class _ViewQuarantinedState extends State<AdminViewQuarantined> {
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> userDetailStream =
+        context.watch<UserDetailListProvider>().userDetails;
+    Stream<User?> userStream = context.watch<AuthProvider>().uStream;
+
     return Scaffold(
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
@@ -105,12 +110,17 @@ class _ViewQuarantinedState extends State<AdminViewQuarantined> {
           ]),
           backgroundColor: Colors.teal[100],
         ),
-        body: Column(
-          children: [
-            SizedBox(height: 10),
-            Text("Quarantined Student Count: ${quarantinedStudents.length}"),
-            viewAllStudents()
-          ],
-        ));
+        body: StreamBuilder(
+            stream: userDetailStream,
+            builder: (context, snapshot) {
+              return Column(
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                      "Quarantined Student Count: ${quarantinedStudents.length}"),
+                  viewAllStudents()
+                ],
+              );
+            }));
   }
 }

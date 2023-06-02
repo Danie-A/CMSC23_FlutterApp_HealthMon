@@ -81,6 +81,11 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void changeUserType(String id, String userType) async {
+    String message = await firebaseService.editStatus(id, userType);
+    notifyListeners();
+  }
+
   void editStatus(String id, String status) async {
     String message = await firebaseService.editStatus(id, status);
     notifyListeners();

@@ -20,6 +20,9 @@ import 'AdminViewUnderMonitoring.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'HealthEntry.dart';
+import '../models/Request.dart';
+import '../api/FirebaseRequestAPI.dart';
+import '../providers/RequestProvider.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -36,6 +39,9 @@ class _MyProfileState extends State<MyProfile> {
   String dateToday = "";
 
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
+    final now = DateTime.now();
+    String curDate = DateFormat('yMd').format(now);
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -49,7 +55,17 @@ class _MyProfileState extends State<MyProfile> {
                 onPressed: () =>
                     {Navigator.pushNamed(context, '/user-edit-entry')},
                 child: Text("Edit Entry")),
-            ElevatedButton(onPressed: () => {}, child: Text("Delete Entry")),
+            ElevatedButton(onPressed: () {
+
+              Request newReq = new Request(
+                      id: "", type: 'delete', date: curDate);
+                      //WE STILL NEED TO GET THE ID OF THe ENTRY
+
+                  context.read<RequestProvider>().addRequest(newReq);
+                  Navigator.of(context).pop();
+              
+              
+            }, child: Text("Delete Entry")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(

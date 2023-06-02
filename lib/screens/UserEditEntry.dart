@@ -5,6 +5,9 @@ import '../models/Entry.dart';
 import '../providers/EntryListProvider.dart';
 import '../screens/myprofile.dart';
 import 'package:intl/intl.dart';
+import '../models/Request.dart';
+import '../api/FirebaseRequestAPI.dart';
+import '../providers/RequestProvider.dart';
 
 class UserEditEntry extends StatefulWidget {
   @override
@@ -28,6 +31,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
   late String user_key = "";
   late bool edit_request = false;
   late bool delete_request = false;
+  late String? id = "";
 
   @override
   void initState() {
@@ -56,6 +60,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
         user_key = entry.user_key;
         edit_request = entry.edit_request;
         delete_request = entry.delete_request;
+        id = entry.id;
       });
     }
   }
@@ -64,6 +69,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     String entryDate = DateFormat('yMd').format(now);
+    String editDate = DateFormat('yMd').format(now);
 
     return Scaffold(
       appBar: AppBar(
@@ -236,9 +242,31 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     newEntry.has_symptoms = true;
                     newEntry.status = 'Under Monitoring';
                   }
+                  List<dynamic> entryList = [
+                    newEntry.fever,
+                    newEntry.feverish,
+                    newEntry.muscle_joint_pain,
+                    newEntry.cough,
+                    newEntry.cold,
+                    newEntry.sore_throat,
+                    newEntry.difficulty_breathing,
+                    newEntry.diarrhea,
+                    newEntry.loss_taste,
+                    newEntry.loss_smell,
+                    newEntry.has_symptoms,
+                    newEntry.had_contact,
+                    newEntry.status,
+                    newEntry.user_key,
+                    newEntry.edit_request,
+                    newEntry.delete_request,
+                    newEntry.entry_date,
+                  ];
+                  Request newReq = new Request(entry: entryList,
+                      id: id, type: 'edit', date: editDate);
 
-                  context.read<EntryListProvider>().editEntry(newEntry);
+                  context.read<RequestProvider>().addRequest(newReq);
 
+                  Navigator.pop(context);
                   Navigator.pop(context);
 
                   // Do something with the newEntry instance, like store it in a database or pass it to another screen
