@@ -120,6 +120,25 @@ class FirebaseUserDetailAPI {
     }
   }
 
+  Future<String> addLocation(String uid, String location) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'location': location,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully added user detail location!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
   // Future<String> editStatus(String? id, String status) async {
   //   try {
   //     await db.collection("userDetails").doc(id).update({"status": status});

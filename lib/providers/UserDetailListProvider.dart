@@ -79,6 +79,11 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void addLocation(String id, String location) async {
+    String message = await firebaseService.addLocation(id, location);
+    notifyListeners();
+  }
+
   void editLatestEntry(String id, String latestEntry) async {
     String message = await firebaseService.editLatestEntry(id, latestEntry);
     notifyListeners();
