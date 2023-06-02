@@ -14,15 +14,13 @@ class EntranceMonitorConsole extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Set Location'),
-          content: Column(children: [
-            TextField(
-              controller: _locationController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: "Enter Location",
-              ),
-            )
-          ]),
+          content: TextField(
+            controller: _locationController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: "Enter Location",
+            ),
+          ),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () => {
