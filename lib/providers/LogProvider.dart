@@ -8,7 +8,7 @@ class LogProvider with ChangeNotifier {
   late Stream<QuerySnapshot> _logStream;
   Log? currentLog;
 
-  LogListProvider() {
+  LogProvider() {
     firebaseService = FirebaseLogAPI();
     fetchLogDetails();
   }
