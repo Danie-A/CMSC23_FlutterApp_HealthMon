@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../models/UserDetail.dart';
 import '../../providers/UserDetailListProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../providers/AuthProvider.dart';
 
 class AdminViewStudents extends StatefulWidget {
   const AdminViewStudents({super.key});
@@ -17,12 +18,13 @@ class _ViewStudentsState extends State<AdminViewStudents> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${userDetail.firstName}'),
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
+          title: Text('${userDetail.firstName} ${userDetail.lastName}'),
+          content: Text(
+            'Email: ${userDetail.email}\n'
+            'Username: ${userDetail.username}\n'
+            'College: ${userDetail.college}\n'
+            'Course: ${userDetail.course}\n'
+            'Student No: ${userDetail.studentNo}\n',
           ),
           actions: <Widget>[
             ElevatedButton(
