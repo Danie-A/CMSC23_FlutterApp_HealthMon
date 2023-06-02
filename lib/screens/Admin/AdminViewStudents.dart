@@ -93,15 +93,10 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     );
   }
 
-  // ListView viewAllStudents(Stream<QuerySnapshot<Object?>> userDetailStream,
-  //     AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
-
-  // }
-
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> userDetailStream =
-        context.watch<UserDetailListProvider>().userDetails1;
+        context.watch<UserDetailListProvider>().userDetails2;
     return displayScaffold(context, userDetailStream);
   }
 
