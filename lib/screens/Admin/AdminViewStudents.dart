@@ -32,7 +32,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             ElevatedButton(
                 onPressed: () => {
                       context
-                          .watch<UserDetailListProvider>()
+                          .read<UserDetailListProvider>()
                           .changeUserType(userDetail.uid, "Admin"),
                       Navigator.of(context).pop()
                     },
@@ -41,7 +41,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             ElevatedButton(
                 onPressed: () => {
                       context
-                          .watch<UserDetailListProvider>()
+                          .read<UserDetailListProvider>()
                           .changeUserType(userDetail.uid, "Entrance Monitor"),
                       Navigator.of(context).pop()
                     },

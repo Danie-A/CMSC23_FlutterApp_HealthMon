@@ -7,14 +7,18 @@ class FirebaseUserDetailAPI {
   //     db.collection('userDetails').where('studentNo', isEqualTo: studentNumber);
 
   Stream<QuerySnapshot> getSortStudentNo() {
-    Stream<QuerySnapshot> filteredStream =
-        db.collection('userDetails').orderBy('studentNo').snapshots();
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
+        .orderBy('studentNo')
+        .snapshots();
     return filteredStream;
   }
 
   Stream<QuerySnapshot> getSortDate() {
     Stream<QuerySnapshot> filteredStream = db
         .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
         .orderBy("latestEntry", descending: true)
         .snapshots();
     return filteredStream;
@@ -23,6 +27,7 @@ class FirebaseUserDetailAPI {
   Stream<QuerySnapshot> getSortCourse(String course) {
     Stream<QuerySnapshot> filteredStream = db
         .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
         .where('course', isEqualTo: course)
         .snapshots();
     return filteredStream;
@@ -31,6 +36,7 @@ class FirebaseUserDetailAPI {
   Stream<QuerySnapshot> getSortCollege(String college) {
     Stream<QuerySnapshot> filteredStream = db
         .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
         .where('college', isEqualTo: college)
         .snapshots();
     return filteredStream;
@@ -64,6 +70,25 @@ class FirebaseUserDetailAPI {
       });
 
       return "Successfully edited user detail status!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> editUserType(String uid, String newUserType) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'userType': newUserType,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited user type!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
