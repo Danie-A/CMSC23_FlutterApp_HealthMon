@@ -5,13 +5,13 @@ import 'dart:convert';
 import 'Entry.dart';
 
 class Request {
-  Entry? entry;
+  List<dynamic>? entry;
   String? id;
   String? type;
   String? date;
 
   Request({
-    required this.entry,
+    this.entry,
     required this.id,
     required this.type,
     required this.date,
