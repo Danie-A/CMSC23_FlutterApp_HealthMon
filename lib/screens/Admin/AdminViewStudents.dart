@@ -13,7 +13,8 @@ class AdminViewStudents extends StatefulWidget {
 }
 
 class _ViewStudentsState extends State<AdminViewStudents> {
-  Widget _showAdminForm(BuildContext context, UserDetail userDetail) {
+  Widget _showForm(
+      BuildContext context, UserDetail userDetail, String userType) {
     final formKey = GlobalKey<FormState>();
     TextEditingController empNoController = TextEditingController();
     TextEditingController positionController = TextEditingController();
@@ -83,13 +84,13 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                             homeUnitController.text.toString());
                     context
                         .read<UserDetailListProvider>()
-                        .changeUserType(userDetail.uid, "Admin");
+                        .changeUserType(userDetail.uid, userType);
                     if (context.mounted) Navigator.pop(context);
                   }
 
                   formKey.currentState?.save();
                 },
-                child: const Text('Make Admin'),
+                child: Text('Make ${userType}'),
               ),
             )
           ],
@@ -121,7 +122,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                         title: Text("Admin Form",
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
-                        content: _showAdminForm(context, userDetail),
+                        content: _showForm(context, userDetail, "Admin"),
                         actions: [
                           TextButton(
                             child: const Text('Close'),
@@ -139,9 +140,27 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             const SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () => {
-                      context
-                          .read<UserDetailListProvider>()
-                          .changeUserType(userDetail.uid, "Entrance Monitor"),
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Entrance Monitor Form",
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                            content: _showForm(
+                                context, userDetail, "Entrance Monitor"),
+                            actions: [
+                              TextButton(
+                                child: const Text('Close'),
+                                onPressed: () {
+                                  // Use the local variable to dismiss the dialog
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     },
                 child: const Text("Make Entrance Monitor")),
             const SizedBox(height: 10),
