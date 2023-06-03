@@ -89,7 +89,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
 
                   formKey.currentState?.save();
                 },
-                child: const Text('Sign up'),
+                child: const Text('Make Admin'),
               ),
             )
           ],
@@ -382,82 +382,60 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                 child: Text("No Students Found"),
               );
             },
-          )
-          // child: ListView.builder(
-          //     itemCount: healthEntries.length,
-          //     itemBuilder: (context, index) {
-          //       return const HealthEntry();
-          //     })
-
-          );
+          ));
     } else if (filterValue == 'College') {
-      return Placeholder();
-      // context.read<UserDetailListProvider>().setCourseStream(collegeValue);
-      // Stream<QuerySnapshot> sortCollege =
-      //     context.watch<UserDetailListProvider>().sortCollegeStream;
-      // if (sortCollege == true) {
-      //   return SizedBox(
-      //       height: 240,
-      //       width: screenWidth * .8,
-      //       child: StreamBuilder<QuerySnapshot>(
-      //         stream: sortCollege,
-      //         builder: (context, snapshot) {
-      //           if (snapshot.hasError) {
-      //             return Text('Error: ${snapshot.error}');
-      //           } else if (snapshot.connectionState ==
-      //               ConnectionState.waiting) {
-      //             return const Center(
-      //               child: CircularProgressIndicator(),
-      //             );
-      //           } else if (snapshot.hasData) {
-      //             // get entries of current user only
-      //             return (ListView.builder(
-      //                 itemCount: snapshot.data?.docs.length,
-      //                 itemBuilder: (context, index) {
-      //                   UserDetail userDetail = UserDetail.studentFromJson(
-      //                       snapshot.data?.docs[index].data()
-      //                           as Map<String, dynamic>);
+      context.read<UserDetailListProvider>().setCollegeStream(collegeValue);
+      Stream<QuerySnapshot> sortCollege =
+          context.watch<UserDetailListProvider>().sortCollegeStream;
+      return SizedBox(
+          height: 240,
+          width: screenWidth * .99,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: sortCollege,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasData) {
+                // get entries of current user only
+                return (ListView.builder(
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: (context, index) {
+                      UserDetail userDetail = UserDetail.studentFromJson(
+                          snapshot.data?.docs[index].data()
+                              as Map<String, dynamic>);
 
-      //                   return InkWell(
-      //                     // InkWell widget adds some hover effect to the ListTile
-      //                     onTap: () {
-      //                       _showStudent(context, userDetail);
-      //                     },
-      //                     hoverColor: Colors.teal[200],
-      //                     // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-      //                     splashColor: Colors.teal[
-      //                         100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-      //                     child: ListTile(
-      //                         leading: Icon(Icons.person, color: Colors.teal),
-      //                         title: Text(
-      //                             "${userDetail.college} - ${userDetail.firstName}"), // name
-      //                         // subtitle: Text("${friend.nickname}"), // filter subtitle
-      //                         trailing: IconButton(
-      //                           icon: const Icon(Icons.coronavirus_rounded),
-      //                           onPressed: () {
-      //                             _showAddToQuarantine(context, userDetail);
-      //                           },
-      //                         )),
-      //                   );
-      //                 }));
-      //           }
-      //           return Center(
-      //             child: Text("No Students Found"),
-      //           );
-      //         },
-      //       )
-      //       // child: ListView.builder(
-      //       //     itemCount: healthEntries.length,
-      //       //     itemBuilder: (context, index) {
-      //       //       return const HealthEntry();
-      //       //     })
-
-      //       );
-      // } else {
-      //   return Center(
-      //     child: Text("No Students Found"),
-      //   );
-      // }
+                      return InkWell(
+                        // InkWell widget adds some hover effect to the ListTile
+                        onTap: () {
+                          _showStudent(context, userDetail);
+                        },
+                        hoverColor: Colors.teal[200],
+                        // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                        splashColor: Colors.teal[
+                            100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                        child: ListTile(
+                            leading: Icon(Icons.person, color: Colors.teal),
+                            title: Text(
+                                "${userDetail.college} - ${userDetail.firstName}"), // name
+                            // subtitle: Text("${friend.nickname}"), // filter subtitle
+                            trailing: IconButton(
+                              icon: const Icon(Icons.coronavirus_rounded),
+                              onPressed: () {
+                                _showAddToQuarantine(context, userDetail);
+                              },
+                            )),
+                      );
+                    }));
+              }
+              return Center(
+                child: Text("No Students Found"),
+              );
+            },
+          ));
     } else {
       Stream<QuerySnapshot> sortDate =
           context.watch<UserDetailListProvider>().sortDateStream;
