@@ -5,6 +5,21 @@ class FirebaseUserDetailAPI {
 
   // Query filteredQuery =
   //     db.collection('userDetails').where('studentNo', isEqualTo: studentNumber);
+  Stream<QuerySnapshot> getQuarantinedUsers() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('status', isEqualTo: 'Quarantined')
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getUnderMonitoringUsers() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('status', isEqualTo: 'Under Monitoring')
+        .snapshots();
+    return filteredStream;
+  }
 
   Stream<QuerySnapshot> getSortStudentNo() {
     Stream<QuerySnapshot> filteredStream = db
@@ -186,6 +201,28 @@ class FirebaseUserDetailAPI {
         doc.reference.set(
           {
             'location': location,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully added user detail location!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> addAdminUniqueProperties(
+      String uid, String empNo, String position, String homeUnit) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'empNo': int.parse(empNo),
+            'position': position,
+            'homeUnit': homeUnit,
           },
           SetOptions(merge: true),
         );

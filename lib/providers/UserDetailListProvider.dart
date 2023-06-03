@@ -67,6 +67,18 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Stream<QuerySnapshot> getQuarantinedUsers() {
+    Stream<QuerySnapshot> filteredStream =
+        firebaseService.getQuarantinedUsers();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getUnderMonitoringUsers() {
+    Stream<QuerySnapshot> filteredStream =
+        firebaseService.getUnderMonitoringUsers();
+    return filteredStream;
+  }
+
   Stream<QuerySnapshot> getSortStudentNo() {
     Stream<QuerySnapshot> filteredStream = firebaseService.getSortStudentNo();
     return filteredStream;
@@ -107,6 +119,12 @@ class UserDetailListProvider with ChangeNotifier {
   void changeUserType(String id, String userType) async {
     String message = await firebaseService.editUserType(id, userType);
     notifyListeners();
+  }
+
+  void addAdminUniqueProperties(
+      String id, String empNo, String position, String homeUnit) async {
+    String message = await firebaseService.addAdminUniqueProperties(
+        id, empNo, position, homeUnit);
   }
 
   void editStatus(String id, String status) async {
