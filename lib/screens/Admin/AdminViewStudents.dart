@@ -160,9 +160,77 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     );
   }
 
-  List<String> filterBy = ['Student Number', 'Date'];
+  List<String> filterBy = ['Student Number', 'Date', 'College', 'Course'];
+  List<String> colleges = [
+    'CAS',
+    'CDC',
+    'CFNR',
+    'CEAT',
+    'CEM',
+    'CHE',
+    'CAFS',
+    'CVM'
+  ];
+  List<String> courses = [
+    'BS Computer Science',
+    'BA Communication Arts',
+    'BS Applied Physics',
+    'BS Biology',
+    'BS Chemistry',
+    'BS Statistics',
+    'BS Agricultural Chemistry',
+    'Doctor of Veterinary Medicine',
+    'BS Accountancy',
+    'BS Economics',
+    'BS Agribusiness Management',
+    'BS Development Communication',
+    'BS Civil Engineering',
+    'BS Chemical Engineering',
+    'BS Electrical Engineering',
+    'BS Forestry',
+    'BS Nutrition',
+    'BS Human Ecology'
+  ];
 
   String filterValue = '';
+  String collegeValue = '';
+  String courseValue = '';
+
+  bool courseDropdownIsVisible = false;
+  bool collegeDropdownIsVisible = false;
+
+  void allNotVisible() {
+    setState(() {
+      courseDropdownIsVisible = false;
+      collegeDropdownIsVisible = false;
+    });
+  }
+
+  void courseVisible() {
+    setState(() {
+      courseDropdownIsVisible = true;
+      collegeDropdownIsVisible = false;
+    });
+  }
+
+  void collegeVisible() {
+    setState(() {
+      collegeDropdownIsVisible = true;
+      courseDropdownIsVisible = false;
+    });
+  }
+
+  void toggleCollegeVisibility() {
+    setState(() {
+      collegeDropdownIsVisible = !collegeDropdownIsVisible;
+    });
+  }
+
+  void toggleCourseVisibility() {
+    setState(() {
+      courseDropdownIsVisible = !courseDropdownIsVisible;
+    });
+  }
 
   Future<void> _showAddToQuarantine(
       BuildContext context, UserDetail userDetail) {
@@ -178,7 +246,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             ElevatedButton(
                 onPressed: () => {
                       context
-                          .watch<UserDetailListProvider>()
+                          .read<UserDetailListProvider>()
                           .editStatus(userDetail.uid, "Quarantined"),
                       Navigator.of(context).pop()
                     },
@@ -207,7 +275,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
           context.watch<UserDetailListProvider>().sortStudentNoStream;
       return SizedBox(
           height: 240,
-          width: screenWidth * .8,
+          width: screenWidth * .99,
           child: StreamBuilder<QuerySnapshot>(
             stream: sortStudentNo,
             builder: (context, snapshot) {
@@ -261,13 +329,142 @@ class _ViewStudentsState extends State<AdminViewStudents> {
           //     })
 
           );
+    } else if (filterValue == 'Course') {
+      context.read<UserDetailListProvider>().setCourseStream(courseValue);
+      Stream<QuerySnapshot> sortCourse =
+          context.watch<UserDetailListProvider>().sortCourseStream;
+
+      return SizedBox(
+          height: 240,
+          width: screenWidth * .99,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: sortCourse,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasData) {
+                // get entries of current user only
+                return (ListView.builder(
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: (context, index) {
+                      UserDetail userDetail = UserDetail.studentFromJson(
+                          snapshot.data?.docs[index].data()
+                              as Map<String, dynamic>);
+
+                      return InkWell(
+                        // InkWell widget adds some hover effect to the ListTile
+                        onTap: () {
+                          _showStudent(context, userDetail);
+                        },
+                        hoverColor: Colors.teal[200],
+                        // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                        splashColor: Colors.teal[
+                            100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                        child: ListTile(
+                            leading: Icon(Icons.person, color: Colors.teal),
+                            title: Text(
+                                "${userDetail.course} - ${userDetail.firstName}"), // name
+                            // subtitle: Text("${friend.nickname}"), // filter subtitle
+                            trailing: IconButton(
+                              icon: const Icon(Icons.coronavirus_rounded),
+                              onPressed: () {
+                                _showAddToQuarantine(context, userDetail);
+                              },
+                            )),
+                      );
+                    }));
+              }
+              return Center(
+                child: Text("No Students Found"),
+              );
+            },
+          )
+          // child: ListView.builder(
+          //     itemCount: healthEntries.length,
+          //     itemBuilder: (context, index) {
+          //       return const HealthEntry();
+          //     })
+
+          );
+    } else if (filterValue == 'College') {
+      return Placeholder();
+      // context.read<UserDetailListProvider>().setCourseStream(collegeValue);
+      // Stream<QuerySnapshot> sortCollege =
+      //     context.watch<UserDetailListProvider>().sortCollegeStream;
+      // if (sortCollege == true) {
+      //   return SizedBox(
+      //       height: 240,
+      //       width: screenWidth * .8,
+      //       child: StreamBuilder<QuerySnapshot>(
+      //         stream: sortCollege,
+      //         builder: (context, snapshot) {
+      //           if (snapshot.hasError) {
+      //             return Text('Error: ${snapshot.error}');
+      //           } else if (snapshot.connectionState ==
+      //               ConnectionState.waiting) {
+      //             return const Center(
+      //               child: CircularProgressIndicator(),
+      //             );
+      //           } else if (snapshot.hasData) {
+      //             // get entries of current user only
+      //             return (ListView.builder(
+      //                 itemCount: snapshot.data?.docs.length,
+      //                 itemBuilder: (context, index) {
+      //                   UserDetail userDetail = UserDetail.studentFromJson(
+      //                       snapshot.data?.docs[index].data()
+      //                           as Map<String, dynamic>);
+
+      //                   return InkWell(
+      //                     // InkWell widget adds some hover effect to the ListTile
+      //                     onTap: () {
+      //                       _showStudent(context, userDetail);
+      //                     },
+      //                     hoverColor: Colors.teal[200],
+      //                     // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+      //                     splashColor: Colors.teal[
+      //                         100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+      //                     child: ListTile(
+      //                         leading: Icon(Icons.person, color: Colors.teal),
+      //                         title: Text(
+      //                             "${userDetail.college} - ${userDetail.firstName}"), // name
+      //                         // subtitle: Text("${friend.nickname}"), // filter subtitle
+      //                         trailing: IconButton(
+      //                           icon: const Icon(Icons.coronavirus_rounded),
+      //                           onPressed: () {
+      //                             _showAddToQuarantine(context, userDetail);
+      //                           },
+      //                         )),
+      //                   );
+      //                 }));
+      //           }
+      //           return Center(
+      //             child: Text("No Students Found"),
+      //           );
+      //         },
+      //       )
+      //       // child: ListView.builder(
+      //       //     itemCount: healthEntries.length,
+      //       //     itemBuilder: (context, index) {
+      //       //       return const HealthEntry();
+      //       //     })
+
+      //       );
+      // } else {
+      //   return Center(
+      //     child: Text("No Students Found"),
+      //   );
+      // }
     } else {
       Stream<QuerySnapshot> sortDate =
           context.watch<UserDetailListProvider>().sortDateStream;
 
       return SizedBox(
           height: 240,
-          width: screenWidth * .8,
+          width: screenWidth * .99,
           child: StreamBuilder<QuerySnapshot>(
             stream: sortDate,
             builder: (context, snapshot) {
@@ -345,6 +542,16 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                 onChanged: (String? newValue) {
                   setState(() {
                     filterValue = newValue!;
+                    if (filterValue == 'College') {
+                      collegeDropdownIsVisible = true;
+                      courseDropdownIsVisible = false;
+                    } else if (filterValue == 'Course') {
+                      courseDropdownIsVisible = true;
+                      collegeDropdownIsVisible = false;
+                    } else {
+                      collegeDropdownIsVisible = false;
+                      courseDropdownIsVisible = false;
+                    }
                   });
                 },
                 items: filterBy.map<DropdownMenuItem<String>>((String value) {
@@ -353,6 +560,54 @@ class _ViewStudentsState extends State<AdminViewStudents> {
                     child: Text('  $value'),
                   );
                 }).toList(),
+              ),
+              Visibility(
+                visible: collegeDropdownIsVisible,
+                child: DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(20),
+                  icon: const Icon(Icons.arrow_drop_down),
+                  dropdownColor: Colors.teal[100],
+                  underline: SizedBox.shrink(),
+                  value: collegeValue,
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.teal),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      collegeValue = newValue!;
+                    });
+                  },
+                  items: colleges.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text('  $value'),
+                    );
+                  }).toList(),
+                ),
+              ),
+              Visibility(
+                visible: courseDropdownIsVisible,
+                child: DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(20),
+                  icon: const Icon(Icons.arrow_drop_down),
+                  dropdownColor: Colors.teal[100],
+                  underline: SizedBox.shrink(),
+                  value: courseValue,
+                  iconSize: 24,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.teal),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      courseValue = newValue!;
+                    });
+                  },
+                  items: courses.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text('  $value'),
+                    );
+                  }).toList(),
+                ),
               ),
             ],
           ),
@@ -366,6 +621,8 @@ class _ViewStudentsState extends State<AdminViewStudents> {
   void initState() {
     super.initState();
     filterValue = filterBy.first;
+    collegeValue = colleges.first;
+    courseValue = courses.first;
   }
 
   @override
@@ -430,17 +687,6 @@ class _ViewStudentsState extends State<AdminViewStudents> {
         body: Column(
           children: [
             SizedBox(height: 8),
-            // ElevatedButton(
-            //     onPressed: () => {}, child: Text("Filter by Student Number")),
-            // SizedBox(height: 18),
-            // ElevatedButton(onPressed: () => {}, child: Text("Filter by Date")),
-            // SizedBox(height: 18),
-            // ElevatedButton(
-            //     onPressed: () => {}, child: Text("Filter by Course")),
-            // SizedBox(height: 18),
-            // ElevatedButton(
-            //     onPressed: () => {}, child: Text("Filter by College")),
-            // SizedBox(height: 18),
             Expanded(
               child: _showStream(context),
             )
