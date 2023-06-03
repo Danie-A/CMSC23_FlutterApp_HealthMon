@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/Log.dart';
-import '../providers/AuthProvider.dart';
-import '../providers/LogProvider.dart';
+import '../../models/Log.dart';
+import '../../providers/LogProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
 
 class EntMonViewLogs extends StatefulWidget {
   const EntMonViewLogs({super.key});
@@ -16,8 +12,6 @@ class EntMonViewLogs extends StatefulWidget {
 }
 
 class _EntMonViewLogsState extends State<EntMonViewLogs> {
-
-  
   Future<void> _showLog(BuildContext context, String location) {
     return showDialog<void>(
       context: context,
@@ -52,7 +46,6 @@ class _EntMonViewLogsState extends State<EntMonViewLogs> {
       },
     );
   }
-  
 
   /*
   Future<void> _showAddToQuarantine(BuildContext context, String name) {

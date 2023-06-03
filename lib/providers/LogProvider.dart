@@ -45,7 +45,7 @@ class LogProvider with ChangeNotifier {
   }
   */
 
-  void deleteLog(String id) async { 
+  void deleteLog(String id) async {
     String message = await firebaseService.deleteLog(id);
     print(message);
     notifyListeners();

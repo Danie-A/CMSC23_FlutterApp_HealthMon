@@ -12,7 +12,7 @@ class Log {
       required this.status,
       required this.studentNo,
       //required this.studentUID,
-      required this.studentName}); 
+      required this.studentName});
 
   factory Log.logFromJson(Map<String, dynamic> json) {
     return Log(
@@ -21,7 +21,6 @@ class Log {
         studentNo: json['studentNo'],
         //studentUID: json['studentUID'],
         studentName: json['studentName']);
-
   }
 
   static List<Log> logFromJsonArray(String jsonData) {

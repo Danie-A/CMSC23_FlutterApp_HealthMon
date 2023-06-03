@@ -1,8 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:health_monitoring_app/screens/EntMonViewLogs.dart';
+import 'package:health_monitoring_app/providers/AuthProvider.dart';
+import 'package:provider/provider.dart';
+import '../../providers/UserDetailListProvider.dart';
 
 class EntranceMonitorConsole extends StatelessWidget {
-  const EntranceMonitorConsole({super.key});
+  EntranceMonitorConsole({super.key});
+  TextEditingController _locationController = TextEditingController();
+
+  Future<void> _showSetLocation(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Set Location'),
+          content: TextField(
+            controller: _locationController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: "Enter Location",
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () => {
+// set location in firebase
+                      context.read<UserDetailListProvider>().addLocation(
+                          context.read<AuthProvider>().uid,
+                          _locationController.text.toString()),
+                      _locationController.clear(),
+                      Navigator.of(context).pop(),
+                    },
+                child: const Text("Set Location")),
+            const SizedBox(height: 10),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +117,7 @@ class EntranceMonitorConsole extends StatelessWidget {
                       ])),
               ElevatedButton(
                   onPressed: () {
+                    _showSetLocation(context);
                     //Navigator.pushNamed(context, '/view-requests');
                   },
                   style: ElevatedButton.styleFrom(

@@ -3,6 +3,60 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseUserDetailAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
+  // Query filteredQuery =
+  //     db.collection('userDetails').where('studentNo', isEqualTo: studentNumber);
+  Stream<QuerySnapshot> getQuarantinedUsers() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('status', isEqualTo: 'Quarantined')
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getUnderMonitoringUsers() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('status', isEqualTo: 'Under Monitoring')
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortStudentNo() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
+        .orderBy('studentNo')
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortDate() {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
+        .orderBy("latestEntry", descending: true)
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortCourse(String course) {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
+        .where('course', isEqualTo: course)
+        .snapshots();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortCollege(String college) {
+    Stream<QuerySnapshot> filteredStream = db
+        .collection('userDetails')
+        .where('userType', isEqualTo: 'User')
+        .where('college', isEqualTo: college)
+        .snapshots();
+    return filteredStream;
+  }
+
   Future<String> addUserDetail(Map<String, dynamic> userDetail) async {
     try {
       final docRef = await db.collection("userDetails").add(userDetail);
@@ -31,6 +85,25 @@ class FirebaseUserDetailAPI {
       });
 
       return "Successfully edited user detail status!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> editUserType(String uid, String newUserType) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'userType': newUserType,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited user type!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
@@ -115,6 +188,47 @@ class FirebaseUserDetailAPI {
       await db.collection("userDetails").doc(id).delete();
 
       return "Successfully deleted user detail!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> addLocation(String uid, String location) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'location': location,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully added user detail location!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> addAdminUniqueProperties(
+      String uid, String empNo, String position, String homeUnit) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'empNo': int.parse(empNo),
+            'position': position,
+            'homeUnit': homeUnit,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully added user detail location!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:provider/provider.dart';
-import '../providers/AuthProvider.dart';
-import '../providers/UserDetailListProvider.dart';
-import '../models/UserDetail.dart';
+import '../../providers/AuthProvider.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../../models/UserDetail.dart';
 
 class QrCodePage extends StatefulWidget {
   const QrCodePage({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class _QrCodePageState extends State<QrCodePage> {
             SizedBox(height: screenHeight * .1),
 
             Center(
-              child: QrImageView(
+              child: QrImage(
                 data: context.read<AuthProvider>().uid,
                 backgroundColor: Color.fromRGBO(128, 203, 196, 1),
                 // ignore: deprecated_member_use

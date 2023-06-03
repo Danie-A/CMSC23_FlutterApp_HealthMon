@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/AuthProvider.dart';
-import '../providers/UserDetailListProvider.dart';
-import '../models/UserDetail.dart';
+// import auth provider
+import 'package:health_monitoring_app/providers/AuthProvider.dart';
+import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
+import 'package:health_monitoring_app/models/UserDetail.dart';
 
 class AdminMonitorSignupPage extends StatefulWidget {
   const AdminMonitorSignupPage({super.key});

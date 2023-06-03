@@ -1,28 +1,17 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/models/Entry.dart';
 import 'package:health_monitoring_app/models/UserDetail.dart';
 import 'package:health_monitoring_app/providers/EntryListProvider.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
-import 'package:health_monitoring_app/screens/AdminConsole.dart';
-import 'package:health_monitoring_app/screens/EntranceMonitorConsole.dart';
-import 'package:health_monitoring_app/screens/UserAddEntry.dart';
+import 'package:health_monitoring_app/screens/admin/AdminConsole.dart';
+import 'package:health_monitoring_app/screens/Entrance Monitor/EntranceMonitorConsole.dart';
 import 'package:intl/intl.dart';
-import '../models/Entry.dart';
-import '../providers/EntryListProvider.dart';
 import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
-import 'AdminViewStudents.dart';
 import '../providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'AdminViewUnderMonitoring.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import 'HealthEntry.dart';
-import '../models/Request.dart';
-import '../api/FirebaseRequestAPI.dart';
-import '../providers/RequestProvider.dart';
+import 'User/HealthEntry.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -38,30 +27,9 @@ class _MyProfileState extends State<MyProfile> {
   var today;
   String dateToday = "";
 
-  static List healthEntries = [
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-    "a",
-    "b",
-    "c",
-  ];
-
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     final now = DateTime.now();
-    String curDate = DateFormat('yMd').format(now);
+    String curDate = DateFormat.yMMMMd('en_US').format(now);
 
     return showDialog<void>(
       context: context,
@@ -76,17 +44,16 @@ class _MyProfileState extends State<MyProfile> {
                 onPressed: () =>
                     {Navigator.pushNamed(context, '/user-edit-entry')},
                 child: Text("Edit Entry")),
-            ElevatedButton(onPressed: () {
+            ElevatedButton(
+                onPressed: () {
+                  // Request newReq = new Request(
+                  //         id: "", type: 'delete', date: curDate);
+                  //WE STILL NEED TO GET THE ID OF THe ENTRY
 
-              Request newReq = new Request(
-                      id: "", type: 'delete', date: curDate);
-                      //WE STILL NEED TO GET THE ID OF THe ENTRY
-
-                  context.read<RequestProvider>().addRequest(newReq);
+                  // context.read<RequestProvider>().addRequest(newReq);
                   Navigator.of(context).pop();
-              
-              
-            }, child: Text("Delete Entry")),
+                },
+                child: Text("Delete Entry")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -346,7 +313,7 @@ class _MyProfileState extends State<MyProfile> {
     Stream<User?> userStream = context.watch<AuthProvider>().uStream;
     Stream<QuerySnapshot> userDetailStream =
         context.watch<UserDetailListProvider>().userDetails;
-    ;
+
     userStream.listen((User? user) async {
       if (user != null) {
         uid = user.uid;
@@ -394,7 +361,7 @@ class _MyProfileState extends State<MyProfile> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     today = new DateTime.now();
-    dateToday = DateFormat('yMd').format(today);
+    dateToday = DateFormat.yMMMMd('en_US').format(today);
 
     return Scaffold(
         backgroundColor: Colors.teal[50],
@@ -413,23 +380,17 @@ class _MyProfileState extends State<MyProfile> {
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('\n\n\n\n\n\n${dateToday}'),
-          ),
-          ListTile(
-            title: const Text('Add Entry'),
-            onTap: () {
-              Navigator.pushNamed(context, '/user-add-entry');
-            },
-          ),
-          ListTile(
-            title: const Text('Show QR'),
-            onTap: () {
-              Navigator.pushNamed(context, '/show-qr');
-            },
-          ),
+              decoration: BoxDecoration(
+                color: Colors.teal.shade50,
+              ),
+              child: Column(children: [
+                Text('\nHealthMon',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF004D40))),
+                Text('\nCMSC 23 Group 2\nAraez Concepcion \nDela Cruz Luñeza'),
+              ])),
           ListTile(
             title: const Text('Logout'),
             onTap: () {
@@ -455,10 +416,9 @@ class _MyProfileState extends State<MyProfile> {
                         snapshot.data?.docs[index].data()
                             as Map<String, dynamic>);
 
-                    context.read<UserDetailListProvider>().setCurrentUser(
-                        userDetail); // get current user details in provider to be accessed by other pages
-
                     if (userDetail.uid == uid) {
+                      context.read<UserDetailListProvider>().setCurrentUser(
+                          userDetail); // get current user details in provider to be accessed by other pages
                       return (_buildScrollView(
                           context, screenWidth, screenHeight, userDetail));
                       // return Container(child: Text(userDetail.firstName));

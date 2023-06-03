@@ -6,7 +6,12 @@ import '../api/FirebaseUserDetailAPI.dart';
 class UserDetailListProvider with ChangeNotifier {
   late FirebaseUserDetailAPI firebaseService;
   late Stream<QuerySnapshot> _userDetailStream;
-  Stream<DocumentSnapshot<Object?>>? _userStream;
+  late Stream<QuerySnapshot> _userDetailStream2;
+
+  late Stream<QuerySnapshot> _sortStudentNoStream;
+  late Stream<QuerySnapshot> _sortDateStream;
+  late Stream<QuerySnapshot> _sortCourseStream;
+  late Stream<QuerySnapshot> _sortCollegeStream;
 
   String currentId = "";
   String _userType = "";
@@ -19,7 +24,24 @@ class UserDetailListProvider with ChangeNotifier {
 
   // getter
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
-  Stream<DocumentSnapshot<Object?>> get user => _userStream!;
+  Stream<QuerySnapshot> get userDetails2 => _userDetailStream2;
+
+  // for sorting/filtering students
+  Stream<QuerySnapshot> get sortStudentNoStream => _sortStudentNoStream;
+  Stream<QuerySnapshot> get sortDateStream => _sortDateStream;
+  Stream<QuerySnapshot> get sortCourseStream => _sortCourseStream;
+  Stream<QuerySnapshot> get sortCollegeStream => _sortCollegeStream;
+
+  setCourseStream(String course) {
+    this._sortCourseStream = firebaseService.getSortCourse(course);
+    notifyListeners();
+  }
+
+  setCollegeStream(String college) {
+    this._sortCollegeStream = firebaseService.getSortCollege(college);
+    notifyListeners();
+  }
+
   UserDetail? get currentUser => _currentUser;
 
   String get getId => currentId;
@@ -39,7 +61,27 @@ class UserDetailListProvider with ChangeNotifier {
 
   fetchUserDetails() {
     _userDetailStream = firebaseService.getAllUserDetails();
+    _userDetailStream2 = firebaseService.getAllUserDetails();
+    _sortStudentNoStream = firebaseService.getSortStudentNo();
+    _sortDateStream = firebaseService.getSortDate();
     notifyListeners();
+  }
+
+  Stream<QuerySnapshot> getQuarantinedUsers() {
+    Stream<QuerySnapshot> filteredStream =
+        firebaseService.getQuarantinedUsers();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getUnderMonitoringUsers() {
+    Stream<QuerySnapshot> filteredStream =
+        firebaseService.getUnderMonitoringUsers();
+    return filteredStream;
+  }
+
+  Stream<QuerySnapshot> getSortStudentNo() {
+    Stream<QuerySnapshot> filteredStream = firebaseService.getSortStudentNo();
+    return filteredStream;
   }
 
   Future<Stream<QuerySnapshot>> getCurrentUserDetail(String uid) async {
@@ -75,12 +117,23 @@ class UserDetailListProvider with ChangeNotifier {
   }
 
   void changeUserType(String id, String userType) async {
-    String message = await firebaseService.editStatus(id, userType);
+    String message = await firebaseService.editUserType(id, userType);
     notifyListeners();
+  }
+
+  void addAdminUniqueProperties(
+      String id, String empNo, String position, String homeUnit) async {
+    String message = await firebaseService.addAdminUniqueProperties(
+        id, empNo, position, homeUnit);
   }
 
   void editStatus(String id, String status) async {
     String message = await firebaseService.editStatus(id, status);
+    notifyListeners();
+  }
+
+  void addLocation(String id, String location) async {
+    String message = await firebaseService.addLocation(id, location);
     notifyListeners();
   }
 
@@ -100,10 +153,5 @@ class UserDetailListProvider with ChangeNotifier {
     String status = await firebaseService.getUserStatus(uid);
     notifyListeners();
     return status;
-  }
-
-  void fetchUserDetail(String id) async {
-    _userStream = await firebaseService.getSpecificUser(id).snapshots();
-    notifyListeners();
   }
 }

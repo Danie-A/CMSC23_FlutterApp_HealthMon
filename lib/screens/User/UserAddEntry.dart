@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';
-import '../models/Entry.dart';
-import '../providers/EntryListProvider.dart';
-import '../screens/myprofile.dart';
+import '../../models/Entry.dart';
+import '../../providers/EntryListProvider.dart';
+import '../../screens/myprofile.dart';
 import 'package:intl/intl.dart';
-import '../providers/UserDetailListProvider.dart';
-import '../providers/AuthProvider.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../../providers/AuthProvider.dart';
 
 class UserAddEntry extends StatefulWidget {
   @override
@@ -34,7 +34,8 @@ class _UserAddEntryState extends State<UserAddEntry> {
   @override
   Widget build(BuildContext context) {
     final now = new DateTime.now();
-    String entryDate = DateFormat('yMd').format(now);
+    String entryDate = DateFormat.yMMMMd('en_US').format(now);
+    print('entrydate is' + entryDate);
 
     return Scaffold(
       appBar: AppBar(
