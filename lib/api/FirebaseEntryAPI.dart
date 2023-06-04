@@ -15,7 +15,10 @@ class FirebaseEntryAPI {
   }
 
   Stream<QuerySnapshot> getAllEntries() {
-    return db.collection("entries").snapshots();
+    return db
+        .collection("entries")
+        .orderBy("entry_date", descending: true)
+        .snapshots();
   }
 
   Future<List> getEntriesList() async {

@@ -29,6 +29,7 @@ class _MyProfileState extends State<MyProfile> {
   var today;
   String dateToday = "";
   String currentEntryId = "";
+  String fullName = '';
 
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     final now = DateTime.now();
@@ -50,8 +51,11 @@ class _MyProfileState extends State<MyProfile> {
             ElevatedButton(
                 onPressed: () async {
                   Request newReq = new Request(
-                      id: currentEntryId, type: 'delete', date: curDate);
-                  //WE STILL NEED TO GET THE ID OF THe ENTRY
+                    id: currentEntryId,
+                    type: 'delete',
+                    date: curDate,
+                  );
+                  // [] name: add fullName to request
                   context.read<RequestProvider>().addRequest(newReq);
                   Navigator.of(context).pop();
                 },
@@ -291,6 +295,9 @@ class _MyProfileState extends State<MyProfile> {
                               context
                                   .read<EntryListProvider>()
                                   .setCurrentEntry(entry);
+                              fullName = userDetail.firstName +
+                                  " " +
+                                  userDetail.lastName;
                             }
                             return (HealthEntry(entry: entry));
                           } else {
@@ -302,14 +309,7 @@ class _MyProfileState extends State<MyProfile> {
                     child: Text("No User Details Found"),
                   );
                 },
-              )
-              // child: ListView.builder(
-              //     itemCount: healthEntries.length,
-              //     itemBuilder: (context, index) {
-              //       return const HealthEntry();
-              //     })
-
-              ),
+              )),
         ],
       ),
     ));
