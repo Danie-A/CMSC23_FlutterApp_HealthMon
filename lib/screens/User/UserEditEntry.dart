@@ -246,6 +246,8 @@ class _UserEditEntryState extends State<UserEditEntry> {
                       newEntry.loss_smell) {
                     newEntry.has_symptoms = true;
                     newEntry.status = 'Under Monitoring';
+                  } else {
+                    newEntry.status = 'Cleared';
                   }
                   List<dynamic> entryList = [
                     newEntry.fever,

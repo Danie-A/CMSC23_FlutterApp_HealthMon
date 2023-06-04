@@ -5,6 +5,8 @@ import 'package:health_monitoring_app/providers/RequestProvider.dart';
 import 'package:health_monitoring_app/models/Request.dart';
 import 'package:health_monitoring_app/providers/EntryListProvider.dart';
 import 'package:health_monitoring_app/models/Entry.dart';
+import 'package:intl/intl.dart';
+import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 
 class ViewRequests extends StatefulWidget {
   const ViewRequests({super.key});
@@ -23,6 +25,9 @@ class _ViewRequestsState extends State<ViewRequests> {
     "LeBron James",
     "President Obama"
   ];
+
+  var today = new DateTime.now();
+  var dateToday;
 
   List<bool> isDeleteRequest = [true, false, true, true, false, false, true];
 
@@ -66,14 +71,17 @@ class _ViewRequestsState extends State<ViewRequests> {
               'you are allowing ${request.requester_name} to edit his/her entry. \n\n'
               'Please be noted that your choice is irrevokable.\n'),
           actions: <Widget>[
-            ElevatedButton(
-                onPressed: () => {}, child: Text("Allow edit entry")),
-            const SizedBox(height: 10),
             TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Close")),
+            const SizedBox(height: 10),
+            ElevatedButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('Close'),
+              child: const Text('Edit Entry'),
               onPressed: () {
                 // get request.entry details and place it in Entry entry form
                 Entry editedEntry = new Entry(
@@ -99,6 +107,14 @@ class _ViewRequestsState extends State<ViewRequests> {
                 context.read<EntryListProvider>().editEntry(editedEntry);
                 // remove from request list
                 context.read<RequestProvider>().deleteRequest(request.id!);
+
+                if (dateToday == editedEntry.entry_date) {
+                  // change user detail status to edited status in entry
+                  context
+                      .read<UserDetailListProvider>()
+                      .editStatus(editedEntry.user_key, editedEntry.status);
+                }
+
                 Navigator.of(context).pop();
               },
             ),
@@ -115,7 +131,15 @@ class _ViewRequestsState extends State<ViewRequests> {
         return AlertDialog(
           title: Text("Reject ${request.requester_name}'s request?"),
           actions: <Widget>[
-            ElevatedButton(onPressed: () => {}, child: Text("Reject request")),
+            ElevatedButton(
+                onPressed: () => {
+                      context
+                          .read<RequestProvider>()
+                          .deleteRequest(request.id!),
+                      Navigator.pop(context)
+                      // set entry's edit_request or delete_request to false
+                    },
+                child: Text("Reject request")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -250,6 +274,7 @@ class _ViewRequestsState extends State<ViewRequests> {
 
   @override
   Widget build(BuildContext context) {
+    dateToday = DateFormat.yMMMMd('en_US').format(today);
     return Scaffold(
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
@@ -296,7 +321,7 @@ class _ViewRequestsState extends State<ViewRequests> {
         title: Row(children: const [
           Icon(Icons.pending_actions, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text("Student Requests",
+          Text("Entry Requests",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF004D40),
