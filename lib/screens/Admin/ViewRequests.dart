@@ -32,9 +32,10 @@ class _ViewRequestsState extends State<ViewRequests> {
       builder: (BuildContext context) {
         return AlertDialog(
           // [] SHOW ENTRY DETAILS
-          title: Text('Allow ${request.id} to delete his/her entry?'),
+          title:
+              Text('Allow ${request.requester_name} to delete his/her entry?'),
           content: Text('By confirming his/her request,\n'
-              'you are allowing ${request.id} to delete his/her entry. \n\n'
+              'you are allowing ${request.requester_name} to delete his/her entry. \n\n'
               'Please be noted that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
@@ -60,9 +61,9 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Allow ${request.id} to edit his/her entry?'),
+          title: Text('Allow ${request.requester_name} to edit his/her entry?'),
           content: Text('By confirming his/her request,\n'
-              'you are allowing ${request.id} to edit his/her entry. \n\n'
+              'you are allowing ${request.requester_name} to edit his/her entry. \n\n'
               'Please be noted that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
@@ -93,7 +94,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                   edit_request: request.entry![14],
                   delete_request: request.entry![15],
                   entry_date: request.entry![16],
-                  id: request.id,
+                  id: request.entry_id,
                 );
                 context.read<EntryListProvider>().editEntry(editedEntry);
                 // remove from request list
@@ -111,7 +112,7 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Reject ${request.id}'s request?"),
+          title: Text("Reject ${request.requester_name}'s request?"),
           actions: <Widget>[
             ElevatedButton(onPressed: () => {}, child: Text("Reject request")),
             const SizedBox(height: 10),
@@ -176,7 +177,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                               title: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("${request.id}"),
+                                    Text("${request.requester_name}"),
                                     Text("Delete Request",
                                         style: TextStyle(
                                             fontSize: 12, color: Colors.grey))
@@ -217,7 +218,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                               title: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("${request.id}"),
+                                    Text("${request.requester_name}"),
                                     Text("Edit Request",
                                         style: TextStyle(
                                             fontSize: 12, color: Colors.grey))

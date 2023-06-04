@@ -10,6 +10,7 @@ class FirebaseRequestAPI {
   Future<String> addRequest(Map<String, dynamic> request) async {
     try {
       final docRef = await db.collection("requests").add(request);
+      await db.collection("requests").doc(docRef.id).update({'id': docRef.id});
 
       return "Successfully added request with id: ${docRef.id}";
     } on FirebaseException catch (e) {

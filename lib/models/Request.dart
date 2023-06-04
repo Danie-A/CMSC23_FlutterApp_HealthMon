@@ -1,4 +1,3 @@
-
 // class for entry
 // dynamic fields
 
@@ -10,13 +9,16 @@ class Request {
   String? id;
   String? type;
   String? date;
+  String? requester_name;
+  String? entry_id;
 
-  Request({
-    this.entry,
-    required this.id,
-    required this.type,
-    required this.date,
-  });
+  Request(
+      {this.entry,
+      this.id,
+      required this.entry_id,
+      required this.type,
+      required this.date,
+      required this.requester_name});
 
   // Factory constructor to instantiate object from json format
   factory Request.fromJson(Map<String, dynamic> json) {
@@ -24,7 +26,9 @@ class Request {
         entry: json['entry'],
         type: json['type'],
         id: json['id'],
-        date: json['date']);
+        date: json['date'],
+        requester_name: json['requester_name'],
+        entry_id: json['entry_id']);
   }
 
   static List<Request> fromJsonArray(String jsonData) {
@@ -36,8 +40,9 @@ class Request {
     return {
       'entry': request.entry,
       'type': request.type,
-      'id': request.id,
-      'date': request.date
+      'date': request.date,
+      'requester_name': request.requester_name,
+      'entry_id': request.entry_id
     };
   }
 }
