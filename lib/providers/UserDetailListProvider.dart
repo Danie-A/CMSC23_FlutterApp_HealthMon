@@ -23,6 +23,10 @@ class UserDetailListProvider with ChangeNotifier {
   }
 
   // getter
+  UserDetail? get currentUser => _currentUser;
+  String get getId => currentId;
+  String get userType => _userType;
+
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
   Stream<QuerySnapshot> get userDetails2 => _userDetailStream2;
 
@@ -42,11 +46,6 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  UserDetail? get currentUser => _currentUser;
-
-  String get getId => currentId;
-
-  String get userType => _userType;
   setUserType(String userType) {
     this._userType = userType;
   }

@@ -17,6 +17,10 @@ class EntryListProvider with ChangeNotifier {
   // getter
   Stream<QuerySnapshot> get entryDetails => _entryStream;
 
+  get getEntry => currentEntry;
+  get entryId => _entryId;
+
+// setter
   fetchEntryDetails() {
     _entryStream = firebaseService.getAllEntries();
     notifyListeners();
@@ -27,16 +31,17 @@ class EntryListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  get getEntry => currentEntry;
-
-  get entryId => _entryId;
-
-  void addEntryDetail(Entry entry) async {
-    String entryId = await firebaseService.addEntry(entry.entryToJson(entry));
-    _entryId = entryId;
-    print(entryId);
-    print(currentEntry);
+  setEntryId(String entryId) async {
+    _entryId = await entryId;
     notifyListeners();
+  }
+
+  Future<String> addEntryDetail(Entry entry) async {
+    String entryId = await firebaseService.addEntry(entry.entryToJson(entry));
+    setEntryId(entryId);
+    print("[PROVIDER] Entry Id is:" + entryId);
+    notifyListeners();
+    return entryId;
   }
 
   // REMINDER: STILL NEED editEntry method

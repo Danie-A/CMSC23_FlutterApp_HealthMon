@@ -135,7 +135,7 @@ class FirebaseUserDetailAPI {
       userDetail.docs.forEach((doc) {
         doc.reference.set(
           {
-            'latestEntry': entryId,
+            'entryId': entryId,
           },
           SetOptions(merge: true),
         );
