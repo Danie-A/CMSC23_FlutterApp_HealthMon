@@ -142,6 +142,11 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void editEntryId(String id, String entryId) async {
+    String message = await firebaseService.editEntryId(id, entryId);
+    notifyListeners();
+  }
+
   Future<String> getCurrentId(String uid) async {
     String message = await firebaseService.getCurrentId(uid);
     setCurrentId(message);
