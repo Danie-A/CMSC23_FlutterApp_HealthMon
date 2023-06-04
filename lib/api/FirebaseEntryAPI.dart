@@ -85,8 +85,8 @@ class FirebaseEntryAPI {
         'had_contact': entry.had_contact,
         'status': entry.status,
         'user_key': entry.user_key,
-        'edit_request': entry.edit_request,
-        'delete_request': entry.delete_request,
+        'edit_request': false, // set the edit request to false after editing
+        'delete_request': false,
         'entry_date': entry.entry_date
       });
 

@@ -10,6 +10,8 @@ import '../../models/Request.dart';
 import '../../api/FirebaseRequestAPI.dart';
 import '../../providers/RequestProvider.dart';
 import '../../providers/EntryListProvider.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../../models/UserDetail.dart';
 
 class UserEditEntry extends StatefulWidget {
   @override
@@ -33,7 +35,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
   late String user_key = "";
   late bool edit_request = false;
   late bool delete_request = false;
-  late String? id = "";
+  late String? entry_id = "";
 
   @override
   void initState() {
@@ -62,7 +64,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
         user_key = entry.user_key;
         edit_request = entry.edit_request;
         delete_request = entry.delete_request;
-        id = entry.id;
+        entry_id = entry.id;
       });
     }
   }
@@ -72,6 +74,7 @@ class _UserEditEntryState extends State<UserEditEntry> {
     final now = DateTime.now();
     String entryDate = DateFormat.yMMMMd('en_US').format(now);
     String editDate = DateFormat.yMMMMd('en_US').format(now);
+    UserDetail? user = context.read<UserDetailListProvider>().currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -263,14 +266,19 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     newEntry.delete_request,
                     newEntry.entry_date,
                   ];
+                  var fullName = user!.firstName + ' ' + user.lastName;
                   Request newReq = new Request(
-                      entry: entryList, id: id, type: 'edit', date: editDate);
+                      entry: entryList,
+                      entry_id: entry_id,
+                      type: 'edit',
+                      date: editDate,
+                      requester_name: fullName);
 
                   context.read<RequestProvider>().addRequest(newReq);
 
                   context
                       .read<EntryListProvider>()
-                      .changeEditRequest(id!, true);
+                      .changeEditRequest(entry_id!, true);
 
                   Navigator.pop(context);
                   Navigator.pop(context);

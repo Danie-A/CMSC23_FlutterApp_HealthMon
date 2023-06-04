@@ -51,11 +51,12 @@ class _MyProfileState extends State<MyProfile> {
             ElevatedButton(
                 onPressed: () async {
                   Request newReq = new Request(
-                    id: currentEntryId,
+                    entry_id: currentEntryId,
                     type: 'delete',
                     date: curDate,
+                    requester_name: fullName,
                   );
-                  // [] name: add fullName to request
+                  // [] name: add delete Entry details?
                   context.read<RequestProvider>().addRequest(newReq);
                   Navigator.of(context).pop();
                 },

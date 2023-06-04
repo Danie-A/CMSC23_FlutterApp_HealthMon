@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:health_monitoring_app/providers/RequestProvider.dart';
 import 'package:health_monitoring_app/models/Request.dart';
+import 'package:health_monitoring_app/providers/EntryListProvider.dart';
+import 'package:health_monitoring_app/models/Entry.dart';
 
 class ViewRequests extends StatefulWidget {
   const ViewRequests({super.key});
@@ -72,6 +74,29 @@ class _ViewRequestsState extends State<ViewRequests> {
               ),
               child: const Text('Close'),
               onPressed: () {
+                // get request.entry details and place it in Entry entry form
+                Entry editedEntry = new Entry(
+                  fever: request.entry![0],
+                  feverish: request.entry![1],
+                  muscle_joint_pain: request.entry![2],
+                  cough: request.entry![3],
+                  cold: request.entry![4],
+                  sore_throat: request.entry![5],
+                  difficulty_breathing: request.entry![6],
+                  diarrhea: request.entry![7],
+                  loss_taste: request.entry![8],
+                  loss_smell: request.entry![9],
+                  has_symptoms: request.entry![10],
+                  had_contact: request.entry![11],
+                  status: request.entry![12],
+                  user_key: request.entry![13],
+                  edit_request: request.entry![14],
+                  delete_request: request.entry![15],
+                  entry_date: request.entry![16],
+                  id: request.id,
+                );
+                context.read<EntryListProvider>().editEntry(editedEntry);
+                // remove from request list
                 Navigator.of(context).pop();
               },
             ),
