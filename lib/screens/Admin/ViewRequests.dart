@@ -230,7 +230,7 @@ class _ViewRequestsState extends State<ViewRequests> {
           decoration: BoxDecoration(
             color: Colors.teal.shade50,
           ),
-          child: Text('Sample Drawer Header'),
+          child: Text('\n\n\n\nHealthMon Admin'),
         ),
         ListTile(
           title: const Text('View All Students'),

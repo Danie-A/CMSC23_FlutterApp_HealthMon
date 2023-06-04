@@ -84,7 +84,7 @@ class _MyProfileState extends State<MyProfile> {
       context.read<UserDetailListProvider>().editStatus(uid, 'No Health Entry');
     } // set status of user to no health entry if user status is cleared but has not submitted any entries for the day yet
 
-    if (userDetail.status != 'Cleared') {
+    if (userDetail.status != 'Cleared' || dateToday != userDetail.latestEntry) {
       generateQRCode = false;
     } // fail to generate QR code if user status is not cleared
 
