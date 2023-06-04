@@ -8,15 +8,17 @@ class FirebaseEntryAPI {
     try {
       final docRef = await db.collection("entries").add(entry);
       await db.collection("entries").doc(docRef.id).update({'id': docRef.id});
-
-      return "Successfully added entry!";
+      return "${docRef.id}"; // return id of entry
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
 
   Stream<QuerySnapshot> getAllEntries() {
-    return db.collection("entries").snapshots();
+    return db
+        .collection("entries")
+        .orderBy("entry_date", descending: true)
+        .snapshots();
   }
 
   Future<List> getEntriesList() async {
@@ -83,12 +85,50 @@ class FirebaseEntryAPI {
         'had_contact': entry.had_contact,
         'status': entry.status,
         'user_key': entry.user_key,
-        'edit_request': entry.edit_request,
-        'delete_request': entry.delete_request,
+        'edit_request': false, // set the edit request to false after editing
+        'delete_request': false,
         'entry_date': entry.entry_date
       });
 
       return "Successfully edited entry!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> changeEditRequest(String eid, bool editBool) async {
+    try {
+      var entry =
+          await db.collection("entries").where("id", isEqualTo: eid).get();
+      entry.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'edit_request': editBool,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited edit_request to ${editBool}!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> changeDeleteRequest(String eid, bool deleteBool) async {
+    try {
+      var entry =
+          await db.collection("entries").where("id", isEqualTo: eid).get();
+      entry.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'delete_request': deleteBool,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited edit_request to ${deleteBool}!";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }

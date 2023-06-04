@@ -413,7 +413,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             stream: sortCollege,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text('avs Error: ${snapshot.error}');
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -466,7 +466,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             stream: sortDate,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text('avs Error: ${snapshot.error}');
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),

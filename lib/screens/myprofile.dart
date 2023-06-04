@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'User/HealthEntry.dart';
+import '../providers/RequestProvider.dart';
+import '../models/Request.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -26,6 +28,8 @@ class _MyProfileState extends State<MyProfile> {
   String data = "";
   var today;
   String dateToday = "";
+  String currentEntryId = "";
+  String fullName = '';
 
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     final now = DateTime.now();
@@ -45,12 +49,15 @@ class _MyProfileState extends State<MyProfile> {
                     {Navigator.pushNamed(context, '/user-edit-entry')},
                 child: Text("Edit Entry")),
             ElevatedButton(
-                onPressed: () {
-                  // Request newReq = new Request(
-                  //         id: "", type: 'delete', date: curDate);
-                  //WE STILL NEED TO GET THE ID OF THe ENTRY
-
-                  // context.read<RequestProvider>().addRequest(newReq);
+                onPressed: () async {
+                  Request newReq = new Request(
+                    entry_id: currentEntryId,
+                    type: 'delete',
+                    date: curDate,
+                    requester_name: fullName,
+                  );
+                  // [] name: also put delete Entry details?
+                  context.read<RequestProvider>().addRequest(newReq);
                   Navigator.of(context).pop();
                 },
                 child: Text("Delete Entry")),
@@ -78,7 +85,7 @@ class _MyProfileState extends State<MyProfile> {
       context.read<UserDetailListProvider>().editStatus(uid, 'No Health Entry');
     } // set status of user to no health entry if user status is cleared but has not submitted any entries for the day yet
 
-    if (userDetail.status != 'Cleared') {
+    if (userDetail.status != 'Cleared' || dateToday != userDetail.latestEntry) {
       generateQRCode = false;
     } // fail to generate QR code if user status is not cleared
 
@@ -240,7 +247,7 @@ class _MyProfileState extends State<MyProfile> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 5),
                   FloatingActionButton.extended(
                       //Add Entry Button
 
@@ -284,8 +291,16 @@ class _MyProfileState extends State<MyProfile> {
                                   as Map<String, dynamic>);
 
                           if (entry.user_key == uid) {
+                            if (entry.entry_date == dateToday) {
+                              currentEntryId = entry.id!;
+                              context
+                                  .read<EntryListProvider>()
+                                  .setCurrentEntry(entry);
+                              fullName = userDetail.firstName +
+                                  " " +
+                                  userDetail.lastName;
+                            }
                             return (HealthEntry(entry: entry));
-                            // return Container(child: Text(userDetail.firstName));
                           } else {
                             return Container();
                           }
@@ -295,14 +310,7 @@ class _MyProfileState extends State<MyProfile> {
                     child: Text("No User Details Found"),
                   );
                 },
-              )
-              // child: ListView.builder(
-              //     itemCount: healthEntries.length,
-              //     itemBuilder: (context, index) {
-              //       return const HealthEntry();
-              //     })
-
-              ),
+              )),
         ],
       ),
     ));
@@ -403,7 +411,7 @@ class _MyProfileState extends State<MyProfile> {
           stream: userDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+              return Text('myprofile 405 Error: ${snapshot.error}');
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),

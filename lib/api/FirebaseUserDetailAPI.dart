@@ -128,6 +128,25 @@ class FirebaseUserDetailAPI {
     }
   }
 
+  Future<String> editEntryId(String uid, String entryId) async {
+    try {
+      var userDetail =
+          await db.collection("userDetails").where("uid", isEqualTo: uid).get();
+      userDetail.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'entryId': entryId,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited user detail latest entry date to ${entryId}!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
   Future<String> getCurrentId(String uid) async {
     String id = "";
 

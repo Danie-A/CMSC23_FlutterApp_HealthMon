@@ -23,6 +23,10 @@ class UserDetailListProvider with ChangeNotifier {
   }
 
   // getter
+  UserDetail? get currentUser => _currentUser;
+  String get getId => currentId;
+  String get userType => _userType;
+
   Stream<QuerySnapshot> get userDetails => _userDetailStream;
   Stream<QuerySnapshot> get userDetails2 => _userDetailStream2;
 
@@ -42,11 +46,6 @@ class UserDetailListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  UserDetail? get currentUser => _currentUser;
-
-  String get getId => currentId;
-
-  String get userType => _userType;
   setUserType(String userType) {
     this._userType = userType;
   }
@@ -118,6 +117,7 @@ class UserDetailListProvider with ChangeNotifier {
 
   void changeUserType(String id, String userType) async {
     String message = await firebaseService.editUserType(id, userType);
+    print(message);
     notifyListeners();
   }
 
@@ -125,20 +125,30 @@ class UserDetailListProvider with ChangeNotifier {
       String id, String empNo, String position, String homeUnit) async {
     String message = await firebaseService.addAdminUniqueProperties(
         id, empNo, position, homeUnit);
+    print(message);
   }
 
   void editStatus(String id, String status) async {
     String message = await firebaseService.editStatus(id, status);
+    print(message);
     notifyListeners();
   }
 
   void addLocation(String id, String location) async {
     String message = await firebaseService.addLocation(id, location);
+    print(message);
     notifyListeners();
   }
 
   void editLatestEntry(String id, String latestEntry) async {
     String message = await firebaseService.editLatestEntry(id, latestEntry);
+    print(message);
+    notifyListeners();
+  }
+
+  void editEntryId(String id, String entryId) async {
+    String message = await firebaseService.editEntryId(id, entryId);
+    print(message);
     notifyListeners();
   }
 

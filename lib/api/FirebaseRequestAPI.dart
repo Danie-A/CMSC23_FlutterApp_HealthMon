@@ -9,9 +9,10 @@ class FirebaseRequestAPI {
 
   Future<String> addRequest(Map<String, dynamic> request) async {
     try {
-      await db.collection("requests").add(request);
+      final docRef = await db.collection("requests").add(request);
+      await db.collection("requests").doc(docRef.id).update({'id': docRef.id});
 
-      return "Successfully added request!";
+      return "Successfully added request with id: ${docRef.id}";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
@@ -21,7 +22,7 @@ class FirebaseRequestAPI {
     try {
       await db.collection("requests").doc(id).delete();
 
-      return "Successfully deleted request!";
+      return "Successfully deleted request! Request ID: ${id}";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }

@@ -208,17 +208,29 @@ class _UserAddEntryState extends State<UserAddEntry> {
                       newEntry.status = "Under Monitoring";
                     }
 
-                    context.read<EntryListProvider>().addEntryDetail(newEntry);
-                    context.read<EntryListProvider>().setCurrentEntry(newEntry);
-                    // change status of user in UserDetailListProvider
-                    context.read<UserDetailListProvider>().editStatus(
-                        context.read<AuthProvider>().userId, newEntry.status);
-                    context.read<UserDetailListProvider>().editLatestEntry(
-                        context.read<AuthProvider>().userId, entryDate);
+                    context
+                        .read<EntryListProvider>()
+                        .addEntryDetail(newEntry)
+                        .then((fetchedEntryId) {
+                      print("[SCREEN] ENTRY ID IS: ${fetchedEntryId}");
+                      context.read<UserDetailListProvider>().editEntryId(
+                          context.read<AuthProvider>().userId, fetchedEntryId);
 
-                    Navigator.pop(context);
+                      // context.read<EntryListProvider>().addEntryDetail(newEntry);
 
-                    // Do something with the newEntry instance, like store it in a database or pass it to another screen
+                      // context
+                      //     .read<EntryListProvider>()
+                      //     .setCurrentEntry(newEntry);
+                      // change status of user in UserDetailListProvider
+                      context.read<UserDetailListProvider>().editStatus(
+                          context.read<AuthProvider>().userId, newEntry.status);
+
+                      context.read<UserDetailListProvider>().editLatestEntry(
+                          context.read<AuthProvider>().userId,
+                          newEntry.entry_date);
+
+                      Navigator.pop(context);
+                    });
                   },
                   child: Text('Submit'),
                 ),
