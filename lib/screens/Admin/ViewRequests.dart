@@ -98,6 +98,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                 );
                 context.read<EntryListProvider>().editEntry(editedEntry);
                 // remove from request list
+                context.read<RequestProvider>().deleteRequest(request.id!);
                 Navigator.of(context).pop();
               },
             ),

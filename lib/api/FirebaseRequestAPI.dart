@@ -22,7 +22,7 @@ class FirebaseRequestAPI {
     try {
       await db.collection("requests").doc(id).delete();
 
-      return "Successfully deleted request!";
+      return "Successfully deleted request! Request ID: ${id}";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }
