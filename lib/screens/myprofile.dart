@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'User/HealthEntry.dart';
+import '../providers/RequestProvider.dart';
+import '../models/Request.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -26,6 +28,7 @@ class _MyProfileState extends State<MyProfile> {
   String data = "";
   var today;
   String dateToday = "";
+  String currentEntryId = "";
 
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     final now = DateTime.now();
@@ -45,12 +48,11 @@ class _MyProfileState extends State<MyProfile> {
                     {Navigator.pushNamed(context, '/user-edit-entry')},
                 child: Text("Edit Entry")),
             ElevatedButton(
-                onPressed: () {
-                  // Request newReq = new Request(
-                  //         id: "", type: 'delete', date: curDate);
+                onPressed: () async {
+                  Request newReq = new Request(
+                      id: currentEntryId, type: 'delete', date: curDate);
                   //WE STILL NEED TO GET THE ID OF THe ENTRY
-
-                  // context.read<RequestProvider>().addRequest(newReq);
+                  context.read<RequestProvider>().addRequest(newReq);
                   Navigator.of(context).pop();
                 },
                 child: Text("Delete Entry")),
@@ -285,6 +287,7 @@ class _MyProfileState extends State<MyProfile> {
 
                           if (entry.user_key == uid) {
                             if (entry.entry_date == dateToday) {
+                              currentEntryId = entry.id!;
                               context
                                   .read<EntryListProvider>()
                                   .setCurrentEntry(entry);

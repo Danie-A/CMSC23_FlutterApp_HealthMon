@@ -231,8 +231,6 @@ class _UserAddEntryState extends State<UserAddEntry> {
 
                       Navigator.pop(context);
                     });
-
-                    // Do something with the newEntry instance, like store it in a database or pass it to another screen
                   },
                   child: Text('Submit'),
                 ),

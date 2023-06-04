@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/providers/AuthProvider.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';
 import '../../models/Entry.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../models/Request.dart';
 import '../../api/FirebaseRequestAPI.dart';
 import '../../providers/RequestProvider.dart';
+import '../../providers/EntryListProvider.dart';
 
 class UserEditEntry extends StatefulWidget {
   @override
@@ -265,6 +267,10 @@ class _UserEditEntryState extends State<UserEditEntry> {
                       entry: entryList, id: id, type: 'edit', date: editDate);
 
                   context.read<RequestProvider>().addRequest(newReq);
+
+                  context
+                      .read<EntryListProvider>()
+                      .changeEditRequest(id!, true);
 
                   Navigator.pop(context);
                   Navigator.pop(context);

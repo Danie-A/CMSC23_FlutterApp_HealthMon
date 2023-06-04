@@ -9,9 +9,9 @@ class FirebaseRequestAPI {
 
   Future<String> addRequest(Map<String, dynamic> request) async {
     try {
-      await db.collection("requests").add(request);
+      final docRef = await db.collection("requests").add(request);
 
-      return "Successfully added request!";
+      return "Successfully added request with id: ${docRef.id}";
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }

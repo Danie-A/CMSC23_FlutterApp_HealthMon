@@ -28,6 +28,7 @@ class EntryListProvider with ChangeNotifier {
 
   setCurrentEntry(Entry entry) async {
     currentEntry = await entry;
+    // setEntryId(entry.id!);
     notifyListeners();
   }
 
@@ -44,8 +45,6 @@ class EntryListProvider with ChangeNotifier {
     return entryId;
   }
 
-  // REMINDER: STILL NEED editEntry method
-
   void editEntry(Entry entry) async {
     String message = await firebaseService.editEntry(entry);
     print(message);
@@ -55,6 +54,20 @@ class EntryListProvider with ChangeNotifier {
   void deleteEntry(String id) async {
     String message = await firebaseService.deleteEntry(id);
     print(message);
+    notifyListeners();
+  }
+
+// change edit request
+  void changeEditRequest(String id, bool editBool) async {
+    String message = await firebaseService.changeEditRequest(id, editBool);
+    print("Edit Request: " + message);
+    notifyListeners();
+  }
+
+// change delete request
+  void changeDeleteRequest(String id, bool deleteBool) async {
+    String message = await firebaseService.changeDeleteRequest(id, deleteBool);
+    print("Delete Request: " + message);
     notifyListeners();
   }
 }

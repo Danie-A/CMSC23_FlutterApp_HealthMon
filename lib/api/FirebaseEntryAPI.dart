@@ -92,4 +92,42 @@ class FirebaseEntryAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
+
+  Future<String> changeEditRequest(String eid, bool editBool) async {
+    try {
+      var entry =
+          await db.collection("entries").where("id", isEqualTo: eid).get();
+      entry.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'edit_request': editBool,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited edit_request to ${editBool}!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> changeDeleteRequest(String eid, bool deleteBool) async {
+    try {
+      var entry =
+          await db.collection("entries").where("id", isEqualTo: eid).get();
+      entry.docs.forEach((doc) {
+        doc.reference.set(
+          {
+            'delete_request': deleteBool,
+          },
+          SetOptions(merge: true),
+        );
+      });
+
+      return "Successfully edited edit_request to ${deleteBool}!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
 }
