@@ -9,7 +9,7 @@ class FirebaseEntryAPI {
       final docRef = await db.collection("entries").add(entry);
       await db.collection("entries").doc(docRef.id).update({'id': docRef.id});
 
-      return "Successfully added entry!";
+      return "${docRef.id}"; // return id of entry
     } on FirebaseException catch (e) {
       return "Failed with error '${e.code}: ${e.message}";
     }

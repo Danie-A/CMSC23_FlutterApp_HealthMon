@@ -67,6 +67,28 @@ class Entry {
         id: json['id']);
   }
 
+  factory Entry.simpleEntryFromJson(Map<String, dynamic> json) {
+    return Entry(
+        fever: false,
+        feverish: false,
+        muscle_joint_pain: false,
+        cough: false,
+        cold: false,
+        sore_throat: false,
+        difficulty_breathing: false,
+        diarrhea: false,
+        loss_taste: false,
+        loss_smell: false,
+        has_symptoms: false,
+        had_contact: json['had_contact'],
+        status: json['status'],
+        user_key: json['user_key'],
+        edit_request: false,
+        delete_request: false,
+        entry_date: json['entry_date'],
+        id: json['id']);
+  }
+
 // list of entries
   static List<Entry> entryFromJsonArray(String jsonData) {
     final Iterable<dynamic> data = jsonDecode(jsonData);

@@ -240,7 +240,7 @@ class _MyProfileState extends State<MyProfile> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 5),
                   FloatingActionButton.extended(
                       //Add Entry Button
 
@@ -282,10 +282,28 @@ class _MyProfileState extends State<MyProfile> {
                           Entry entry = Entry.entryFromJson(
                               snapshot.data?.docs[index].data()
                                   as Map<String, dynamic>);
+                          print('entry is: '
+                              'fever: ${entry.fever}, '
+                              'feverish: ${entry.feverish}, '
+                              'muscle_joint_pain: ${entry.muscle_joint_pain}, '
+                              'cough: ${entry.cough}, '
+                              'cold: ${entry.cold}, '
+                              'sore_throat: ${entry.sore_throat}, '
+                              'difficulty_breathing: ${entry.difficulty_breathing}, '
+                              'diarrhea: ${entry.diarrhea}, '
+                              'loss_taste: ${entry.loss_taste}, '
+                              'loss_smell: ${entry.loss_smell}, '
+                              'has_symptoms: ${entry.has_symptoms}, '
+                              'had_contact: ${entry.had_contact}, '
+                              'status: ${entry.status}, '
+                              'user_key: ${entry.user_key}, '
+                              'edit_request: ${entry.edit_request}, '
+                              'delete_request: ${entry.delete_request}, '
+                              'entry_date: ${entry.entry_date}, '
+                              'id: ${entry.id}');
 
                           if (entry.user_key == uid) {
                             return (HealthEntry(entry: entry));
-                            // return Container(child: Text(userDetail.firstName));
                           } else {
                             return Container();
                           }

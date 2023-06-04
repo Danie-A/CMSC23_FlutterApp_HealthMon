@@ -7,6 +7,7 @@ class EntryListProvider with ChangeNotifier {
   late FirebaseEntryAPI firebaseService;
   late Stream<QuerySnapshot> _entryStream;
   Entry? currentEntry;
+  String? _entryId;
 
   EntryListProvider() {
     firebaseService = FirebaseEntryAPI();
@@ -28,9 +29,12 @@ class EntryListProvider with ChangeNotifier {
 
   get getEntry => currentEntry;
 
+  get entryId => _entryId;
+
   void addEntryDetail(Entry entry) async {
-    String message = await firebaseService.addEntry(entry.entryToJson(entry));
-    print(message);
+    String entryId = await firebaseService.addEntry(entry.entryToJson(entry));
+    _entryId = entryId;
+    print(entryId);
     print(currentEntry);
     notifyListeners();
   }
