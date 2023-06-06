@@ -6,6 +6,8 @@ import '../api/FirebaseLogAPI.dart';
 class LogProvider with ChangeNotifier {
   late FirebaseLogAPI firebaseService;
   late Stream<QuerySnapshot> _logStream;
+  late Stream<QuerySnapshot> _searchedLogStream;
+
   Log? currentLog;
 
   LogProvider() {
@@ -15,9 +17,11 @@ class LogProvider with ChangeNotifier {
 
   // getter
   Stream<QuerySnapshot> get logDetails => _logStream;
+  Stream<QuerySnapshot> get searchedLogStream => _searchedLogStream;
 
   fetchLogDetails() {
     _logStream = firebaseService.getAllLogs();
+    _searchedLogStream = firebaseService.getSearchedLogs();
     notifyListeners();
   }
 
