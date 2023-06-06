@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/api/GoogleAuth.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:provider/provider.dart';
 import '../providers/AuthProvider.dart';
@@ -9,7 +10,8 @@ var identities = ['User', 'Admin', 'Entrance Monitor'];
 String identityValue = identities.first;
 
 class SigninPage extends StatefulWidget {
-  const SigninPage({super.key});
+  const SigninPage({Key? key}) : super(key: key);
+
   @override
   _SigninPageState createState() => _SigninPageState();
 }
@@ -22,9 +24,10 @@ class _SigninPageState extends State<SigninPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(string,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            title: Text(
+              string,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             content: const Text("Please try again."),
             actions: [
               TextButton(
@@ -46,22 +49,18 @@ class _SigninPageState extends State<SigninPage> {
 
     final email = TextFormField(
       decoration: const InputDecoration(
-        // contentPadding: EdgeInsets.all(16),
-        // border: OutlineInputBorder(),
         hintText: "Email",
-        // labelText: "Email",
       ),
       controller: emailController,
       validator: (value) {
         final bool emailValid = RegExp(
-                // from https://stackoverflow.com/questions/16800540/how-should-i-check-if-the-input-is-an-email-address-in-flutter
-                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-            .hasMatch(value.toString());
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+        ).hasMatch(value.toString());
         if (!emailValid) {
           return 'Invalid email.';
         }
         return null;
-      }, // adds a validator in the form field
+      },
     );
 
     final password = TextFormField(
@@ -75,7 +74,7 @@ class _SigninPageState extends State<SigninPage> {
           return 'Password must be at least 6 characters.';
         }
         return null;
-      }, // adds a validator in the form field
+      },
     );
 
     final identity = DropdownButton<String>(
@@ -85,7 +84,6 @@ class _SigninPageState extends State<SigninPage> {
       dropdownColor: Colors.teal[100],
       underline: SizedBox.shrink(),
       onChanged: (String? newValue) {
-        // This is called when the user selects an item.
         setState(() {
           identityValue = newValue!;
         });
@@ -94,14 +92,15 @@ class _SigninPageState extends State<SigninPage> {
       },
       items: identities.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
-            value: value,
-            child: Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                'As $value',
-                style: const TextStyle(fontSize: 14),
-              ),
-            ));
+          value: value,
+          child: Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+              'As $value',
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        );
       }).toList(),
     );
 
@@ -112,7 +111,9 @@ class _SigninPageState extends State<SigninPage> {
         onPressed: () async {
           if (_formSigninKey.currentState!.validate()) {
             String message = await context.read<AuthProvider>().signIn(
-                emailController.text.trim(), passwordController.text.trim());
+                  emailController.text.trim(),
+                  passwordController.text.trim(),
+                );
 
             if (message == 'user-not-found') {
               showErrorDialog("User Not Found");
@@ -151,32 +152,44 @@ class _SigninPageState extends State<SigninPage> {
 
     Widget showSigninForm(BuildContext context) {
       return Form(
-          key: _formSigninKey,
-          child: Column(children: [
+        key: _formSigninKey,
+        child: Column(
+          children: [
             email,
             password,
             signinButton,
             const SizedBox(height: 50),
             const Text("Don't have an account?"),
-            Wrap(spacing: 20, children: [
-              signUpButton,
-              Container(
-                  padding: const EdgeInsets.only(top: 8.0), child: identity)
-            ])
-          ]));
+            Wrap(
+              spacing: 20,
+              children: [
+                signUpButton,
+                Container(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: identity,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(children: const [
-          Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
-          SizedBox(width: 14),
-          Text("HealthMon",
+        title: Row(
+          children: const [
+            Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
+            SizedBox(width: 14),
+            Text(
+              "HealthMon",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF004D40),
-              ))
-        ]),
+              ),
+            ),
+          ],
+        ),
         backgroundColor: Colors.teal[100],
       ),
       body: Center(
@@ -189,7 +202,17 @@ class _SigninPageState extends State<SigninPage> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-            showSigninForm(context)
+            showSigninForm(context),
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(top: 16.0),
+              child: IconButton(
+                icon: const Icon(Icons.language_outlined),
+                onPressed: () {
+                  GoogleAuth().signInWithGoogle();
+                },
+              ),
+            ),
           ],
         ),
       ),
