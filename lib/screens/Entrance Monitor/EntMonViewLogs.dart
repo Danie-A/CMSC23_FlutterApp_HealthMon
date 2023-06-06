@@ -92,97 +92,105 @@ class _EntMonViewLogsState extends State<EntMonViewLogs> {
   Scaffold displayScaffold(
       BuildContext context, Stream<QuerySnapshot> logStream) {
     return Scaffold(
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-        DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.teal.shade50,
+        drawer: Drawer(
+            child: ListView(padding: EdgeInsets.zero, children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.teal.shade50,
+            ),
+            child: Text('Sample Drawer Header'),
           ),
-          child: Text('Sample Drawer Header'),
+          ListTile(
+            title: const Text('Back'),
+            onTap: () {
+              Navigator.pop(context); //back drawer
+              Navigator.pop(context); //back to homepage
+            },
+          ),
+        ])),
+        appBar: AppBar(
+          title: Row(children: const [
+            Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
+            SizedBox(width: 14),
+            Text("All Logs",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF004D40),
+                ))
+          ]),
+          backgroundColor: Colors.teal[100],
         ),
-        ListTile(
-          title: const Text('Back'),
-          onTap: () {
-            Navigator.pop(context); //back drawer
-            Navigator.pop(context); //back to homepage
-          },
-        ),
-      ])),
-      appBar: AppBar(
-        title: Row(children: const [
-          Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
-          SizedBox(width: 14),
-          Text("All Logs",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF004D40),
-              ))
-        ]),
-        backgroundColor: Colors.teal[100],
-      ),
-      body: Container(
-        padding: const EdgeInsets.only(top: 16),
-        child: StreamBuilder(
-            stream: logStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text("Error encountered! ${snapshot.error}"),
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (!snapshot.hasData) {
-                return const Center(
-                  child: Text("No Todos Found"),
-                );
-              }
+        body: Column(children: [
+          SizedBox(
+            height: 10,
+          ),
+          Text('LOCATION: <EntMon Location>'),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 16),
+              child: StreamBuilder(
+                  stream: logStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text("Error encountered! ${snapshot.error}"),
+                      );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (!snapshot.hasData) {
+                      return const Center(
+                        child: Text("No Todos Found"),
+                      );
+                    }
 
-              //just get all users
-              return ListView.builder(
-                // displays friend names through multiple instances of List Tile
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (context, index) {
-                  Log log = Log.logFromJson(snapshot.data?.docs[index].data()
-                      as Map<String, dynamic>);
-                  return InkWell(
-                      // InkWell widget adds some hover effect to the ListTile
-                      onTap: () {
-                        _showLog(context, log.location);
+                    //just get all users
+                    return ListView.builder(
+                      // displays friend names through multiple instances of List Tile
+                      itemCount: snapshot.data?.docs.length,
+                      itemBuilder: (context, index) {
+                        Log log = Log.logFromJson(snapshot.data?.docs[index]
+                            .data() as Map<String, dynamic>);
+                        return InkWell(
+                            // InkWell widget adds some hover effect to the ListTile
+                            onTap: () {
+                              _showLog(context, log.location);
+                            },
+                            hoverColor: Colors.teal[200],
+                            // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                            splashColor: Colors.teal[
+                                100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                            child: Padding(
+                              padding: EdgeInsets.all(2),
+                              child: ListTile(
+                                leading: Icon(Icons.folder_shared_outlined,
+                                    color: Colors.teal),
+                                subtitle: Row(children: [
+                                  Text('${log.studentNo}'),
+                                  SizedBox(width: 15),
+                                  Text('Janaury 31, 2024'),
+                                ]), // name
+                                title: Row(children: [
+                                  Text(
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                      '${log.studentName}'),
+                                ]),
+                                trailing: Text(
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontStyle: FontStyle.italic),
+                                    '${log.status}'),
+                              ),
+                            ));
                       },
-                      hoverColor: Colors.teal[200],
-                      // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-                      splashColor: Colors.teal[
-                          100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-                      child: Padding(
-                        padding: EdgeInsets.all(2),
-                        child: ListTile(
-                          leading: Icon(Icons.folder_shared_outlined,
-                              color: Colors.teal),
-                          subtitle: Row(children: [
-                            Text('${log.location}'),
-                            SizedBox(width: 15),
-                            Text('${log.studentNo}'),
-                            SizedBox(width: 15),
-                            Text('Janaury 31, 2024'),
-                          ]), // name
-                          title: Row(children: [
-                            Text(
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                                '${log.studentName}'),
-                          ]),
-                          trailing: Text(
-                              style: TextStyle(
-                                  fontSize: 17, fontStyle: FontStyle.italic),
-                              '${log.status}'),
-                        ),
-                      ));
-                },
-              );
-            }),
-      ),
-    );
+                    );
+                  }),
+            ),
+          )
+        ]));
   }
 }

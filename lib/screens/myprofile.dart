@@ -30,6 +30,33 @@ class _MyProfileState extends State<MyProfile> {
   String dateToday = "";
   String currentEntryId = "";
   String fullName = '';
+  bool isRequestPending = false; // Variable to track if a request is pending
+
+  Future<void> _alreadySubmittedRequestPrompt(BuildContext context) {
+    final now = DateTime.now();
+    String curDate = DateFormat.yMMMMd('en_US').format(now);
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("You have already submitted a request."),
+          content: Text('You can only submit one request per day.'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<void> _alreadySubmittedPrompt(BuildContext context) {
     final now = DateTime.now();
@@ -253,11 +280,9 @@ class _MyProfileState extends State<MyProfile> {
 
                       backgroundColor: Colors.teal[200],
                       onPressed: () {
-                        // get list of entries of user
-                        // compare date of each entry with today's date
-                        // if not equal to today's date, allow user to add entry
-
-                        if (userDetail.latestEntry == dateToday) {
+                        if (isRequestPending) {
+                          _alreadySubmittedRequestPrompt(context);
+                        } else if (userDetail.latestEntry == dateToday) {
                           _alreadySubmittedPrompt(context);
                         } else {
                           Navigator.pushNamed(context, '/user-add-entry');
@@ -292,6 +317,11 @@ class _MyProfileState extends State<MyProfile> {
 
                           if (entry.user_key == uid) {
                             if (entry.entry_date == dateToday) {
+                              if (entry.edit_request == true ||
+                                  entry.delete_request == true) {
+                                isRequestPending = true;
+                                print(isRequestPending);
+                              }
                               currentEntryId = entry.id!;
                               context
                                   .read<EntryListProvider>()

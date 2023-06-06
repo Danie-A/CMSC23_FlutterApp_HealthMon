@@ -60,7 +60,7 @@ class _UserSignupPageState extends State<UserSignupPage> {
     'BS Accountancy',
     'BS Economics',
     'BS Agribusiness Management',
-    'BS Development Communication',
+    'BS Communication',
     'BS Civil Engineering',
     'BS Chemical Engineering',
     'BS Electrical Engineering',

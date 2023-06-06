@@ -8,6 +8,8 @@ import 'package:health_monitoring_app/models/Entry.dart';
 import 'package:intl/intl.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 
+import '../../providers/AuthProvider.dart';
+
 class ViewRequests extends StatefulWidget {
   const ViewRequests({super.key});
 
@@ -44,7 +46,21 @@ class _ViewRequestsState extends State<ViewRequests> {
               'Please be noted that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {}, child: Text("Allow delete entry")),
+                onPressed: () => {
+                      context
+                          .read<EntryListProvider>()
+                          .deleteEntry(request.entry_id!),
+                      context
+                          .read<RequestProvider>()
+                          .deleteRequest(request.id!),
+                      context
+                          .read<UserDetailListProvider>()
+                          .editStatus(request.entry![13], "No Health Entry"),
+                      context.read<UserDetailListProvider>().editLatestEntry(
+                          context.read<AuthProvider>().userId, ""),
+                      Navigator.of(context).pop()
+                    },
+                child: Text("Allow delete entry")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -132,13 +148,32 @@ class _ViewRequestsState extends State<ViewRequests> {
           title: Text("Reject ${request.requester_name}'s request?"),
           actions: <Widget>[
             ElevatedButton(
-                onPressed: () => {
-                      context
-                          .read<RequestProvider>()
-                          .deleteRequest(request.id!),
-                      Navigator.pop(context)
-                      // set entry's edit_request or delete_request to false
-                    },
+                onPressed: () {
+                  Entry editedEntry = new Entry(
+                    fever: request.entry![0],
+                    feverish: request.entry![1],
+                    muscle_joint_pain: request.entry![2],
+                    cough: request.entry![3],
+                    cold: request.entry![4],
+                    sore_throat: request.entry![5],
+                    difficulty_breathing: request.entry![6],
+                    diarrhea: request.entry![7],
+                    loss_taste: request.entry![8],
+                    loss_smell: request.entry![9],
+                    has_symptoms: request.entry![10],
+                    had_contact: request.entry![11],
+                    status: request.entry![12],
+                    user_key: request.entry![13],
+                    edit_request: false,
+                    delete_request: false,
+                    entry_date: request.entry![16],
+                    id: request.entry_id,
+                  );
+                  context.read<EntryListProvider>().editEntry(editedEntry);
+                  context.read<RequestProvider>().deleteRequest(request.id!);
+                  Navigator.pop(context);
+                  // set entry's edit_request or delete_request to false
+                },
                 child: Text("Reject request")),
             const SizedBox(height: 10),
             TextButton(
@@ -180,92 +215,100 @@ class _ViewRequestsState extends State<ViewRequests> {
               itemBuilder: (context, index) {
                 Request request = Request.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>);
-                bool isDelete = request.type == "delete" ? true : false;
-                return isDelete
-                    ? InkWell(
-                        hoverColor: Color.fromARGB(255, 10, 41, 24),
-                        // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-                        splashColor: Colors
-                            .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: ListTile(
-                              tileColor: Color.fromARGB(255, 239, 224, 224),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 1,
+
+                if (request.date != dateToday) {
+                  context.read<RequestProvider>().deleteRequest(request.id!);
+                } else {
+                  bool isDelete = request.type == "delete" ? true : false;
+                  return isDelete
+                      ? InkWell(
+                          hoverColor: Color.fromARGB(255, 10, 41, 24),
+                          // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                          splashColor: Colors
+                              .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: ListTile(
+                                tileColor: Color.fromARGB(255, 239, 224, 224),
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 165, 85, 80)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                leading: Icon(Icons.delete,
                                     color: Color.fromARGB(255, 165, 85, 80)),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              leading: Icon(Icons.delete,
-                                  color: Color.fromARGB(255, 165, 85, 80)),
-                              title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("${request.requester_name}"),
-                                    Text("Delete Request",
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.grey))
-                                  ]), // name
-                              // subtitle: Text("${friend.nickname}"), // filter subtitle
-                              trailing: Wrap(spacing: 5, children: <Widget>[
-                                IconButton(
-                                  icon: const Icon(Icons.check_circle),
-                                  color: Colors.teal,
-                                  onPressed: () {
-                                    _confirmDelete(context, request);
-                                  },
+                                title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${request.requester_name}"),
+                                      Text("Delete Request",
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.grey))
+                                    ]), // name
+                                // subtitle: Text("${friend.nickname}"), // filter subtitle
+                                trailing: Wrap(spacing: 5, children: <Widget>[
+                                  IconButton(
+                                    icon: const Icon(Icons.check_circle),
+                                    color: Colors.teal,
+                                    onPressed: () {
+                                      _confirmDelete(context, request);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    color: Color.fromARGB(255, 165, 85, 80),
+                                    onPressed: () {
+                                      _confirmReject(context, request);
+                                    },
+                                  ),
+                                ]),
+                              )))
+                      : InkWell(
+                          hoverColor: Color.fromARGB(255, 10, 41, 24),
+                          // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                          splashColor: Colors
+                              .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: ListTile(
+                                tileColor: Colors.teal[50],
+                                shape: RoundedRectangleBorder(
+                                  side:
+                                      BorderSide(width: 1, color: Colors.teal),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.cancel),
-                                  color: Color.fromARGB(255, 165, 85, 80),
-                                  onPressed: () {
-                                    _confirmReject(context, request);
-                                  },
-                                ),
-                              ]),
-                            )))
-                    : InkWell(
-                        hoverColor: Color.fromARGB(255, 10, 41, 24),
-                        // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
-                        splashColor: Colors
-                            .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: ListTile(
-                              tileColor: Colors.teal[50],
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(width: 1, color: Colors.teal),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              leading:
-                                  Icon(Icons.edit_note, color: Colors.teal),
-                              title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("${request.requester_name}"),
-                                    Text("Edit Request",
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.grey))
-                                  ]), // name
-                              // subtitle: Text("${friend.nickname}"), // filter subtitle
-                              trailing: Wrap(spacing: 5, children: <Widget>[
-                                IconButton(
-                                  icon: const Icon(Icons.check_circle),
-                                  color: Colors.teal,
-                                  onPressed: () {
-                                    _confirmEdit(context, request);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.cancel),
-                                  color: Color.fromARGB(255, 165, 85, 80),
-                                  onPressed: () {
-                                    _confirmReject(context, request);
-                                  },
-                                ),
-                              ]),
-                            )));
+                                leading:
+                                    Icon(Icons.edit_note, color: Colors.teal),
+                                title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${request.requester_name}"),
+                                      Text("Edit Request",
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.grey))
+                                    ]), // name
+                                // subtitle: Text("${friend.nickname}"), // filter subtitle
+                                trailing: Wrap(spacing: 5, children: <Widget>[
+                                  IconButton(
+                                    icon: const Icon(Icons.check_circle),
+                                    color: Colors.teal,
+                                    onPressed: () {
+                                      _confirmEdit(context, request);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    color: Color.fromARGB(255, 165, 85, 80),
+                                    onPressed: () {
+                                      _confirmReject(context, request);
+                                    },
+                                  ),
+                                ]),
+                              )));
+                }
               },
             );
           }
