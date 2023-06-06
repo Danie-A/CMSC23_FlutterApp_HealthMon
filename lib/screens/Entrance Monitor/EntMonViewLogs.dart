@@ -89,11 +89,17 @@ class _EntMonViewLogsState extends State<EntMonViewLogs> {
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('HealthMon Entrance Monitor'),
-          ),
+              decoration: BoxDecoration(
+                color: Colors.teal.shade50,
+              ),
+              child: Column(children: [
+                Text('\nHealthMon',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF004D40))),
+                Text('\nCMSC 23 Group 2\nAraez Concepcion \nDela Cruz Luñeza'),
+              ])),
           ListTile(
             title: const Text('Back'),
             onTap: () {
