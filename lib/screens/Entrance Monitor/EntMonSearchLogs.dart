@@ -1,12 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/Todo.dart';
-import '../providers/TodoListProvider.dart';
-import '../providers/AuthProvider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'SigninPage.dart';
-import 'UserDetailsPage.dart';
 
 class EntMonSearchLogs extends StatefulWidget {
   const EntMonSearchLogs({super.key});
@@ -103,9 +95,17 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
-            child: TextFormField(
+            child: TextField(
               controller: _searchLogsController,
-              decoration: const InputDecoration(border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                suffixIcon: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.search, color: Color(0xFF004D40))),
+                ),
+              ),
             ),
           ),
           Expanded(child: viewAllStudents()),

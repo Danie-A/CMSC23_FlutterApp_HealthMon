@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,6 @@ class FirebaseAuthAPI {
 
       //let's print the object returned by signInWithEmailAndPassword
       //you can use this object to get the user's id, email, etc.
-      print(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         //possible to return something more useful
@@ -33,7 +31,7 @@ class FirebaseAuthAPI {
   }
 
   Future<String> signUp(String email, String password) async {
-    UserCredential credential;
+    UserCredential? credential;
     try {
       credential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -57,7 +55,7 @@ class FirebaseAuthAPI {
     } catch (e) {
       print(e);
     }
-    return '';
+    return credential!.user!.uid;
   }
 
   Future<void> signOut() async {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/AuthProvider.dart';
-import '../providers/UserDetailListProvider.dart';
-import '../models/UserDetail.dart';
+// import auth provider
+import 'package:health_monitoring_app/providers/AuthProvider.dart';
+import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
+import 'package:health_monitoring_app/models/UserDetail.dart';
 
 class AdminMonitorSignupPage extends StatefulWidget {
   const AdminMonitorSignupPage({super.key});
@@ -174,7 +175,7 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
 
             if (message == 'email-already-in-use') {
               showErrorDialog("Email Already In Use");
-            } else if (message == '') {
+            } else {
               UserDetail userDetail = UserDetail(
                   email: emailController.text,
                   firstName: fnameController.text,
@@ -183,7 +184,9 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
                   position: positionController.text,
                   homeUnit: homeUnitController.text,
                   status: 'No Health Entry',
-                  userType: 'Admin');
+                  userType: context.read<UserDetailListProvider>().userType,
+                  uid: message,
+                  latestEntry: "");
               addAdminMonitorDetail(userDetail);
               if (context.mounted) Navigator.pop(context);
             }

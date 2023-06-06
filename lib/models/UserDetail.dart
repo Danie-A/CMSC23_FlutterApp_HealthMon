@@ -10,18 +10,23 @@ class UserDetail {
   String email;
   String status;
   String userType; // "student", "admin", "monitor"
+  String uid;
 
   // for student (user)
   String? username;
   String? college;
   String? course;
   int? studentNo;
-  List<String>? preExistingIllness;
+  List<dynamic>? preExistingIllness;
 
   // for admin or entrance monitor
   int? empNo;
   String? position;
   String? homeUnit;
+  String latestEntry;
+
+  String? allergy;
+  String? location;
 
   UserDetail(
       {this.id,
@@ -30,6 +35,8 @@ class UserDetail {
       required this.email,
       required this.status,
       required this.userType,
+      required this.uid,
+      required this.latestEntry,
       this.username,
       this.college,
       this.course,
@@ -37,7 +44,9 @@ class UserDetail {
       this.preExistingIllness,
       this.empNo,
       this.position,
-      this.homeUnit});
+      this.homeUnit,
+      this.allergy,
+      this.location});
 
 // get STUDENT from JSON
   // Factory constructor to instantiate object from json format
@@ -49,26 +58,78 @@ class UserDetail {
         email: json['email'],
         status: json['status'],
         userType: json['userType'],
+        uid: json['uid'],
         username: json['username'],
         college: json['college'],
         course: json['course'],
         studentNo: json['studentNo'],
-        preExistingIllness: json['preExistingIllness']);
+        preExistingIllness: json['preExistingIllness'],
+        allergy: json['allergy'],
+        latestEntry: json['latestEntry'],
+        location: json['location']);
+  }
+
+  factory UserDetail.userFromJson(Map<String, dynamic> json) {
+    return UserDetail(
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        status: json['status'],
+        userType: json['userType'],
+        uid: json['uid'],
+        username: json['username'],
+        college: json['college'],
+        allergy: json['allergy'],
+        preExistingIllness: json['preExistingIllness'],
+        latestEntry: json['latestEntry'],
+        location: json['location']);
   }
 
 // get ADMIN or MONITOR from JSON
   factory UserDetail.adminMonitorFromJson(Map<String, dynamic> json) {
     return UserDetail(
-      id: json['id'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      email: json['email'],
-      status: json['status'],
-      userType: json['userType'],
-      empNo: json['empNo'],
-      position: json['position'],
-      homeUnit: json['homeUnit'],
-    );
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        status: json['status'],
+        userType: json['userType'],
+        uid: json['uid'],
+        empNo: json['empNo'],
+        position: json['position'],
+        homeUnit: json['homeUnit'],
+        allergy: json['allergy'],
+        preExistingIllness: json['preExistingIllness'],
+        latestEntry: json['latestEntry'],
+        location: json['location']);
+  }
+
+// get entmon details from json with location
+  factory UserDetail.entmonFromJson(Map<String, dynamic> json) {
+    return UserDetail(
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        status: json['status'],
+        userType: json['userType'],
+        uid: json['uid'],
+        empNo: json['empNo'],
+        position: json['position'],
+        homeUnit: json['homeUnit'],
+        allergy: json['allergy'],
+        preExistingIllness: json['preExistingIllness'],
+        latestEntry: json['latestEntry'],
+        location: json['location']);
+  }
+
+// list of users
+  static List<UserDetail> usersList(String jsonData) {
+    final Iterable<dynamic> data = jsonDecode(jsonData);
+    return data
+        .map<UserDetail>((dynamic d) => UserDetail.studentFromJson(d))
+        .toList();
   }
 
 // list of students
@@ -95,11 +156,15 @@ class UserDetail {
       'email': student.email,
       'status': student.status,
       'userType': student.userType,
+      'uid': student.uid,
       'username': student.username,
       'college': student.college,
       'course': student.course,
       'studentNo': student.studentNo,
-      'preExistingIllness': student.preExistingIllness
+      'preExistingIllness': student.preExistingIllness,
+      'allergy': student.allergy,
+      'latestEntry': student.latestEntry,
+      'location': student.location
     };
   }
 
@@ -111,9 +176,32 @@ class UserDetail {
       'email': adminMonitor.email,
       'status': adminMonitor.status,
       'userType': adminMonitor.userType,
+      'uid': adminMonitor.uid,
       'empNo': adminMonitor.empNo,
       'position': adminMonitor.position,
-      'homeUnit': adminMonitor.homeUnit
+      'homeUnit': adminMonitor.homeUnit,
+      'latestEntry': adminMonitor.latestEntry,
+      'preExistingIllness': adminMonitor.preExistingIllness,
+      'allergy': adminMonitor.allergy,
+    };
+  }
+
+// entmon to JSON
+  Map<String, dynamic> entmonToJson(UserDetail adminMonitor) {
+    return {
+      'firstName': adminMonitor.firstName,
+      'lastName': adminMonitor.lastName,
+      'email': adminMonitor.email,
+      'status': adminMonitor.status,
+      'userType': adminMonitor.userType,
+      'uid': adminMonitor.uid,
+      'empNo': adminMonitor.empNo,
+      'position': adminMonitor.position,
+      'homeUnit': adminMonitor.homeUnit,
+      'latestEntry': adminMonitor.latestEntry,
+      'preExistingIllness': adminMonitor.preExistingIllness,
+      'allergy': adminMonitor.allergy,
+      'location': adminMonitor.location,
     };
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';
-import '../models/Entry.dart';
-import '../providers/EntryListProvider.dart';
-import '../screens/myprofile.dart';
+import '../../models/Entry.dart';
+import '../../providers/EntryListProvider.dart';
+import '../../screens/myprofile.dart';
 import 'package:intl/intl.dart';
+import '../../providers/UserDetailListProvider.dart';
+import '../../providers/AuthProvider.dart';
 
 class UserAddEntry extends StatefulWidget {
   @override
@@ -32,7 +34,8 @@ class _UserAddEntryState extends State<UserAddEntry> {
   @override
   Widget build(BuildContext context) {
     final now = new DateTime.now();
-    String entryDate = DateFormat('yMd').format(now);
+    String entryDate = DateFormat.yMMMMd('en_US').format(now);
+    print('entrydate is' + entryDate);
 
     return Scaffold(
       appBar: AppBar(
@@ -186,7 +189,7 @@ class _UserAddEntryState extends State<UserAddEntry> {
                         has_symptoms: has_symptoms,
                         had_contact: had_contact,
                         status: status,
-                        user_key: user_key,
+                        user_key: context.read<AuthProvider>().userId,
                         edit_request: edit_request,
                         delete_request: delete_request,
                         entry_date: entryDate);
@@ -202,12 +205,32 @@ class _UserAddEntryState extends State<UserAddEntry> {
                         newEntry.loss_taste == true ||
                         newEntry.loss_smell == true) {
                       newEntry.has_symptoms = true;
-                      newEntry.status = "under_monitoring";
+                      newEntry.status = "Under Monitoring";
                     }
 
-                    context.read<EntryListProvider>().addEntryDetail(newEntry);
+                    context
+                        .read<EntryListProvider>()
+                        .addEntryDetail(newEntry)
+                        .then((fetchedEntryId) {
+                      print("[SCREEN] ENTRY ID IS: ${fetchedEntryId}");
+                      context.read<UserDetailListProvider>().editEntryId(
+                          context.read<AuthProvider>().userId, fetchedEntryId);
 
-                    // Do something with the newEntry instance, like store it in a database or pass it to another screen
+                      // context.read<EntryListProvider>().addEntryDetail(newEntry);
+
+                      // context
+                      //     .read<EntryListProvider>()
+                      //     .setCurrentEntry(newEntry);
+                      // change status of user in UserDetailListProvider
+                      context.read<UserDetailListProvider>().editStatus(
+                          context.read<AuthProvider>().userId, newEntry.status);
+
+                      context.read<UserDetailListProvider>().editLatestEntry(
+                          context.read<AuthProvider>().userId,
+                          newEntry.entry_date);
+
+                      Navigator.pop(context);
+                    });
                   },
                   child: Text('Submit'),
                 ),
