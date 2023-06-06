@@ -441,7 +441,7 @@ class _MyProfileState extends State<MyProfile> {
           stream: userDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Text('myprofile 405 Error: ${snapshot.error}');
+              return Text('MyProfile Error: ${snapshot.error}');
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),

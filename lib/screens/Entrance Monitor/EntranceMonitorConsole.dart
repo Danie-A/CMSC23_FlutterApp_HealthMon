@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/models/UserDetail.dart';
 import 'package:health_monitoring_app/providers/AuthProvider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/UserDetailListProvider.dart';
 
 class EntranceMonitorConsole extends StatelessWidget {
   EntranceMonitorConsole({super.key});
-  TextEditingController _locationController = TextEditingController();
 
   Future<void> _showSetLocation(BuildContext context) {
+    UserDetail? entmon = context.read<UserDetailListProvider>().currentUser;
+    TextEditingController _locationController =
+        TextEditingController(text: entmon?.location);
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -128,7 +132,7 @@ class EntranceMonitorConsole extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(Icons.location_on, size: screenWidth * 0.20),
-                        Text("Add Location", textAlign: TextAlign.center)
+                        Text("Edit Location", textAlign: TextAlign.center)
                       ])),
             ],
           ),

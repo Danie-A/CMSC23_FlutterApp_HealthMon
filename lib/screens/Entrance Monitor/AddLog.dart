@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_app/models/Log.dart';
 import 'package:health_monitoring_app/models/UserDetail.dart';
+import 'package:health_monitoring_app/providers/LogProvider.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class AddLog extends StatelessWidget {
   final String data;
@@ -11,6 +14,10 @@ class AddLog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> user = data.split('\n');
+    UserDetail? entmon = context.read<UserDetailListProvider>().currentUser;
+    final now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    final String logDateTime = formatter.format(now);
 
     return Scaffold(
       appBar: AppBar(
@@ -74,6 +81,18 @@ class AddLog extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
+              Log log = new Log(
+                location: entmon!.location!,
+                studentName: user[0],
+                studentNo: int.parse(user[1]),
+                status: user[2],
+                logDate: logDateTime,
+              );
+              if (user[2] == 'Cleared') {
+                // only add log if status is cleared
+                context.read<LogProvider>().addLogDetail(log);
+              }
+
               Navigator.pop(context);
             },
             child: Text('Yes'),

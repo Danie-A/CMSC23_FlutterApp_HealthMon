@@ -3,6 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:developer';
 import 'dart:io';
 import 'AddLog.dart';
+import 'package:flutter/services.dart';
 
 class QrScanPage extends StatefulWidget {
   const QrScanPage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _QrScanPageState extends State<QrScanPage> {
 
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     controller?.dispose();
     super.dispose();
   }
@@ -34,12 +36,20 @@ class _QrScanPageState extends State<QrScanPage> {
 
   Widget _showText() {
     if (result != null) {
-      return Text('${result!.code}', style: TextStyle(fontSize: 20));
-
-      // pause screen and add to log
+      return Text('${result!.code}', style: TextStyle(fontSize: 10));
     } else {
-      return Text('Scan a Code', style: TextStyle(fontSize: 20));
+      return Text('Scan a Code', style: TextStyle(fontSize: 14));
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Lock screen orientation to portrait mode
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override
@@ -48,69 +58,64 @@ class _QrScanPageState extends State<QrScanPage> {
       body: Column(
         children: <Widget>[
           Expanded(flex: 4, child: _buildQrView(context)),
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // add to log
-                  // if (result != null) addLog(result)
-                  Center(
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: _showText(),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: _showText(),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: IconButton(
+                        iconSize: 38,
+                        onPressed: () async {
+                          await controller?.toggleFlash();
+                          setState(() {});
+                        },
+                        icon: FutureBuilder(
+                          future: controller?.getFlashStatus(),
+                          builder: (context, snapshot) {
+                            if (snapshot.data != null) {
+                              return Icon(snapshot.data!
+                                  ? Icons.flash_on
+                                  : Icons.flash_off);
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: IconButton(
-                          iconSize: 50,
-                          onPressed: () async {
-                            await controller?.toggleFlash();
-                            setState(() {});
+                    Container(
+                      child: IconButton(
+                        iconSize: 38,
+                        onPressed: () async {
+                          await controller?.flipCamera();
+                          setState(() {});
+                        },
+                        icon: FutureBuilder(
+                          future: controller?.getCameraInfo(),
+                          builder: (context, snapshot) {
+                            if (snapshot.data != null) {
+                              return Icon(Icons.switch_camera);
+                            } else {
+                              return Container();
+                            }
                           },
-                          icon: FutureBuilder(
-                            future: controller?.getFlashStatus(),
-                            builder: (context, snapshot) {
-                              if (snapshot.data != null) {
-                                return Icon(snapshot.data!
-                                    ? Icons.flash_on
-                                    : Icons.flash_off);
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
                         ),
                       ),
-                      Container(
-                        child: IconButton(
-                          iconSize: 50,
-                          onPressed: () async {
-                            await controller?.flipCamera();
-                            setState(() {});
-                          },
-                          icon: FutureBuilder(
-                            future: controller?.getCameraInfo(),
-                            builder: (context, snapshot) {
-                              if (snapshot.data != null) {
-                                return Icon(Icons.switch_camera);
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
