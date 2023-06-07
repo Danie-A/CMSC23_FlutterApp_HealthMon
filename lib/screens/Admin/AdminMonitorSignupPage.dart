@@ -180,18 +180,36 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
             if (message == 'email-already-in-use') {
               showErrorDialog("Email Already In Use");
             } else {
-              UserDetail userDetail = UserDetail(
-                  email: emailController.text,
-                  firstName: fnameController.text,
-                  lastName: lnameController.text,
-                  empNo: int.parse(empNoController.text),
-                  position: positionController.text,
-                  homeUnit: homeUnitController.text,
-                  status: 'No Health Entry',
-                  userType: context.read<UserDetailListProvider>().userType,
-                  uid: message,
-                  latestEntry: "");
-              addAdminMonitorDetail(userDetail);
+              String userType = context.read<UserDetailListProvider>().userType;
+              if (userType == 'Entrance Monitor') {
+                UserDetail userDetail = UserDetail(
+                    email: emailController.text,
+                    firstName: fnameController.text,
+                    lastName: lnameController.text,
+                    empNo: int.parse(empNoController.text),
+                    position: positionController.text,
+                    homeUnit: homeUnitController.text,
+                    status: 'No Health Entry',
+                    userType: userType,
+                    uid: message,
+                    latestEntry: "",
+                    location: "PhySci Entrance");
+                addAdminMonitorDetail(userDetail);
+              } else {
+                UserDetail userDetail = UserDetail(
+                    email: emailController.text,
+                    firstName: fnameController.text,
+                    lastName: lnameController.text,
+                    empNo: int.parse(empNoController.text),
+                    position: positionController.text,
+                    homeUnit: homeUnitController.text,
+                    status: 'No Health Entry',
+                    userType: userType,
+                    uid: message,
+                    latestEntry: "");
+                addAdminMonitorDetail(userDetail);
+              }
+
               if (context.mounted) Navigator.pop(context);
             }
 
