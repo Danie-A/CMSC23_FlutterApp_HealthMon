@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '489417437365',
     projectId: 'cmsc23-b7l-group2-health-app',
     storageBucket: 'cmsc23-b7l-group2-health-app.appspot.com',
-    iosClientId: '489417437365-83n73f38ambc43vbbroglacblqsefth7.apps.googleusercontent.com',
+    iosClientId:
+        '489417437365-83n73f38ambc43vbbroglacblqsefth7.apps.googleusercontent.com',
     iosBundleId: 'com.example.healthMonitoringApp',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '489417437365',
     projectId: 'cmsc23-b7l-group2-health-app',
     storageBucket: 'cmsc23-b7l-group2-health-app.appspot.com',
-    iosClientId: '489417437365-83n73f38ambc43vbbroglacblqsefth7.apps.googleusercontent.com',
+    iosClientId:
+        '489417437365-83n73f38ambc43vbbroglacblqsefth7.apps.googleusercontent.com',
     iosBundleId: 'com.example.healthMonitoringApp',
   );
 }

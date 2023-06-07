@@ -46,46 +46,6 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
     Stream<QuerySnapshot>? searchedLogStream =
         context.watch<LogProvider>().searchedLogStream;
     return Scaffold(
-        drawer: Drawer(
-            child: ListView(padding: EdgeInsets.zero, children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('Sample Drawer Header'),
-          ),
-          ListTile(
-            title: const Text('Show QR'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/show-qr'); //show qr
-            },
-          ),
-          ListTile(
-            title: const Text('Scan QR'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/scan-qr'); //scan qr
-            },
-          ),
-          ListTile(
-            title: const Text('View Logs'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-logs'); //go to searchlogs
-            },
-          ),
-          ListTile(
-            title: const Text('Back'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-            },
-          ),
-        ])),
         appBar: AppBar(
           title: Row(children: const [
             Icon(Icons.screen_search_desktop_outlined,
