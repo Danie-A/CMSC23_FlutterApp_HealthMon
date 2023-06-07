@@ -52,7 +52,7 @@ class AdminConsole extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.local_hospital_rounded,
+                        Icon(Icons.coronavirus_rounded,
                             size: screenWidth * 0.20),
                         Text("View Quarantined Students",
                             textAlign: TextAlign.center)

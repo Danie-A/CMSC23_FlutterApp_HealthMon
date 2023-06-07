@@ -111,8 +111,12 @@ class _ViewQuarantinedState extends State<AdminViewQuarantined> {
                         splashColor: Colors.teal[
                             100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
                         child: ListTile(
+                            hoverColor: Colors.teal[200],
+                            // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
+                            splashColor: Color(
+                                0xFFFBC6A4), // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
                             leading:
-                                Icon(Icons.person, color: Colors.teal[500]),
+                                Icon(Icons.person, color: Color(0xFFBE7575)),
                             title: Text("${userDetail.firstName}"), // name
                             // subtitle: Text("${friend.nickname}"), // filter subtitle
                             trailing: IconButton(
