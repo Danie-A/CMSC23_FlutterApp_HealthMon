@@ -38,7 +38,6 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // [] SHOW ENTRY DETAILS
           title:
               Text('Allow ${request.requester_name} to delete his/her entry?'),
           content: Text('By confirming his/her request,\n'
@@ -218,6 +217,7 @@ class _ViewRequestsState extends State<ViewRequests> {
 
                 if (request.date != dateToday) {
                   context.read<RequestProvider>().deleteRequest(request.id!);
+                  return Container();
                 } else {
                   bool isDelete = request.type == "delete" ? true : false;
                   return isDelete

@@ -41,7 +41,8 @@ class _MyProfileState extends State<MyProfile> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("You have already submitted a request."),
-          content: Text('You can only submit one request per day.'),
+          content: Text(
+              'You can only submit one request until the admin approves your request.'),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
