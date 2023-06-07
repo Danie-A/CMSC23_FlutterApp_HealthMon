@@ -97,46 +97,6 @@ class _AdminViewUnderMonitoringState extends State<AdminViewUnderMonitoring> {
       BuildContext context, Stream<QuerySnapshot<Object?>> userDetailStream) {
     return Scaffold(
         backgroundColor: Colors.teal[50],
-        drawer: Drawer(
-            child: ListView(padding: EdgeInsets.zero, children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('Sample Drawer Header'),
-          ),
-          ListTile(
-            title: const Text('View All Students'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-students'); //show qr
-            },
-          ),
-          ListTile(
-            title: const Text('View Quarantined'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-quarantined'); //scan qr
-            },
-          ),
-          ListTile(
-            title: const Text('Student Requests'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-requests'); //go to searchlogs
-            },
-          ),
-          ListTile(
-            title: const Text('Back'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-            },
-          ),
-        ])),
         appBar: AppBar(
           title: Row(children: const [
             Icon(Icons.medication_outlined,
