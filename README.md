@@ -6,7 +6,8 @@
 
 
 ## Program Description
-![HealthMon Header](https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/a81e76fd-553e-4bde-a5cf-9046a3a2e559)
+![HealthMonLogo](https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/e2693622-7ec2-4526-83f7-fa92ed51bde4)
+
 
 HealthMon is a health monitoring system application created using the Flutter framework which is connected to a Firebase Cloud Firestore for database and Firebase Authentication for the login and signup features.
 
@@ -22,13 +23,16 @@ The application hosts three types of accounts which are the user, entrance monit
 5. Select Chrome or Edge as the simulator for the app
 
 ### Using Phone (recommended)
-1. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
-2. Clone the main repository
-3. In the terminal, go to the app's path
-4. On your phone, enable the developer option and USB debugging from the settings
-5. Execute flutter devices
-6. Execute flutter run
-7. Make sure to accept app's permission to camera for qr scanning
+1a. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
+2a. Clone the main repository
+3a. In the terminal, go to the app's path
+4a. On your phone, enable the developer option and USB debugging from the settings
+5a. Execute flutter devices
+6a. Execute flutter run
+7a. Make sure to accept the app's permission to camera for qr scanning
+
+1b. Alternatively, you can install the app through an APK provided by the developers
+2b. Just also make sure to accept the app's permission to camera for qr scanning
 
 
 ## How To Use the Health Monitor App
