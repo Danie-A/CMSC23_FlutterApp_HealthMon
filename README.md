@@ -1,4 +1,6 @@
-# CMSC 23 B7L Group 2 Members
+# HealthMon Android Application
+
+## CMSC 23 B7L Group 2 Members
 - Araez, Danielle Lei R.  
 - Concepcion, Sean Kierby I.  
 - Dela Cruz, Laydon Albert L.  
@@ -15,15 +17,15 @@ The application hosts three types of accounts which are the user, entrance monit
 
 ## Installation Guide
 ### Using Chrome or Edge (not recommended) 
-1. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
+1. Access the GitHub Link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
 2. Clone the main repository
 3. In the terminal, go to the app's path
 4. Execute flutter run
 5. Select Chrome or Edge as the simulator for the app
 
 ### Using Phone (recommended)
-#### Through github link
-1. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
+#### Through GitHub Link
+1. Access the Github Link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
 2. Clone the main repository
 3. In the terminal, go to the app's path
 4. On your phone, enable the developer option and USB debugging from the settings
@@ -34,7 +36,6 @@ The application hosts three types of accounts which are the user, entrance monit
 #### Through APK
 1. Alternatively, you can install the app through an APK provided by the developers
 2. Just also make sure to accept the app's permission to camera for qr scanning
-
 
 ## How To Use the Health Monitor App
 HealthMon showcases wide variety of features centered around monitoring the health of all users registered on this app.
