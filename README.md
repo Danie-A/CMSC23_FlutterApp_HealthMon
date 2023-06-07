@@ -8,13 +8,27 @@
 ## Program Description
 ![HealthMon Header](https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/a81e76fd-553e-4bde-a5cf-9046a3a2e559)
 
-HealthMon is a health monitoring system application created using the flutter framework which is connected to a Firebase Cloud Firestore for database and Firebase Authentication for the login and signup features.
+HealthMon is a health monitoring system application created using the Flutter framework which is connected to a Firebase Cloud Firestore for database and Firebase Authentication for the login and signup features.
 
-The application hosts three types of accounts which are the user, entrance monitor, and admin. All of the accounts have the base features such as creating a health entry and generating a building pass. On the other hand, certain features are only available to a particular account type: entrance monitor accounts are able to view logs, search student logs, update log, and read generated QR. Meanwhile, admin accounts are granted with the abilities for the following: viewing student accounts, viewing quarantined students, viewing sudents that are under monitoring, manage (approve or reject) students' requests, and elevate user accounts to admin or entrance monitor.
+The application hosts three types of accounts which are the user, entrance monitor, and admin. All of the accounts have the base features such as creating a health entry and generating a building pass. On the other hand, certain features are only available to a particular account type: entrance monitor accounts are able to view logs, search student logs, update logs, and read generated QR. Meanwhile, admin accounts are granted the abilities for the following: viewing student accounts, viewing quarantined students, viewing students that are under monitoring, managing (approving or rejecting) students' requests, and elevating user accounts to admin or entrance monitor.
 
 
 ## Installation Guide
-1. Install something idk
+### Using Chrome or Edge (not recommended) 
+1. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
+2. Clone the main repository
+3. In the terminal, go to the app's path
+4. Execute flutter run
+5. Select Chrome or Edge as the simulator for the app
+
+### Using Phone (recommended)
+1. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
+2. Clone the main repository
+3. In the terminal, go to the app's path
+4. On your phone, enable the developer option and USB debugging from the settings
+5. Execute flutter devices
+6. Execute flutter run
+7. Make sure to accept app's permission to camera for qr scanning
 
 
 ## How To Use the Health Monitor App

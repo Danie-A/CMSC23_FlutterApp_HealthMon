@@ -22,7 +22,7 @@ class FirebaseLogAPI {
 
   Stream<QuerySnapshot> getSearchedLogs() {
     Stream<QuerySnapshot> searchedStream =
-        db.collection('logs').where('status', isEqualTo: "cleared").snapshots();
+        db.collection('logs').where('status', isEqualTo: "Cleared").snapshots();
     return searchedStream;
   }
 

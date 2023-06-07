@@ -86,28 +86,6 @@ class _EntMonViewLogsState extends State<EntMonViewLogs> {
       BuildContext context, Stream<QuerySnapshot> logStream) {
     UserDetail? entmon = context.read<UserDetailListProvider>().currentUser;
     return Scaffold(
-        drawer: Drawer(
-            child: ListView(padding: EdgeInsets.zero, children: [
-          DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal.shade50,
-              ),
-              child: Column(children: [
-                Text('\nHealthMon',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF004D40))),
-                Text('\nCMSC 23 Group 2\nAraez Concepcion \nDela Cruz Luñeza'),
-              ])),
-          ListTile(
-            title: const Text('Back'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-            },
-          ),
-        ])),
         appBar: AppBar(
           title: Row(children: const [
             Icon(Icons.domain_rounded, color: Color(0xFF004D40)),

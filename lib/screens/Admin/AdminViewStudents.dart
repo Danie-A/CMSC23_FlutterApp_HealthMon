@@ -629,46 +629,6 @@ class _ViewStudentsState extends State<AdminViewStudents> {
 
   Scaffold displayScaffold(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-            child: ListView(padding: EdgeInsets.zero, children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('HealthMon'),
-          ),
-          ListTile(
-            title: const Text('View Quarantined Users'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-quarantined'); //show qr
-            },
-          ),
-          ListTile(
-            title: const Text('View Under Monitoring'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-under-monitoring'); //scan qr
-            },
-          ),
-          ListTile(
-            title: const Text('Student Requests'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-              Navigator.pushNamed(context, '/view-requests'); //go to searchlogs
-            },
-          ),
-          ListTile(
-            title: const Text('Back'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-            },
-          ),
-        ])),
         appBar: AppBar(
           title: Row(children: const [
             Icon(Icons.people_outline_rounded, color: Color(0xFF004D40)),
