@@ -92,22 +92,6 @@ class _EntMonViewLogsState extends State<EntMonViewLogs> {
   Scaffold displayScaffold(
       BuildContext context, Stream<QuerySnapshot> logStream) {
     return Scaffold(
-        drawer: Drawer(
-            child: ListView(padding: EdgeInsets.zero, children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.teal.shade50,
-            ),
-            child: Text('Sample Drawer Header'),
-          ),
-          ListTile(
-            title: const Text('Back'),
-            onTap: () {
-              Navigator.pop(context); //back drawer
-              Navigator.pop(context); //back to homepage
-            },
-          ),
-        ])),
         appBar: AppBar(
           title: Row(children: const [
             Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),

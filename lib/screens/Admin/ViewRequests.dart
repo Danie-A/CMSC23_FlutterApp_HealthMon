@@ -319,47 +319,6 @@ class _ViewRequestsState extends State<ViewRequests> {
   Widget build(BuildContext context) {
     dateToday = DateFormat.yMMMMd('en_US').format(today);
     return Scaffold(
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-        DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.teal.shade50,
-          ),
-          child: Text('\n\n\n\nHealthMon Admin'),
-        ),
-        ListTile(
-          title: const Text('View All Students'),
-          onTap: () {
-            Navigator.pop(context); //back drawer
-            Navigator.pop(context); //back to homepage
-            Navigator.pushNamed(context, '/view-students'); //show qr
-          },
-        ),
-        ListTile(
-          title: const Text('View Quarantined Students'),
-          onTap: () {
-            Navigator.pop(context); //back drawer
-            Navigator.pop(context); //back to homepage
-            Navigator.pushNamed(context, '/view-quarantined'); //scan qr
-          },
-        ),
-        ListTile(
-          title: const Text('View Under Monitoring Students'),
-          onTap: () {
-            Navigator.pop(context); //back drawer
-            Navigator.pop(context); //back to homepage
-            Navigator.pushNamed(
-                context, '/view-under-monitoring'); //go to searchlogs
-          },
-        ),
-        ListTile(
-          title: const Text('Back'),
-          onTap: () {
-            Navigator.pop(context); //back drawer
-            Navigator.pop(context); //back to homepage
-          },
-        ),
-      ])),
       appBar: AppBar(
         title: Row(children: const [
           Icon(Icons.pending_actions, color: Color(0xFF004D40)),
