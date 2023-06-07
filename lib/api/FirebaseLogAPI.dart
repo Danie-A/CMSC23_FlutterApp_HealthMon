@@ -14,7 +14,10 @@ class FirebaseLogAPI {
   }
 
   Stream<QuerySnapshot> getAllLogs() {
-    return db.collection("logs").snapshots();
+    return db
+        .collection("logs")
+        .orderBy("logDate", descending: true)
+        .snapshots();
   }
 
   Stream<QuerySnapshot> getSearchedLogs() {

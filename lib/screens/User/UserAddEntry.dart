@@ -39,7 +39,16 @@ class _UserAddEntryState extends State<UserAddEntry> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Entry'),
+        title: Row(children: [
+          Icon(Icons.post_add_outlined, color: Color(0xFF004D40)),
+          SizedBox(width: 14),
+          Text("Add Entry",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF004D40),
+              ))
+        ]),
+        backgroundColor: Colors.teal[200],
       ),
       body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -216,12 +225,6 @@ class _UserAddEntryState extends State<UserAddEntry> {
                       context.read<UserDetailListProvider>().editEntryId(
                           context.read<AuthProvider>().userId, fetchedEntryId);
 
-                      // context.read<EntryListProvider>().addEntryDetail(newEntry);
-
-                      // context
-                      //     .read<EntryListProvider>()
-                      //     .setCurrentEntry(newEntry);
-                      // change status of user in UserDetailListProvider
                       context.read<UserDetailListProvider>().editStatus(
                           context.read<AuthProvider>().userId, newEntry.status);
 

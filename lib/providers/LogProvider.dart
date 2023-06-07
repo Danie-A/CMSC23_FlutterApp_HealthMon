@@ -41,13 +41,6 @@ class LogProvider with ChangeNotifier {
     print(currentLog);
     notifyListeners();
   }
-  /*
-  void editEntry(String id, String newTitle) async {
-    String message = await firebaseService.editLog(id, newTitle);
-    print(message);
-    notifyListeners();
-  }
-  */
 
   void deleteLog(String id) async {
     String message = await firebaseService.deleteLog(id);

@@ -4,23 +4,23 @@ class Log {
   String location;
   String status;
   int studentNo;
-  //String studentUID;
   String studentName;
+  String logDate;
 
   Log(
       {required this.location,
       required this.status,
       required this.studentNo,
-      //required this.studentUID,
-      required this.studentName});
+      required this.studentName,
+      required this.logDate});
 
   factory Log.logFromJson(Map<String, dynamic> json) {
     return Log(
         location: json['location'],
         status: json['status'],
         studentNo: json['studentNo'],
-        //studentUID: json['studentUID'],
-        studentName: json['studentName']);
+        studentName: json['studentName'],
+        logDate: json['logDate']);
   }
 
   static List<Log> logFromJsonArray(String jsonData) {
@@ -33,8 +33,8 @@ class Log {
       'location': log.location,
       'status': log.status,
       'studentNo': log.studentNo,
-      //'studentUID': log.studentUID,
       'studentName': log.studentName,
+      'logDate': log.logDate
     };
   }
 }

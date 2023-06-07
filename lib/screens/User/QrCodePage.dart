@@ -13,20 +13,20 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
-  // Map data = {
-  //   "firstName": "Marcel Luiz",
-  //   "lastName": "Luneza",
-  //   "id": "2U2n8QuGQpFz7pE2NzWp",
-  //   "date": "December 01, 2002",
-  //   "studentNo": "2021-00000"
-  // };
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     UserDetail? user = context.read<UserDetailListProvider>().currentUser;
+    String name = "${user?.firstName} ${user?.lastName}";
+    String studentNo = '';
+    if (user?.userType == 'User') {
+      studentNo = "${user?.studentNo}";
+    } else {
+      studentNo = "${user?.empNo}";
+    }
 
+    String status = "${user?.status}";
     return Scaffold(
       appBar: AppBar(
         title: Row(children: [
@@ -50,7 +50,7 @@ class _QrCodePageState extends State<QrCodePage> {
 
             Center(
               child: QrImage(
-                data: context.read<AuthProvider>().uid,
+                data: "$name\n$studentNo\n$status",
                 backgroundColor: Color.fromRGBO(128, 203, 196, 1),
                 // ignore: deprecated_member_use
                 foregroundColor: Color.fromRGBO(0, 77, 64, 1),

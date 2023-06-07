@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import auth provider
 import 'package:health_monitoring_app/providers/AuthProvider.dart';
 import 'package:health_monitoring_app/providers/UserDetailListProvider.dart';
 import 'package:health_monitoring_app/models/UserDetail.dart';
+import 'package:flutter/services.dart';
 
 class AdminMonitorSignupPage extends StatefulWidget {
   const AdminMonitorSignupPage({super.key});
@@ -124,9 +124,13 @@ class _AdminMonitorSignupPageState extends State<AdminMonitorSignupPage> {
         // labelText: "Last Name",
       ),
       controller: empNoController,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ],
       validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please input employee number.';
+        if (value.toString().length != 9) {
+          return 'Employee number must be 9 numbers.';
         }
         return null;
       }, // adds a validator in the form field

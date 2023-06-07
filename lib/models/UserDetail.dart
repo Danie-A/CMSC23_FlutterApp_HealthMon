@@ -83,7 +83,9 @@ class UserDetail {
         allergy: json['allergy'],
         preExistingIllness: json['preExistingIllness'],
         latestEntry: json['latestEntry'],
-        location: json['location']);
+        location: json['location'],
+        empNo: json['empNo'],
+        studentNo: json['studentNo']);
   }
 
 // get ADMIN or MONITOR from JSON
