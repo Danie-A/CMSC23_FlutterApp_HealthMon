@@ -202,7 +202,7 @@ class _ViewStudentsState extends State<AdminViewStudents> {
     'BS Accountancy',
     'BS Economics',
     'BS Agribusiness Management',
-    'BS Development Communication',
+    'BS Communication',
     'BS Civil Engineering',
     'BS Chemical Engineering',
     'BS Electrical Engineering',
@@ -527,84 +527,96 @@ class _ViewStudentsState extends State<AdminViewStudents> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text("Filter By: "),
-              DropdownButton<String>(
-                borderRadius: BorderRadius.circular(20),
-                icon: const Icon(Icons.arrow_drop_down),
-                dropdownColor: Colors.teal[100],
-                underline: SizedBox.shrink(),
-                value: filterValue,
-                iconSize: 24,
-                elevation: 16,
-                style: const TextStyle(color: Colors.teal),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    filterValue = newValue!;
-                    if (filterValue == 'College') {
-                      collegeDropdownIsVisible = true;
-                      courseDropdownIsVisible = false;
-                    } else if (filterValue == 'Course') {
-                      courseDropdownIsVisible = true;
-                      collegeDropdownIsVisible = false;
-                    } else {
-                      collegeDropdownIsVisible = false;
-                      courseDropdownIsVisible = false;
-                    }
-                  });
-                },
-                items: filterBy.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text('  $value'),
-                  );
-                }).toList(),
+              SizedBox(
+                width: 10,
               ),
-              Visibility(
-                visible: collegeDropdownIsVisible,
-                child: DropdownButton<String>(
-                  borderRadius: BorderRadius.circular(20),
-                  icon: const Icon(Icons.arrow_drop_down),
-                  dropdownColor: Colors.teal[100],
-                  underline: SizedBox.shrink(),
-                  value: collegeValue,
-                  iconSize: 24,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.teal),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      collegeValue = newValue!;
-                    });
-                  },
-                  items: colleges.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text('  $value'),
-                    );
-                  }).toList(),
-                ),
-              ),
-              Visibility(
-                visible: courseDropdownIsVisible,
-                child: DropdownButton<String>(
-                  borderRadius: BorderRadius.circular(20),
-                  icon: const Icon(Icons.arrow_drop_down),
-                  dropdownColor: Colors.teal[100],
-                  underline: SizedBox.shrink(),
-                  value: courseValue,
-                  iconSize: 24,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.teal),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      courseValue = newValue!;
-                    });
-                  },
-                  items: courses.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text('  $value'),
-                    );
-                  }).toList(),
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DropdownButton<String>(
+                    borderRadius: BorderRadius.circular(20),
+                    icon: const Icon(Icons.arrow_drop_down),
+                    dropdownColor: Colors.teal[100],
+                    underline: SizedBox.shrink(),
+                    value: filterValue,
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.teal),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        filterValue = newValue!;
+                        if (filterValue == 'College') {
+                          collegeDropdownIsVisible = true;
+                          courseDropdownIsVisible = false;
+                        } else if (filterValue == 'Course') {
+                          courseDropdownIsVisible = true;
+                          collegeDropdownIsVisible = false;
+                        } else {
+                          collegeDropdownIsVisible = false;
+                          courseDropdownIsVisible = false;
+                        }
+                      });
+                    },
+                    items:
+                        filterBy.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text('  $value'),
+                      );
+                    }).toList(),
+                  ),
+                  Visibility(
+                    visible: collegeDropdownIsVisible,
+                    child: DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(20),
+                      icon: const Icon(Icons.arrow_drop_down),
+                      dropdownColor: Colors.teal[100],
+                      underline: SizedBox.shrink(),
+                      value: collegeValue,
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.teal),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          collegeValue = newValue!;
+                        });
+                      },
+                      items: colleges
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text('  $value'),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Visibility(
+                    visible: courseDropdownIsVisible,
+                    child: DropdownButton<String>(
+                      borderRadius: BorderRadius.circular(20),
+                      icon: const Icon(Icons.arrow_drop_down),
+                      dropdownColor: Colors.teal[100],
+                      underline: SizedBox.shrink(),
+                      value: courseValue,
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.teal),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          courseValue = newValue!;
+                        });
+                      },
+                      items:
+                          courses.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text('  $value'),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -528,8 +528,8 @@ class _UserSignupPageState extends State<UserSignupPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(children: const [
-          Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
+        title: Row(children: [
+          Image.asset('icon/HealthMonLogo.png', height: 20, width: 20),
           SizedBox(width: 14),
           Text("HealthMon",
               style: TextStyle(

@@ -92,7 +92,6 @@ class AddLog extends StatelessWidget {
                 // only add log if status is cleared
                 context.read<LogProvider>().addLogDetail(log);
               }
-
               Navigator.pop(context);
             },
             child: Text('Yes'),

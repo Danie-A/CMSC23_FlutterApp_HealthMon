@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -21,6 +22,19 @@ class _QrCodePageState extends State<QrCodePage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<String> saveImage(Uint8List image) async {
+    await [Permission.storage].request();
+
+    final time = DateTime.now()
+        .toIso8601String()
+        .replaceAll(".", "-")
+        .replaceAll(":", "-");
+    final name = "screenshot-$time";
+    final result = await ImageGallerySaver.saveImage(image, name: name);
+    Navigator.of(context).pop();
+    return result['filePath'];
   }
 
   @override
@@ -56,31 +70,11 @@ class _QrCodePageState extends State<QrCodePage> {
           _screenshotController
               .capture(delay: Duration(milliseconds: 10))
               .then((capturedImage) async {
-            final result = await ImageGallerySaver.saveImage(capturedImage!);
-            print(result);
+            await saveImage(capturedImage!);
             // ShowCapturedWidget(context, capturedImage!);
           }).catchError((onError) {
             print(onError);
           });
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Qr Code'),
-                content: Text('Image Saved!'),
-                actions: [
-                  TextButton(
-                    child: Text('OK'),
-                    onPressed: () {
-                      // Perform an action when OK is pressed.
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
         },
         child: Icon(Icons.file_download_outlined),
       ),
