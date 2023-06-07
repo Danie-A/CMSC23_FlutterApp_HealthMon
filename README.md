@@ -12,7 +12,8 @@
 HealthMon
 
 #### App Theme
-Teal
+<img src="https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/8ef99047-6276-432e-8124-54173b590cb4" data-canonical-src="https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/8ef99047-6276-432e-8124-54173b590cb4" width="250" height="300" />
+
 
 #### App Icon
 <img src="https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/e2693622-7ec2-4526-83f7-fa92ed51bde4" data-canonical-src="https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/e2693622-7ec2-4526-83f7-fa92ed51bde4" width="250" height="250" />
