@@ -138,12 +138,12 @@ class _ViewRequestsState extends State<ViewRequests> {
     );
   }
 
-  Future<void> _confirmRejectEdit(BuildContext context, Request request) {
+  Future<void> _confirmReject(BuildContext context, Request request) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Reject ${request.requester_name}'s Edit Request?"),
+          title: Text("Reject ${request.requester_name}'s Request?"),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () {
@@ -173,36 +173,6 @@ class _ViewRequestsState extends State<ViewRequests> {
                   // set entry's edit_request or delete_request to false
                 },
                 child: Text("Reject Edit Request")),
-            const SizedBox(height: 10),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _confirmRejectDelete(BuildContext context, Request request) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Reject ${request.requester_name}'s Delete Request?"),
-          actions: <Widget>[
-            ElevatedButton(
-                onPressed: () {
-                  context.read<RequestProvider>().deleteRequest(request.id!);
-                  Navigator.pop(context);
-                  // set delete_request to false
-                },
-                child: Text("Reject Delete Request")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -334,7 +304,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                                     icon: const Icon(Icons.cancel),
                                     color: Color.fromARGB(255, 165, 85, 80),
                                     onPressed: () {
-                                      _confirmRejectDelete(context, request);
+                                      _confirmReject(context, request);
                                     },
                                   ),
                                 ]),
@@ -381,7 +351,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                                     icon: const Icon(Icons.cancel),
                                     color: Color.fromARGB(255, 165, 85, 80),
                                     onPressed: () {
-                                      _confirmRejectEdit(context, request);
+                                      _confirmReject(context, request);
                                     },
                                   ),
                                 ]),

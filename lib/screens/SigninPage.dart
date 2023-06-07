@@ -128,7 +128,7 @@ class _SigninPageState extends State<SigninPage> {
 
     final signUpButton = Padding(
       key: const Key('signUpButton'),
-      padding: const EdgeInsets.only(top: 16.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: ElevatedButton(
         onPressed: () async {
           if (identityValue == 'User') {
