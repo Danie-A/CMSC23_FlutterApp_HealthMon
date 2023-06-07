@@ -202,7 +202,8 @@ class _MyProfileState extends State<MyProfile> {
                               title: Text("I can't generate my QR!"),
                               content: Text(
                                   "To generate your QR code, you must complete your daily health entry and experience no symptoms.\n\n"
-                                  "You must also not be quarantined."),
+                                  "You must also not be quarantined.\n\n"
+                                  "If you are marked as cleared, you may still need to request edit entry to change your daily entry status."),
                               actions: [
                                 TextButton(
                                     onPressed: () {
@@ -426,7 +427,8 @@ class _MyProfileState extends State<MyProfile> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF004D40))),
-                Text('CMSC 23 Group 2'),
+                SizedBox(height: 10),
+                Text('CMSC 23 Group 2\nAraez Dela Cruz\nLuñeza Concepcion'),
                 SizedBox(height: 20)
               ])),
           ListTile(
