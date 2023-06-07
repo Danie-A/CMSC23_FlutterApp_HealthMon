@@ -41,6 +41,41 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
     });
   }
 
+  Future<void> _showLog(BuildContext context, String location) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('${location}'),
+          content: const Text(
+            'A dialog is a type of modal window that\n'
+            'appears in front of app content to\n'
+            'provide critical information, or prompt\n'
+            'for a decision to be made.',
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+                onPressed: () => {}, child: const Text("Make Admin")),
+            const SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () => {},
+                child: const Text("Make Entrance Monitor")),
+            const SizedBox(height: 10),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot>? searchedLogStream =
@@ -106,17 +141,37 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                         ? Container()
                         : InkWell(
                             // InkWell widget adds some hover effect to the ListTile
-                            onTap: () {},
-                            hoverColor: Colors.teal[100],
+                            onTap: () {
+                              _showLog(context, log.location);
+                            },
+                            hoverColor: Colors.teal[200],
                             // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                             splashColor: Colors.teal[
                                 100], // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
-                            child: ListTile(
-                              leading: Icon(Icons.person, color: Colors.teal),
-                              title: Text("${log.studentName}"), // name
-                              // subtitle: Text("${friend.nickname}"), // filter subtitle
-                            ),
-                          ));
+                            child: Padding(
+                              padding: EdgeInsets.all(2),
+                              child: ListTile(
+                                leading: Icon(Icons.folder_shared_outlined,
+                                    color: Colors.teal),
+                                subtitle: Row(children: [
+                                  Text('${log.studentNo}'),
+                                  SizedBox(width: 15),
+                                  Text('Janaury 31, 2024'),
+                                ]), // name
+                                title: Row(children: [
+                                  Text(
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                      '${log.studentName}'),
+                                ]),
+                                trailing: Text(
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontStyle: FontStyle.italic),
+                                    '${log.status}'),
+                              ),
+                            )));
                   },
                 )),
               ]);
