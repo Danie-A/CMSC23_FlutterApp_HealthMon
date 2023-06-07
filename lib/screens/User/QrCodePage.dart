@@ -8,8 +8,6 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import '../../providers/UserDetailListProvider.dart';
 import '../../models/UserDetail.dart';
 
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
-
 class QrCodePage extends StatefulWidget {
   const QrCodePage({Key? key}) : super(key: key);
 
@@ -22,7 +20,6 @@ class _QrCodePageState extends State<QrCodePage> {
 
   @override
   void initState() {
-    // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView()
     super.initState();
   }
 
@@ -61,9 +58,29 @@ class _QrCodePageState extends State<QrCodePage> {
               .then((capturedImage) async {
             final result = await ImageGallerySaver.saveImage(capturedImage!);
             print(result);
+            // ShowCapturedWidget(context, capturedImage!);
           }).catchError((onError) {
             print(onError);
           });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Qr Code'),
+                content: Text('Image Saved!'),
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      // Perform an action when OK is pressed.
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         },
         child: Icon(Icons.file_download_outlined),
       ),
@@ -75,36 +92,39 @@ class _QrCodePageState extends State<QrCodePage> {
             SizedBox(height: screenHeight * .1),
             Screenshot(
               controller: _screenshotController,
-              child: Column(
-                children: [
-                  Center(
-                    child: Container(
-                      child: QrImageView(
-                        data: "$name\n$studentNo\n$status",
-                        backgroundColor: Color.fromRGBO(128, 203, 196, 1),
-                        // ignore: deprecated_member_use
-                        foregroundColor: Color.fromRGBO(0, 77, 64, 1),
-                        size: screenWidth * .5,
+              child: Container(
+                color: Colors.teal[100],
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        child: QrImageView(
+                          data: "$name\n$studentNo\n$status",
+                          backgroundColor: Color.fromRGBO(128, 203, 196, 1),
+                          // ignore: deprecated_member_use
+                          foregroundColor: Color.fromRGBO(0, 77, 64, 1),
+                          size: screenWidth * .5,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Center(
-                        child:
-                            Text("Name: ${user?.firstName} ${user?.lastName}")),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Center(child: Text("Status: ${user?.status}")),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child:
-                        Center(child: Text("Entry Date: ${user?.latestEntry}")),
-                  ),
-                ],
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(
+                          child: Text(
+                              "Name: ${user?.firstName} ${user?.lastName}")),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(child: Text("Status: ${user?.status}")),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(
+                          child: Text("Entry Date: ${user?.latestEntry}")),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -118,18 +138,4 @@ class _QrCodePageState extends State<QrCodePage> {
       ),
     );
   }
-
-  // Future<dynamic> ShowCapturedWidget(
-  //     BuildContext context, Uint8List capturedImage) {
-  //   return showDialog(
-  //     useSafeArea: false,
-  //     context: context,
-  //     builder: (context) => Scaffold(
-  //       appBar: AppBar(
-  //         title: Text("Captured widget screenshot"),
-  //       ),
-  //       body: Center(child: Image.memory(capturedImage)),
-  //     ),
-  //   );
-  // }
 }
