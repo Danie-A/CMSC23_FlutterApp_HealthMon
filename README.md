@@ -8,13 +8,13 @@
 
 
 ## Program Description
-####App Name
+#### App Name
 HealthMon
 
-####App Theme
+#### App Theme
 Teal
 
-####App Icon
+#### App Icon
 <img src="https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/e2693622-7ec2-4526-83f7-fa92ed51bde4" data-canonical-src="https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza/assets/125255946/e2693622-7ec2-4526-83f7-fa92ed51bde4" width="250" height="250" />
 
 HealthMon is a health monitoring system application created using the Flutter framework which is connected to a Firebase Cloud Firestore for database and Firebase Authentication for the login and signup features.
