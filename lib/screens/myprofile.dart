@@ -101,7 +101,7 @@ class _MyProfileState extends State<MyProfile> {
       final screenHeight, UserDetail userDetail) {
     bool generateQRCode = true;
 
-    if (userDetail.status == 'Cleared' && dateToday != userDetail.latestEntry) {
+    if (dateToday != userDetail.latestEntry && userDetail.status == 'Cleared') {
       context.read<UserDetailListProvider>().editStatus(uid, 'No Health Entry');
     } // set status of user to no health entry if user status is cleared but has not submitted any entries for the day yet
 
