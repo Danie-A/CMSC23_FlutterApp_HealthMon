@@ -281,10 +281,12 @@ class _MyProfileState extends State<MyProfile> {
 
                       backgroundColor: Colors.teal[200],
                       onPressed: () {
-                        if (isRequestPending) {
-                          _alreadySubmittedRequestPrompt(context);
-                        } else if (userDetail.latestEntry == dateToday) {
-                          _alreadySubmittedPrompt(context);
+                        if (userDetail.latestEntry == dateToday) {
+                          if (isRequestPending) {
+                            _alreadySubmittedRequestPrompt(context);
+                          } else {
+                            _alreadySubmittedPrompt(context);
+                          }
                         } else {
                           Navigator.pushNamed(context, '/user-add-entry');
                         }
@@ -322,6 +324,8 @@ class _MyProfileState extends State<MyProfile> {
                                   entry.delete_request == true) {
                                 isRequestPending = true;
                                 print(isRequestPending);
+                              } else {
+                                isRequestPending = false;
                               }
                               currentEntryId = entry.id!;
                               context
