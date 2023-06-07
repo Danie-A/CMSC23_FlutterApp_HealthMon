@@ -147,27 +147,13 @@ class _ViewRequestsState extends State<ViewRequests> {
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () {
-                  Entry editedEntry = new Entry(
-                    fever: request.entry![0],
-                    feverish: request.entry![1],
-                    muscle_joint_pain: request.entry![2],
-                    cough: request.entry![3],
-                    cold: request.entry![4],
-                    sore_throat: request.entry![5],
-                    difficulty_breathing: request.entry![6],
-                    diarrhea: request.entry![7],
-                    loss_taste: request.entry![8],
-                    loss_smell: request.entry![9],
-                    has_symptoms: request.entry![10],
-                    had_contact: request.entry![11],
-                    status: request.entry![12],
-                    user_key: request.entry![13],
-                    edit_request: false,
-                    delete_request: false,
-                    entry_date: request.entry![16],
-                    id: request.entry_id,
-                  );
-                  context.read<EntryListProvider>().editEntry(editedEntry);
+                  // change edit and delete request to false
+                  context
+                      .read<EntryListProvider>()
+                      .changeEditRequest(request.entry_id!, false);
+                  context
+                      .read<EntryListProvider>()
+                      .changeDeleteRequest(request.entry_id!, false);
                   context.read<RequestProvider>().deleteRequest(request.id!);
                   Navigator.pop(context);
                   // set entry's edit_request or delete_request to false
