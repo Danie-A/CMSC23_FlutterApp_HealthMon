@@ -38,12 +38,10 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // [] SHOW ENTRY DETAILS
-          title:
-              Text('Allow ${request.requester_name} to delete his/her entry?'),
-          content: Text('By confirming his/her request,\n'
-              'you are allowing ${request.requester_name} to delete his/her entry. \n\n'
-              'Please be noted that your choice is irrevokable.\n'),
+          title: Text('Allow ${request.requester_name} to delete their entry?'),
+          content: Text('By confirming this request,\n'
+              'you are allowing ${request.requester_name} to delete today\'s entry. \n\n'
+              'Note that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () => {
@@ -53,9 +51,9 @@ class _ViewRequestsState extends State<ViewRequests> {
                       context
                           .read<RequestProvider>()
                           .deleteRequest(request.id!),
-                      context
-                          .read<UserDetailListProvider>()
-                          .editStatus(request.entry![13], "No Health Entry"),
+                      context.read<UserDetailListProvider>().editStatus(
+                          request.entry![13],
+                          "No Health Entry"), // must pass entry in delete
                       context.read<UserDetailListProvider>().editLatestEntry(
                           context.read<AuthProvider>().userId, ""),
                       Navigator.of(context).pop()
@@ -82,10 +80,10 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Allow ${request.requester_name} to edit his/her entry?'),
-          content: Text('By confirming his/her request,\n'
-              'you are allowing ${request.requester_name} to edit his/her entry. \n\n'
-              'Please be noted that your choice is irrevokable.\n'),
+          title: Text('Allow ${request.requester_name} to edit this entry?'),
+          content: Text('By confirming this request,\n'
+              'you are allowing ${request.requester_name} to edit their entry. \n\n'
+              'Note that your choice is irrevokable.\n'),
           actions: <Widget>[
             TextButton(
                 onPressed: () {
@@ -145,7 +143,7 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Reject ${request.requester_name}'s request?"),
+          title: Text("Reject ${request.requester_name}'s Request?"),
           actions: <Widget>[
             ElevatedButton(
                 onPressed: () {
@@ -174,9 +172,51 @@ class _ViewRequestsState extends State<ViewRequests> {
                   Navigator.pop(context);
                   // set entry's edit_request or delete_request to false
                 },
-                child: Text("Reject request")),
+                child: Text("Reject Edit Request")),
             const SizedBox(height: 10),
             TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _viewDetails(BuildContext context, Request request) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "${request.requester_name}'s Entry",
+            style: TextStyle(fontSize: 18),
+          ),
+          content: Column(children: [
+            Text(
+              'Fever: ${request.entry![0]} \n'
+              'Feverish: ${request.entry![1]} \n'
+              'Muscle Joint Pain: ${request.entry![2]} \n'
+              'Cough: ${request.entry![3]} \n'
+              'Cold: ${request.entry![4]} \n'
+              'Sore Throat: ${request.entry![5]}\n'
+              'Difficulty Breathing: ${request.entry![6]} \n'
+              'Diarrhea: ${request.entry![7]} \n'
+              'Loss Taste: ${request.entry![8]} \n'
+              'Loss Smell: ${request.entry![9]} \n'
+              'Had Symptoms: ${request.entry![10]} \n'
+              'Had Contact: ${request.entry![11]}',
+              style: TextStyle(height: 2.0),
+            ),
+          ]),
+          actions: <Widget>[
+            ElevatedButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
@@ -218,6 +258,7 @@ class _ViewRequestsState extends State<ViewRequests> {
 
                 if (request.date != dateToday) {
                   context.read<RequestProvider>().deleteRequest(request.id!);
+                  return Container();
                 } else {
                   bool isDelete = request.type == "delete" ? true : false;
                   return isDelete
@@ -226,6 +267,9 @@ class _ViewRequestsState extends State<ViewRequests> {
                           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                           splashColor: Colors
                               .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                          onTap: () {
+                            _viewDetails(context, request);
+                          },
                           child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               child: ListTile(
@@ -266,6 +310,7 @@ class _ViewRequestsState extends State<ViewRequests> {
                                 ]),
                               )))
                       : InkWell(
+                          // EDIT REQUEST
                           hoverColor: Color.fromARGB(255, 10, 41, 24),
                           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                           splashColor: Colors
@@ -279,6 +324,9 @@ class _ViewRequestsState extends State<ViewRequests> {
                                       BorderSide(width: 1, color: Colors.teal),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
+                                onTap: () {
+                                  _viewDetails(context, request);
+                                },
                                 leading:
                                     Icon(Icons.edit_note, color: Colors.teal),
                                 title: Column(

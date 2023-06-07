@@ -41,25 +41,17 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
     });
   }
 
-  Future<void> _showLog(BuildContext context, String location) {
+  Future<void> _showLog(BuildContext context, Log log) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${location}'),
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
-          ),
+          title: Text('${log.studentName}'),
+          content: Text('Name: ${log.studentName} \n'
+              'Number: ${log.studentNo}\n'
+              'Location: ${log.location}\n'
+              'DateTime: ${log.logDate}\n'),
           actions: <Widget>[
-            ElevatedButton(
-                onPressed: () => {}, child: const Text("Make Admin")),
-            const SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () => {},
-                child: const Text("Make Entrance Monitor")),
             const SizedBox(height: 10),
             TextButton(
               style: TextButton.styleFrom(
@@ -107,7 +99,7 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                 );
               } else if (!snapshot.hasData) {
                 return const Center(
-                  child: Text("No Todos Found"),
+                  child: Text("No Logs Found"),
                 );
               }
               return Column(children: [
@@ -134,7 +126,7 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                   itemBuilder: (context, index) {
                     Log log = Log.logFromJson(snapshot.data?.docs[index].data()
                         as Map<String, dynamic>);
-                    return ((!log.studentName
+                    return (!log.studentName
                             .toString()
                             .toLowerCase()
                             .contains(text))
@@ -142,7 +134,7 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                         : InkWell(
                             // InkWell widget adds some hover effect to the ListTile
                             onTap: () {
-                              _showLog(context, log.location);
+                              _showLog(context, log);
                             },
                             hoverColor: Colors.teal[200],
                             // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
@@ -154,9 +146,10 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                                 leading: Icon(Icons.folder_shared_outlined,
                                     color: Colors.teal),
                                 subtitle: Row(children: [
-                                  Text('${log.studentNo}'),
-                                  SizedBox(width: 15),
-                                  Text('Janaury 31, 2024'),
+                                  SizedBox(width: 3),
+                                  Text('${log.logDate}',
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic)),
                                 ]), // name
                                 title: Row(children: [
                                   Text(
@@ -164,6 +157,11 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
                                       '${log.studentName}'),
+                                  SizedBox(width: 3),
+                                  Text(
+                                    '${log.studentNo}',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
                                 ]),
                                 trailing: Text(
                                     style: TextStyle(
@@ -171,7 +169,7 @@ class _EntMonSearchLogsState extends State<EntMonSearchLogs> {
                                         fontStyle: FontStyle.italic),
                                     '${log.status}'),
                               ),
-                            )));
+                            ));
                   },
                 )),
               ]);

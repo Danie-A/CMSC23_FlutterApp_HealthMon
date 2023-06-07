@@ -4,7 +4,10 @@ class FirebaseRequestAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
   Stream<QuerySnapshot> getAllRequests() {
-    return db.collection("requests").snapshots();
+    return db
+        .collection("requests")
+        .orderBy("date", descending: true)
+        .snapshots();
   }
 
   Future<String> addRequest(Map<String, dynamic> request) async {

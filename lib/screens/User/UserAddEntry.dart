@@ -216,7 +216,9 @@ class _UserAddEntryState extends State<UserAddEntry> {
                       newEntry.has_symptoms = true;
                       newEntry.status = "Under Monitoring";
                     }
-
+                    if (newEntry.had_contact == "Yes") {
+                      newEntry.status = "Under Monitoring";
+                    }
                     context
                         .read<EntryListProvider>()
                         .addEntryDetail(newEntry)

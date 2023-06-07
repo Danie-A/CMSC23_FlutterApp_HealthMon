@@ -41,7 +41,8 @@ class _MyProfileState extends State<MyProfile> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("You have already submitted a request."),
-          content: Text('You can only submit one request per day.'),
+          content: Text(
+              'You can only submit one request until the admin approves your request.'),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -77,15 +78,10 @@ class _MyProfileState extends State<MyProfile> {
                 child: Text("Edit Entry")),
             ElevatedButton(
                 onPressed: () async {
-                  Request newReq = new Request(
-                    entry_id: currentEntryId,
-                    type: 'delete',
-                    date: curDate,
-                    requester_name: fullName,
-                  );
+                  Navigator.pushNamed(context, '/user-delete-entry');
 
-                  context.read<RequestProvider>().addRequest(newReq);
-                  Navigator.of(context).pop();
+                  // context.read<RequestProvider>().addRequest(newReq);
+                  // Navigator.of(context).pop();
                 },
                 child: Text("Delete Entry")),
             const SizedBox(height: 10),
@@ -280,10 +276,12 @@ class _MyProfileState extends State<MyProfile> {
 
                       backgroundColor: Colors.teal[200],
                       onPressed: () {
-                        if (isRequestPending) {
-                          _alreadySubmittedRequestPrompt(context);
-                        } else if (userDetail.latestEntry == dateToday) {
-                          _alreadySubmittedPrompt(context);
+                        if (userDetail.latestEntry == dateToday) {
+                          if (isRequestPending) {
+                            _alreadySubmittedRequestPrompt(context);
+                          } else {
+                            _alreadySubmittedPrompt(context);
+                          }
                         } else {
                           Navigator.pushNamed(context, '/user-add-entry');
                         }
@@ -321,6 +319,8 @@ class _MyProfileState extends State<MyProfile> {
                                   entry.delete_request == true) {
                                 isRequestPending = true;
                                 print(isRequestPending);
+                              } else {
+                                isRequestPending = false;
                               }
                               currentEntryId = entry.id!;
                               context

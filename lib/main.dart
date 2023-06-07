@@ -23,6 +23,7 @@ import 'screens/Admin/AdminViewQuarantined.dart';
 import 'screens/Admin/AdminViewUnderMonitoring.dart';
 import 'screens/Entrance Monitor/EntMonViewLogs.dart';
 import 'providers/RequestProvider.dart';
+import 'screens/User/UserDeleteEntry.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,33 +61,6 @@ class MyApp extends StatelessWidget {
               ), //<-- SEE HERE
           brightness: Brightness.light,
           colorSchemeSeed: Colors.teal),
-      // onGenerateRoute: (settings) {
-      //   switch (settings.name) {
-      //     case '/': // route for homepage
-      //       return MaterialPageRoute(
-      //         builder: (context) => MyProfile(),
-      //       );
-      //     case '/login': // route for sign in
-      //       return MaterialPageRoute(
-      //         builder: (context) => SigninPage(),
-      //       );
-      //     case '/user-profile': // route for sign in
-      //       return MaterialPageRoute(
-      //         builder: (context) => SigninPage(),
-      //       );
-      //     case '/user-details': // route for sign in
-      //       return MaterialPageRoute(
-      //         builder: (context) => UserDetailsPage(),
-      //       );
-      //     case '/user-profile': // route for info of a specific friend
-      //       final args = settings.arguments as Friend;
-      //       return MaterialPageRoute(
-      //         builder: (context) => FriendDetails(friend: args),
-      //       );
-      //     default:
-      //       return null;
-      //   }
-      // },
       routes: {
         '/': (context) => const MyProfile(),
         '/login': (context) => const SigninPage(),
@@ -94,6 +68,7 @@ class MyApp extends StatelessWidget {
         '/user-details': (context) => const UserDetailsPage(),
         '/user-add-entry': (context) => UserAddEntry(),
         '/user-edit-entry': (context) => UserEditEntry(),
+        '/user-delete-entry': (context) => UserDeleteEntry(),
         '/show-qr': (context) => const QrCodePage(),
         '/scan-qr': (context) => QrScanPage(),
         //admin console
