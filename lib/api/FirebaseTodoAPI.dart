@@ -1,4 +1,4 @@
-
+// USED AS A GUIDE ONLY
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseTodoAPI {

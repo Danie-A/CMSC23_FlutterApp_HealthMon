@@ -1,3 +1,18 @@
+/*
+GROUP 2 MEMBERS (B7L) GoogleAuth.dart
+
+Araez, Danielle Lei R.
+Concepcion, Sean Kierby I.
+Dela Cruz, Laydon Albert L.
+Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+This will handle when user uses Sign in with google
+*/
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

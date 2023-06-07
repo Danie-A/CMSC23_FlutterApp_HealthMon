@@ -1,3 +1,23 @@
+/*
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+>> This page is where the user can edit their health entry. This page is only accessible if the user
+has already submitted an entry for the day. The user can edit their entry by checking the symptoms
+they have and choosing "Yes" if they had a F2F contact with a COVID-19 positive person.
+
+>> The user will need to wait for the admin to approve their edit entry before the changes would show.
+
+*/
+
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/providers/AuthProvider.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';

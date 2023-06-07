@@ -1,3 +1,14 @@
+/*
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PAGE DESCRIPTION
+>> This page is shows the users that have a status of "Under Monitoring". The Admin can move the said users to quarantine or mark them as cleared
+*/
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

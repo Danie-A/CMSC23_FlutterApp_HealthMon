@@ -2,6 +2,8 @@
   Created by: Claizel Coubeili Cepe
   Date: updated April 26, 2023
   Description: Sample todo app with Firebase 
+
+  // USED AS A GUIDE ONLY
 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';

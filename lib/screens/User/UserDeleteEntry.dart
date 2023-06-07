@@ -1,3 +1,22 @@
+/*
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+>> This page is where the user can delete an entry. This page is accessed by the user through the
+My Profile page. The user can delete an entry by clicking the delete button on the daily entry.
+
+>> This page will only show if the user has already submitted a daily entry.
+
+*/
+
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/providers/AuthProvider.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';

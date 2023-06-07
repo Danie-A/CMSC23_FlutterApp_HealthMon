@@ -1,3 +1,19 @@
+/*
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+>> This page is where users can add their health entries. It is accessed through the My Profile page.
+
+*/
+
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/screens/MyProfile.dart';
 import 'package:provider/provider.dart';

@@ -1,3 +1,21 @@
+/*
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+>> This page is the main homepage of all users.
+
+>> It shows the consoles for admin and entrance monitor if that is their user type, respectively.
+
+*/
+
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_app/models/Entry.dart';
 import 'package:health_monitoring_app/models/UserDetail.dart';
@@ -100,11 +118,14 @@ class _MyProfileState extends State<MyProfile> {
   Widget _buildScrollView(BuildContext context, final screenWidth,
       final screenHeight, UserDetail userDetail) {
     bool generateQRCode = true;
-
+// generate QR code if user status is cleared and has submitted an entry for the day
     if (dateToday != userDetail.latestEntry && userDetail.status == 'Cleared') {
       context.read<UserDetailListProvider>().editStatus(uid, 'No Health Entry');
     } // set status of user to no health entry if user status is cleared but has not submitted any entries for the day yet
-
+    if (userDetail.latestEntry == dateToday &&
+        userDetail.status == 'No Health Entry') {
+      context.read<UserDetailListProvider>().editStatus(uid, 'Cleared');
+    }
     if (userDetail.status != 'Cleared' || dateToday != userDetail.latestEntry) {
       generateQRCode = false;
     } // fail to generate QR code if user status is not cleared
@@ -415,22 +436,28 @@ class _MyProfileState extends State<MyProfile> {
         ),
         drawer: Drawer(
             child: ListView(padding: EdgeInsets.zero, children: [
-          DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal.shade50,
-              ),
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Image.asset('icon/HealthMonLogo.png', height: 35, width: 35),
-                Text('HealthMon',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF004D40))),
-                SizedBox(height: 10),
-                Text('CMSC 23 Group 2\nAraez Dela Cruz\nLuñeza Concepcion'),
-                SizedBox(height: 20)
-              ])),
+          Container(
+            height: 250,
+            child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade50,
+                ),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('icon/HealthMonLogo.png',
+                          height: 35, width: 35),
+                      Text('HealthMon',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF004D40))),
+                      SizedBox(height: 10),
+                      Text(
+                          'CMSC 23 Group 2\nAraez Dela Cruz\nLuñeza Concepcion'),
+                      SizedBox(height: 20)
+                    ])),
+          ),
           ListTile(
             title: const Text('Logout'),
             onTap: () {

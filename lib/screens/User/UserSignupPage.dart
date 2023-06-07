@@ -1,3 +1,26 @@
+/*
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+>> This page is where the user or student can sign up for an account. The user will be asked to
+input their personal information and pre-existing illnesses. The user will also be asked to input
+their college, course, and student number. The user will also be asked to input their username and
+password for their account. The user will be asked to confirm their password. The user will be
+asked to input their email address. The user will be asked to input their first name and last name.
+
+>> This is added to the user detail list provider. After signing up successfully, the user will be
+redirected to the MyProfile page.  
+
+*/
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/AuthProvider.dart';

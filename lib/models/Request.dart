@@ -1,6 +1,19 @@
-// class for entry
-// dynamic fields
+/*
 
+GROUP 2 MEMBERS (B7L)
+>> Araez, Danielle Lei R.
+>> Concepcion, Sean Kierby I.
+>> Dela Cruz, Laydon Albert L.
+>> Luñeza, Marcel Luiz G.
+
+PROGRAM DESCRIPTION
+>> This program simulates an OHMS-like application where users can monitor their health through 
+daily health entries to be QR scanned by entrance monitor and managed by the application's admin.
+
+PAGE DESCRIPTION
+>> This page contains the model as well as the details for the request object to convert to or from JSON when communicating with the Firestore database.
+
+ */
 import 'dart:convert';
 import 'Entry.dart';
 
