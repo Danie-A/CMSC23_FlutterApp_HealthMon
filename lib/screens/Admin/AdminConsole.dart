@@ -85,7 +85,7 @@ class AdminConsole extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(Icons.pending_actions, size: screenWidth * 0.20),
-                        Text("Student Requests", textAlign: TextAlign.center)
+                        Text("Entry Requests", textAlign: TextAlign.center)
                       ])),
             ],
           ),

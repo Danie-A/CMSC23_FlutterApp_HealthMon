@@ -13,12 +13,12 @@ import '../../providers/EntryListProvider.dart';
 import '../../providers/UserDetailListProvider.dart';
 import '../../models/UserDetail.dart';
 
-class UserEditEntry extends StatefulWidget {
+class UserDeleteEntry extends StatefulWidget {
   @override
-  _UserEditEntryState createState() => _UserEditEntryState();
+  _UserDeleteEntryState createState() => _UserDeleteEntryState();
 }
 
-class _UserEditEntryState extends State<UserEditEntry> {
+class _UserDeleteEntryState extends State<UserDeleteEntry> {
   late bool fever = false;
   late bool feverish = false;
   late bool muscle_joint_pain = false;
@@ -73,15 +73,15 @@ class _UserEditEntryState extends State<UserEditEntry> {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     String entryDate = DateFormat.yMMMMd('en_US').format(now);
-    String editDate = DateFormat.yMMMMd('en_US').format(now);
+    String deleteDate = DateFormat.yMMMMd('en_US').format(now);
     UserDetail? user = context.read<UserDetailListProvider>().currentUser;
 
     return Scaffold(
       appBar: AppBar(
         title: Row(children: [
-          Icon(Icons.edit_note_rounded, color: Color(0xFF004D40)),
+          Icon(Icons.delete_rounded, color: Color(0xFF004D40)),
           SizedBox(width: 14),
-          Text("Edit Today's Entry",
+          Text("Delete Entry",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF004D40),
@@ -95,104 +95,112 @@ class _UserEditEntryState extends State<UserEditEntry> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Please check the box for each symptom you are experiencing:',
-                style: TextStyle(fontSize: 18),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Are you sure you want to delete today\'s entry?',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      'Note: Wait for the admin to approve your delete request.',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 8),
               CheckboxListTile(
                 value: fever,
-                onChanged: (bool? value) {
-                  setState(() {
-                    fever = value!;
-                  });
-                },
+                onChanged: (bool? value) {},
                 title: Text('Fever (37.8 C and above)'),
               ),
               CheckboxListTile(
                 value: feverish,
                 onChanged: (bool? value) {
-                  setState(() {
-                    feverish = value!;
-                  });
+                  // setState(() {
+                  //   feverish = value!;
+                  // });
                 },
                 title: Text('Feeling feverish'),
               ),
               CheckboxListTile(
                 value: muscle_joint_pain,
                 onChanged: (bool? value) {
-                  setState(() {
-                    muscle_joint_pain = value!;
-                  });
+                  // setState(() {
+                  //   muscle_joint_pain = value!;
+                  // });
                 },
                 title: Text('Muscle or joint pains'),
               ),
               CheckboxListTile(
                 value: cough,
                 onChanged: (bool? value) {
-                  setState(() {
-                    cough = value!;
-                  });
+                  // setState(() {
+                  //   cough = value!;
+                  // });
                 },
                 title: Text('Cough'),
               ),
               CheckboxListTile(
                 value: cold,
                 onChanged: (bool? value) {
-                  setState(() {
-                    cold = value!;
-                  });
+                  // setState(() {
+                  //   cold = value!;
+                  // });
                 },
                 title: Text('Colds'),
               ),
               CheckboxListTile(
                 value: sore_throat,
                 onChanged: (bool? value) {
-                  setState(() {
-                    sore_throat = value!;
-                  });
+                  // setState(() {
+                  //   sore_throat = value!;
+                  // });
                 },
                 title: Text('Sore throat'),
               ),
               CheckboxListTile(
                 value: difficulty_breathing,
                 onChanged: (bool? value) {
-                  setState(() {
-                    difficulty_breathing = value!;
-                  });
+                  // setState(() {
+                  //   difficulty_breathing = value!;
+                  // });
                 },
                 title: Text('Difficulty of breathing'),
               ),
               CheckboxListTile(
                 value: diarrhea,
                 onChanged: (bool? value) {
-                  setState(() {
-                    diarrhea = value!;
-                  });
+                  // setState(() {
+                  //   diarrhea = value!;
+                  // });
                 },
                 title: Text('Diarrhea'),
               ),
               CheckboxListTile(
                 value: loss_taste,
                 onChanged: (bool? value) {
-                  setState(() {
-                    loss_taste = value!;
-                  });
+                  // setState(() {
+                  //   loss_taste = value!;
+                  // });
                 },
                 title: Text('Loss of taste'),
               ),
               CheckboxListTile(
                 value: loss_smell,
                 onChanged: (bool? value) {
-                  setState(() {
-                    loss_smell = value!;
-                  });
+                  // setState(() {
+                  //   loss_smell = value!;
+                  // });
                 },
                 title: Text('Loss of smell'),
               ),
               SizedBox(height: 16),
               Text(
-                'Have you had a face-to-face encounter or contact with a confirmed COVID-19 case?',
+                'Had a face-to-face encounter or contact with a confirmed COVID-19 case:',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 8),
@@ -202,9 +210,9 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     value: 'Yes',
                     groupValue: had_contact,
                     onChanged: (value) {
-                      setState(() {
-                        had_contact = value!;
-                      });
+                      // setState(() {
+                      //   had_contact = value!;
+                      // });
                     },
                   ),
                   Text('Yes'),
@@ -212,9 +220,9 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     value: 'No',
                     groupValue: had_contact,
                     onChanged: (value) {
-                      setState(() {
-                        had_contact = value!;
-                      });
+                      // setState(() {
+                      //   had_contact = value!;
+                      // });
                     },
                   ),
                   Text('No'),
@@ -243,25 +251,6 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     entry_date: entryDate,
                   );
 
-                  if (newEntry.fever ||
-                      newEntry.feverish ||
-                      newEntry.muscle_joint_pain ||
-                      newEntry.cough ||
-                      newEntry.cold ||
-                      newEntry.sore_throat ||
-                      newEntry.difficulty_breathing ||
-                      newEntry.diarrhea ||
-                      newEntry.loss_taste ||
-                      newEntry.loss_smell) {
-                    newEntry.has_symptoms = true;
-                    newEntry.status = 'Under Monitoring';
-                  } else if (newEntry.had_contact == "Yes") {
-                    newEntry.status = 'Under Monitoring';
-                    newEntry.has_symptoms = false;
-                  } else {
-                    newEntry.status = 'Cleared';
-                    newEntry.has_symptoms = false;
-                  }
                   List<dynamic> entryList = [
                     newEntry.fever,
                     newEntry.feverish,
@@ -281,26 +270,27 @@ class _UserEditEntryState extends State<UserEditEntry> {
                     newEntry.delete_request,
                     newEntry.entry_date,
                   ];
+
                   var fullName = user!.firstName + ' ' + user.lastName;
                   Request newReq = new Request(
                       entry: entryList,
                       entry_id: entry_id,
-                      type: 'edit',
-                      date: editDate,
+                      type: 'delete',
+                      date: deleteDate,
                       requester_name: fullName);
 
                   context.read<RequestProvider>().addRequest(newReq);
 
                   context
                       .read<EntryListProvider>()
-                      .changeEditRequest(entry_id!, true);
+                      .changeDeleteRequest(entry_id!, true);
+
+                  // make entry_id null or delete --otherwise, it will be overridden by new entry
 
                   Navigator.pop(context);
                   Navigator.pop(context);
-
-                  // Do something with the newEntry instance, like store it in a database or pass it to another screen
                 },
-                child: Text('Submit'),
+                child: Text('Delete Entry'),
               ),
             ],
           ),

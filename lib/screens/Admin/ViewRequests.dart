@@ -38,9 +38,9 @@ class _ViewRequestsState extends State<ViewRequests> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Allow ${request.requester_name} to delete entry?'),
+          title: Text('Allow ${request.requester_name} to delete their entry?'),
           content: Text('By confirming this request,\n'
-              'you are allowing ${request.requester_name} to delete entry. \n\n'
+              'you are allowing ${request.requester_name} to delete today\'s entry. \n\n'
               'Note that your choice is irrevokable.\n'),
           actions: <Widget>[
             ElevatedButton(
@@ -51,9 +51,9 @@ class _ViewRequestsState extends State<ViewRequests> {
                       context
                           .read<RequestProvider>()
                           .deleteRequest(request.id!),
-                      context
-                          .read<UserDetailListProvider>()
-                          .editStatus(request.entry![13], "No Health Entry"),
+                      context.read<UserDetailListProvider>().editStatus(
+                          request.entry![13],
+                          "No Health Entry"), // must pass entry in delete
                       context.read<UserDetailListProvider>().editLatestEntry(
                           context.read<AuthProvider>().userId, ""),
                       Navigator.of(context).pop()
@@ -225,7 +225,7 @@ class _ViewRequestsState extends State<ViewRequests> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            "${request.requester_name}'s \nEdited Entry",
+            "${request.requester_name}'s Entry",
             style: TextStyle(fontSize: 18),
           ),
           content: Column(children: [
@@ -241,7 +241,7 @@ class _ViewRequestsState extends State<ViewRequests> {
               'Loss Taste: ${request.entry![8]} \n'
               'Loss Smell: ${request.entry![9]} \n'
               'Had Symptoms: ${request.entry![10]} \n'
-              'Had Contacts: ${request.entry![11]}',
+              'Had Contact: ${request.entry![11]}',
               style: TextStyle(height: 2.0),
             ),
           ]),
@@ -297,6 +297,9 @@ class _ViewRequestsState extends State<ViewRequests> {
                           // Color.fromARGB(15, 233, 30, 98), // hover color set to pink
                           splashColor: Colors
                               .teal, // sets the splash color (circle splash effect when user taps and holds the ListTile) to pink
+                          onTap: () {
+                            _viewDetails(context, request);
+                          },
                           child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               child: ListTile(

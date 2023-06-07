@@ -78,15 +78,10 @@ class _MyProfileState extends State<MyProfile> {
                 child: Text("Edit Entry")),
             ElevatedButton(
                 onPressed: () async {
-                  Request newReq = new Request(
-                    entry_id: currentEntryId,
-                    type: 'delete',
-                    date: curDate,
-                    requester_name: fullName,
-                  );
+                  Navigator.pushNamed(context, '/user-delete-entry');
 
-                  context.read<RequestProvider>().addRequest(newReq);
-                  Navigator.of(context).pop();
+                  // context.read<RequestProvider>().addRequest(newReq);
+                  // Navigator.of(context).pop();
                 },
                 child: Text("Delete Entry")),
             const SizedBox(height: 10),
