@@ -20,6 +20,12 @@ class FirebaseLogAPI {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> getSearchedLogs() {
+    Stream<QuerySnapshot> searchedStream =
+        db.collection('logs').where('status', isEqualTo: "cleared").snapshots();
+    return searchedStream;
+  }
+
   Future<List> getLogsList() async {
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await db.collection("logs").get();
@@ -39,4 +45,17 @@ class FirebaseLogAPI {
       return "Failed with error '${e.code}: ${e.message}";
     }
   }
+
+  /*
+  Future<String> editLog(String? id, String title) async {
+    try {
+      print("New String: $title");
+      await db.collection("logs").doc(id).update({"title": title});
+
+      return "Successfully edited log!";
+    } on FirebaseException catch (e) {
+      return "Failed with error '${e.code}: ${e.message}";
+    }
+  }
+  */
 }
