@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:provider/provider.dart';
-import '../../providers/AuthProvider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import '../../providers/UserDetailListProvider.dart';
 import '../../models/UserDetail.dart';
 
@@ -13,6 +17,26 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
+  ScreenshotController _screenshotController = ScreenshotController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<String> saveImage(Uint8List image) async {
+    await [Permission.storage].request();
+
+    final time = DateTime.now()
+        .toIso8601String()
+        .replaceAll(".", "-")
+        .replaceAll(":", "-");
+    final name = "screenshot-$time";
+    final result = await ImageGallerySaver.saveImage(image, name: name);
+    Navigator.of(context).pop();
+    return result['filePath'];
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -41,42 +65,63 @@ class _QrCodePageState extends State<QrCodePage> {
         backgroundColor: Colors.teal[200],
       ),
       backgroundColor: Colors.teal[100],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _screenshotController
+              .capture(delay: Duration(milliseconds: 10))
+              .then((capturedImage) async {
+            await saveImage(capturedImage!);
+            // ShowCapturedWidget(context, capturedImage!);
+          }).catchError((onError) {
+            print(onError);
+          });
+        },
+        child: Icon(Icons.file_download_outlined),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: screenHeight * .1),
-
-            Center(
-              child: QrImage(
-                data: "$name\n$studentNo\n$status",
-                backgroundColor: Color.fromRGBO(128, 203, 196, 1),
-                // ignore: deprecated_member_use
-                foregroundColor: Color.fromRGBO(0, 77, 64, 1),
-                size: screenWidth * .5,
+            Screenshot(
+              controller: _screenshotController,
+              child: Container(
+                color: Colors.teal[100],
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        child: QrImageView(
+                          data: "$name\n$studentNo\n$status",
+                          backgroundColor: Color.fromRGBO(128, 203, 196, 1),
+                          // ignore: deprecated_member_use
+                          foregroundColor: Color.fromRGBO(0, 77, 64, 1),
+                          size: screenWidth * .5,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(
+                          child: Text(
+                              "Name: ${user?.firstName} ${user?.lastName}")),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(child: Text("Status: ${user?.status}")),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(
+                          child: Text("Entry Date: ${user?.latestEntry}")),
+                    ),
+                  ],
+                ),
               ),
             ),
-
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.all(5.0),
-              child: Center(
-                  child: Text("Name: ${user?.firstName} ${user?.lastName}")),
-            ),
-            Container(
-              padding: const EdgeInsets.all(5.0),
-              child: Center(child: Text("Status: ${user?.status}")),
-            ),
-            Container(
-              padding: const EdgeInsets.all(5.0),
-              child: Center(child: Text("Entry Date: ${user?.latestEntry}")),
-            ),
             SizedBox(height: 20),
-            // Padding(
-            //   padding: const EdgeInsets.all(20.0),
-            //   child: Center(child: Text("INSERT MORE EME")),
-            // ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
