@@ -23,16 +23,18 @@ The application hosts three types of accounts which are the user, entrance monit
 5. Select Chrome or Edge as the simulator for the app
 
 ### Using Phone (recommended)
-1a. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
-2a. Clone the main repository
-3a. In the terminal, go to the app's path
-4a. On your phone, enable the developer option and USB debugging from the settings
-5a. Execute flutter devices
-6a. Execute flutter run
-7a. Make sure to accept the app's permission to camera for qr scanning
+#### Through github link
+1. Access the github link (https://github.com/CMSC-23-2nd-Sem-2022-2023/project-araez_concepcion_delacruz_luneza)
+2. Clone the main repository
+3. In the terminal, go to the app's path
+4. On your phone, enable the developer option and USB debugging from the settings
+5. Execute flutter devices
+6. Execute flutter run
+7. Make sure to accept the app's permission to camera for qr scanning
 
-1b. Alternatively, you can install the app through an APK provided by the developers
-2b. Just also make sure to accept the app's permission to camera for qr scanning
+#### Through APK
+1. Alternatively, you can install the app through an APK provided by the developers
+2. Just also make sure to accept the app's permission to camera for qr scanning
 
 
 ## How To Use the Health Monitor App
