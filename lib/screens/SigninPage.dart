@@ -158,7 +158,7 @@ class _SigninPageState extends State<SigninPage> {
             email,
             password,
             signinButton,
-            const SizedBox(height: 50),
+            const SizedBox(height: 28),
             const Text("Don't have an account?"),
             Wrap(
               spacing: 20,
@@ -178,8 +178,8 @@ class _SigninPageState extends State<SigninPage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: const [
-            Icon(Icons.local_hospital_rounded, color: Color(0xFF004D40)),
+          children: [
+            Image.asset('icon/HealthMonLogo.png', height: 20, width: 20),
             SizedBox(width: 14),
             Text(
               "HealthMon",
@@ -197,6 +197,8 @@ class _SigninPageState extends State<SigninPage> {
           shrinkWrap: true,
           padding: const EdgeInsets.only(left: 40.0, right: 40.0),
           children: <Widget>[
+            Image.asset('icon/HealthMonLogo.png', height: 100, width: 100),
+            SizedBox(height: 20),
             const Text(
               "Sign In",
               textAlign: TextAlign.center,

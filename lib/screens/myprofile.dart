@@ -418,13 +418,16 @@ class _MyProfileState extends State<MyProfile> {
               decoration: BoxDecoration(
                 color: Colors.teal.shade50,
               ),
-              child: Column(children: [
-                Text('\nHealthMon',
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Image.asset('icon/HealthMonLogo.png', height: 35, width: 35),
+                Text('HealthMon',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF004D40))),
-                Text('\nCMSC 23 Group 2\nAraez Concepcion \nDela Cruz Luñeza'),
+                Text('CMSC 23 Group 2'),
+                SizedBox(height: 20)
               ])),
           ListTile(
             title: const Text('Logout'),

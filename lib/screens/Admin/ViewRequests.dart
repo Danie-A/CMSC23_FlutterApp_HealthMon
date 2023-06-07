@@ -54,8 +54,9 @@ class _ViewRequestsState extends State<ViewRequests> {
                       context.read<UserDetailListProvider>().editStatus(
                           request.entry![13],
                           "No Health Entry"), // must pass entry in delete
-                      context.read<UserDetailListProvider>().editLatestEntry(
-                          context.read<AuthProvider>().userId, ""),
+                      context
+                          .read<UserDetailListProvider>()
+                          .editLatestEntry(request.entry![13], ""),
                       Navigator.of(context).pop()
                     },
                 child: Text("Allow delete entry")),
